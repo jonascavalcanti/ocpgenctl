@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ ! -f ${HOME}/${OCP_INSTALLER_FILE} ]
+then
+    wget ${URL_OCP_INSTALLER} 
+    tar -xvzf ${HOME}/${OCP_INSTALLER_FILE}
+    chmod +x ${HOME}/openshift-install
+fi
+
+if [ ! -f ${HOME}/install-config.yaml ]
+then
+    ansible-playbook playbook.yaml
+fi

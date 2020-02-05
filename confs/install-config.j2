@@ -1,0 +1,22 @@
+apiVersion: v1
+baseDomain: {{ ansible_env.BASE_DOMAIN }} 
+compute:
+- hyperthreading: Enabled   
+  name: worker
+  replicas: {{ ansible_env.WORKERS_REPLICS }} 
+controlPlane:
+  hyperthreading: Enabled   
+  name: master
+  replicas: {{ ansible_env.MASTER_REPLICS }}
+metadata:
+  name: {{ ansible_env.CLUSTER_NAME }} 
+platform:
+  vsphere:
+    vcenter: {{ ansible_env.VCENTER_DNS }} 
+    username: {{ ansible_env.VCENTER_USER }} 
+    password: {{ ansible_env.VCENTER_PASS }} 
+    datacenter: {{ ansible_env.VCENTER_DATACENTER }} 
+    defaultDatastore: {{ ansible_env.VCENTER_STORAGE }} 
+fips: false 
+pullSecret: {{ ansible_env.PULL_SECRET }}
+sshKey: {{ ansible_env.SSH_KEY }} 

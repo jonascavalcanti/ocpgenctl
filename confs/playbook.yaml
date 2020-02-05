@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Create install-config.yaml file
+      template: 
+        src: /home/initiator/install-config.j2
+        dest: /home/initiator/install-config.yaml
+        owner: initiator
+        group: initiator
+        mode: "0644"
