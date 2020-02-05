@@ -19,8 +19,15 @@ ADD confs/supervisord.conf /etc/supervisord.conf
 
 ADD confs/ssh/id_rsa /home/initiator/.ssh/id_rsa
 ADD confs/ssh/id_rsa.pub /home/initiator/.ssh/id_rsa.pub
-ADD confs/install-config.j2 /home/initiator/install-config.j2
-ADD confs/playbook.yaml /home/initiator/playbook.yaml
+
+ADD confs/initiatord /initiatord
+RUN chmod +x /initiatord
+
+ADD confs/start.sh /start.sh
+RUN chmod +x /start.sh
+
+USER initiator
+WORKDIR /home/initiator
 
 ENV OCP_INSTALLER_FILE="openshift-install-linux-4.3.0.tar.gz"
 ENV URL_OCP_INSTALLER="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/${OCP_INSTALLER_FILE}"
@@ -34,14 +41,10 @@ ENV VCENTER_PASS=""
 ENV VCENTER_DATACENTER="datacenter"
 ENV VCENTER_STORAGE="datastore"
 ENV PULL_SECRET=""
+ENV INSTALLERS_DIR_PATH="/home/initiator/installers"
 
-ADD confs/initiatord /initiatord
-RUN chmod +x /initiatord
-
-ADD confs/start.sh /start.sh
-RUN chmod +x /start.sh
-
-USER initiator
-WORKDIR /home/initiator
+RUN mkdir -p ${INSTALLERS_DIR_PATH}
+ADD confs/install-config.j2 ${INSTALLERS_DIR_PATH}/install-config.j2
+ADD confs/playbook.yaml ${INSTALLERS_DIR_PATH}/playbook.yaml
 
 CMD ["/start.sh"]

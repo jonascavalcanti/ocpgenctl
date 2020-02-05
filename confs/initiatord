@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "Download openshift-install command"
 if [ ! -f ${HOME}/${OCP_INSTALLER_FILE} ]
 then
     wget ${URL_OCP_INSTALLER} 
@@ -7,7 +8,12 @@ then
     chmod +x ${HOME}/openshift-install
 fi
 
-if [ ! -f ${HOME}/install-config.yaml ]
+echo "Creating install-config.yaml"
+if [ ! -f ${INSTALLERS_DIR_PATH}/install-config.yaml ]
 then
-    ansible-playbook playbook.yaml
+    ansible-playbook ${INSTALLERS_DIR_PATH}/playbook.yaml
 fi
+
+echo "Preparing the install environment"
+${HOME}/openshift-install create manifests --dir=${INSTALLERS_DIR_PATH}
+${HOME}/openshift-install create ignition-configs --dir=${INSTALLERS_DIR_PATH}
