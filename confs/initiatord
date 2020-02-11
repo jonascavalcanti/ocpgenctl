@@ -1,6 +1,10 @@
 #!/bin/bash
 
-echo "Download openshift-install command"
+mkdir -p ${INSTALLERS_DIR_PATH}
+cp /home/initiator/install-config.j2 ${INSTALLERS_DIR_PATH}
+cp  /home/initiator/playbook.yaml ${INSTALLERS_DIR_PATH}
+
+echo "Downloading openshift-install cli"
 if [ ! -f ${HOME}/${OCP_INSTALLER_FILE} ]
 then
     wget ${URL_OCP_INSTALLER} 
@@ -14,6 +18,21 @@ then
     ansible-playbook ${INSTALLERS_DIR_PATH}/playbook.yaml
 fi
 
-echo "Preparing the install environment"
+echo "Preparing the install environments"
 ${HOME}/openshift-install create manifests --dir=${INSTALLERS_DIR_PATH}
 ${HOME}/openshift-install create ignition-configs --dir=${INSTALLERS_DIR_PATH}
+
+echo "Secondary Ignition config file for your bootstrap node to your computer"
+cp -rv ${HOME}/installers/bootstrap.ign ${HOME}/installers/append-bootstrap.ign
+
+echo "Converting the master, worker, and secondary bootstrap Ignition config files to Base64 encoding"
+base64 -w0 ${HOME}/installers/master.ign > ${HOME}/installers/master.64
+base64 -w0 ${HOME}/installers/worker.ign > ${HOME}/installers/worker.64
+base64 -w0 ${HOME}/installers/append-bootstrap.ign > ${HOME}/installers/append-bootstrap.64
+
+echo "Downloading RHCOS to TIER ${TIER}"
+if [ ${TIER} == "vsphere" ]
+then
+    cd ${HOME}/installers/
+    wget ${URL_RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova
+fi

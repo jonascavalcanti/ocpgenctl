@@ -14,6 +14,23 @@ RUN yum install -y \
         ansible \
 		supervisor
 
+ENV OCP_VERSION="4.3"
+ENV OCP_INSTALLER_FILE="openshift-install-linux-4.3.0.tar.gz"
+ENV URL_OCP_INSTALLER="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/${OCP_INSTALLER_FILE}"
+ENV URL_RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}/latest"
+ENV BASE_DOMAIN=etice.ce.gov.br
+ENV WORKERS_REPLICS="4"
+ENV MASTER_REPLICS="3"
+ENV CLUSTER_NAME="cluster"
+ENV TIER="vsphere"
+ENV VCENTER_DNS="vcenter.local"
+ENV VCENTER_USER=""
+ENV VCENTER_PASS=""
+ENV VCENTER_DATACENTER="datacenter"
+ENV VCENTER_STORAGE="datastore"
+ENV PULL_SECRET=""
+ENV INSTALLERS_DIR_PATH="/home/initiator/installers"
+
 RUN useradd initiator
 ADD confs/supervisord.conf /etc/supervisord.conf
 
@@ -29,22 +46,9 @@ RUN chmod +x /start.sh
 USER initiator
 WORKDIR /home/initiator
 
-ENV OCP_INSTALLER_FILE="openshift-install-linux-4.3.0.tar.gz"
-ENV URL_OCP_INSTALLER="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/${OCP_INSTALLER_FILE}"
-ENV BASE_DOMAIN=etice.ce.gov.br
-ENV WORKERS_REPLICS="4"
-ENV MASTER_REPLICS="3"
-ENV CLUSTER_NAME="cluster"
-ENV VCENTER_DNS="vcenter.local"
-ENV VCENTER_USER=""
-ENV VCENTER_PASS=""
-ENV VCENTER_DATACENTER="datacenter"
-ENV VCENTER_STORAGE="datastore"
-ENV PULL_SECRET=""
-ENV INSTALLERS_DIR_PATH="/home/initiator/installers"
+ADD confs/install-config.j2 /home/initiator/install-config.j2
+ADD confs/playbook.yaml /home/initiator/playbook.yaml
 
-RUN mkdir -p ${INSTALLERS_DIR_PATH}
-ADD confs/install-config.j2 ${INSTALLERS_DIR_PATH}/install-config.j2
-ADD confs/playbook.yaml ${INSTALLERS_DIR_PATH}/playbook.yaml
+VOLUME [ "/home/initiator/installers" ]
 
 CMD ["/start.sh"]
