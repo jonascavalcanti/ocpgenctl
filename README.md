@@ -26,11 +26,10 @@ DNS name of the vCenter Server when will install on VMWare Enviroment
 User admin of the VMWare enviroment
 ##### VCENTER_PASS
 Password of the VMWare Enviroment
-##### VCENTER_DATACENTER
+##### VCENTER_STORAGE
 Data Storage of the VMWare where will be install the components Openshift within VMWare enviroment. Default is "datastorage"
-##### VCENTER_STORAGE="datastore"
 ##### PULL_SECRET
-You can download your PULL Secret on cloud.redhat.com
+You can download your PULL Secret on [Red Hat Openshift Install](https://cloud.redhat.com/openshift/install)
 
 ## Creating ignations files
 
