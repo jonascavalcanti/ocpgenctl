@@ -29,7 +29,7 @@ Password of the VMWare Enviroment
 ##### VCENTER_STORAGE
 Data Storage of the VMWare where will be install the components Openshift within VMWare enviroment. Default is "datastorage"
 ##### PULL_SECRET
-You can download your PULL Secret on [Red Hat Openshift Install](https://cloud.redhat.com/openshift/install)
+You can download your PULL Secret on [Red Hat Openshift Install](https://cloud.redhat.com/openshift/install/vsphere/user-provisioned)
 
 ## Creating ignations files
 
