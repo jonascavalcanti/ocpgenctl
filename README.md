@@ -1,4 +1,4 @@
-# How to Configure Openshift 4 in the vSphere Environment
+# How to Configure Openshift 4.3 in the vSphere Environment
 
 ## Clonning repository 
 ```
@@ -6,8 +6,7 @@ git clone https://github.com/jonascavalcantineto/ocp-bootstrap-ignition.git
 ```
 ## Variables
 
-**OCP_VERSION**
-Openshift versions | ex.: 4.0, 4.1, 4.2, 4.3 
+**OCP_VERSION** - Openshift versions | ex.: 4.0, 4.1, 4.2, 4.3.
 
 **BASE_DOMAIN** - Base domain of company | ex.: mycompany.com.
 
@@ -31,7 +30,7 @@ Openshift versions | ex.: 4.0, 4.1, 4.2, 4.3
 
 **SSH_KEY**
 
-## Set up yo
+## Set up your local environment
 ```
 $ cd $HOME
 $ mkdir -p $HOME/openshift/installers
