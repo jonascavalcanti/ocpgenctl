@@ -7,7 +7,7 @@ git clone https://github.com/jonascavalcantineto/ocp-bootstrap-ignition.git
 ## Variables
 
 **OCP_VERSION**
-Openshift versions | ex.: 4.0, 4.1, 4.2, 4.3
+Openshift versions | ex.: 4.0, 4.1, 4.2, 4.3 \n
 **BASE_DOMAIN**
 Base domain of company | ex.: mycompany.com
 **WORKERS_REPLICS**
