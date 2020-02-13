@@ -18,7 +18,7 @@ ENV OCP_BOOTSTRAP_URL="bootstrap.mycompany.com"
 
 ENV RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}/latest"
 
-ENV OCP_USERID="3900"
+ENV OCP_USERID=3900 
 ENV OCP_USER_PATH="/home/ocp${OCP_USERID}"
 
 #Cluster variables
@@ -44,9 +44,7 @@ RUN useradd ocp${OCP_USERID}
 ADD confs/supervisord.conf /etc/supervisord.conf
 RUN sed -i "s/ocp_userid/ocp${OCP_USERID}/g" /etc/supervisord.conf
 
-ADD confs/install-config.j2 ${OCP_USER_PATH}/install-config.j2
-ADD confs/ocp-playbook.yaml ${OCP_USER_PATH}/ocp-playbook.yaml
-RUN sed -i "s/ocp_userid/ocp${OCP_USERID}/g" ${OCP_USER_PATH}/ocp-playbook.yaml
+ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
 
 ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
 ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
