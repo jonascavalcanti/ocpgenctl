@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  ocp-bootstrap-ignition:
+    build: .
+    container_name: ocp-bootstrap-ignition
+    hostname: ocp-bootstrap-ignition
+    restart: always
+    network_mode: bridge
+    environment: 
+      - BASE_DOMAIN={{ BASE_DOMAIN }}
+      - WORKERS_REPLICS={{ WORKERS_REPLICS }}
+      - MASTER_REPLICS={{ MASTER_REPLICS }}
+      - CLUSTER_NAME={{ CLUSTER_NAME }}
+      - TIER={{ TIER }}
+      - VCENTER_DNS={{ VCENTER_DNS }}
+      - VCENTER_USER={{ VCENTER_USER }}
+      - VCENTER_PASS={{ VCENTER_PASS }}
+      - VCENTER_DATACENTER={{ VCENTER_DATACENTER }}
+      - VCENTER_STORAGE={{ VCENTER_STORAGE }}
+      - PULL_SECRET={{ PULL_SECRET }}
+      - OCP_SSH_KEY={{ OCP_SSH_KEY }}
+    volumes: 
+      - ${HOME}/ocp/shared:/home/ocp{{ OCP_USERID }}/shared
+          

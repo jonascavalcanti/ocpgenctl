@@ -1,4 +1,23 @@
 # How to Configure Openshift 4.3 in the vSphere Environment
+### Modules:
+
+link:overview.adoc[Deployment Overview]
+
+link:prerequisites.adoc[Prerequisites Preparation]
+
+link:ignition.adoc[Generating Install Files]
+
+link:vsphere-import-ova.adoc[Import OVA on vSphere]
+
+link:deploy.adoc[Deploy Cluster on vSphere]
+
+link:post-deployment.adoc[Post deployment configuration]
+
+link:troubleshooting.adoc[Troubleshooting tips]
+
+link:common-further-resources.adoc[Further Resources]
+
+link:common-workshop-links.adoc[Workshop Links] 
 
 ## Clonning repository 
 ```
@@ -68,6 +87,12 @@ $ docker-compose up -d --build
 ```
 
 ## Creating Red Hat Enterprise Linux CoreOS (RHCOS) machines in vSphere
+
+**Prerequisites**
+
+* Obtain the Ignition config files for your cluster.
+
+* Have access to an HTTP server that you can access from your computer and that the machines that you create can access.
 
 1. Upload the bootstrap Ignition config file, which is named <installation_directory>/bootstrap.ign, that the installation program created to your HTTP server. Note the URL of this file.
 

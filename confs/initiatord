@@ -1,38 +1,69 @@
 #!/bin/bash
 
-mkdir -p ${INSTALLERS_DIR_PATH}
-cp /home/initiator/install-config.j2 ${INSTALLERS_DIR_PATH}
-cp  /home/initiator/playbook.yaml ${INSTALLERS_DIR_PATH}
+OCP_LATEST_VERSION=$(curl -s ${OCP_BASEURL}/release.txt | grep 'Version: ' | awk '{print $2}')
 
 echo "Downloading openshift-install cli"
-if [ ! -f ${HOME}/${OCP_INSTALLER_FILE} ]
+if [ ! -f ${OCP_USER_PATH}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz ]
 then
-    wget ${URL_OCP_INSTALLER} 
-    tar -xvzf ${HOME}/${OCP_INSTALLER_FILE}
-    chmod +x ${HOME}/openshift-install
+    curl -s ${OCP_BASEURL}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_USER_PATH} oc kubectl
+    curl -s ${OCP_BASEURL}/openshift-install-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_USER_PATH} openshift-install
 fi
 
 echo "Creating install-config.yaml"
-if [ ! -f ${INSTALLERS_DIR_PATH}/install-config.yaml ]
+if [ ! -f ${OCP_USER_PATH}/install-config.yaml ]
 then
-    ansible-playbook ${INSTALLERS_DIR_PATH}/playbook.yaml
+    ansible-playbook ${OCP_USER_PATH}/ocp-playbook.yaml
 fi
 
 echo "Preparing the install environments"
-${HOME}/openshift-install create manifests --dir=${INSTALLERS_DIR_PATH}
-${HOME}/openshift-install create ignition-configs --dir=${INSTALLERS_DIR_PATH}
+
+echo "Generating Manisfests files"
+${OCP_USER_PATH}/openshift-install create manifests --dir=${OCP_USER_PATH}
+sed -i 's/mastersSchedulable: true/mastersSchedulable: false/g' ${OCP_USER_PATH}/manifests/cluster-scheduler-02-config.yml
+
+echo "Generating Ignitions files"
+${OCP_USER_PATH}/openshift-install create ignition-configs --dir=${OCP_USER_PATH}
 
 echo "Secondary Ignition config file for your bootstrap node to your computer"
-cp -rv ${HOME}/installers/bootstrap.ign ${HOME}/installers/append-bootstrap.ign
 
-echo "Converting the master, worker, and secondary bootstrap Ignition config files to Base64 encoding"
-base64 -w0 ${HOME}/installers/master.ign > ${HOME}/installers/master.64
-base64 -w0 ${HOME}/installers/worker.ign > ${HOME}/installers/worker.64
-base64 -w0 ${HOME}/installers/append-bootstrap.ign > ${HOME}/installers/append-bootstrap.64
+cat <<EOF > ${OCP_USER_PATH}/ignition
+{
+  "ignition": {
+    "config": {
+      "append": [
+        {
+          "source": "http://${OCP_BOOTSTRAP_URL}/ocp/ignition/bootstrap.ign",
+          "verification": {}
+        }
+      ]
+    },
+    "timeouts": {},
+    "version": "2.1.0"
+  },
+  "networkd": {},
+  "passwd": {},
+  "storage": {},
+  "systemd": {}
+}
+EOF
+
+#cp -rv ${OCP_USER_PATH}/installers/bootstrap.ign ${OCP_USER_PATH}/installers/append-bootstrap.ign
+
+echo "Generating files in base64"
+
+cd ${OCP_USER_PATH}/ignition
+for i in append-bootstrap master worker
+do
+    base64 -w0 < $i.ign > $i.64
+done
+
+# base64 -w0 ${OCP_USER_PATH}/installers/master.ign > ${OCP_USER_PATH}/installers/master.64
+# base64 -w0 ${OCP_USER_PATH}/installers/worker.ign > ${OCP_USER_PATH}/installers/worker.64
+# base64 -w0 ${OCP_USER_PATH}/installers/append-bootstrap.ign > ${OCP_USER_PATH}/installers/append-bootstrap.64
 
 echo "Downloading RHCOS to TIER ${TIER}"
 if [ ${TIER} == "vsphere" ]
 then
-    cd ${HOME}/installers/
-    wget ${URL_RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova
+    cd ${OCP_USER_PATH}/installers/
+    wget ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova
 fi
