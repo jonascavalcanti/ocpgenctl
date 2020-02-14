@@ -49,7 +49,7 @@ ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
 ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
 ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
 
-#RUN chmod 777 ${OCP_USER_PATH} && chown ocp${OCP_USERID} -Rv ${OCP_USER_PATH}
+RUN  chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
 
 ADD confs/initiatord /initiatord
 RUN chmod +x /initiatord

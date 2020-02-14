@@ -26,13 +26,13 @@ ${OCP_USER_PATH}/openshift-install create ignition-configs --dir=${OCP_USER_PATH
 
 echo "Secondary Ignition config file for your bootstrap node to your computer"
 
-cat <<EOF > ${OCP_USER_PATH}/ignition
+cat <<EOF > ${OCP_USER_PATH}/append-bootstrap.ign
 {
   "ignition": {
     "config": {
       "append": [
         {
-          "source": "http://${OCP_BOOTSTRAP_URL}/ocp/ignition/bootstrap.ign",
+          "source": "http://${OCP_BOOTSTRAP_URL}/ocp${OCP_USERID}/ignition/bootstrap.ign",
           "verification": {}
         }
       ]
@@ -47,23 +47,16 @@ cat <<EOF > ${OCP_USER_PATH}/ignition
 }
 EOF
 
-#cp -rv ${OCP_USER_PATH}/installers/bootstrap.ign ${OCP_USER_PATH}/installers/append-bootstrap.ign
-
 echo "Generating files in base64"
 
-cd ${OCP_USER_PATH}/ignition
 for i in append-bootstrap master worker
 do
     base64 -w0 < $i.ign > $i.64
 done
 
-# base64 -w0 ${OCP_USER_PATH}/installers/master.ign > ${OCP_USER_PATH}/installers/master.64
-# base64 -w0 ${OCP_USER_PATH}/installers/worker.ign > ${OCP_USER_PATH}/installers/worker.64
-# base64 -w0 ${OCP_USER_PATH}/installers/append-bootstrap.ign > ${OCP_USER_PATH}/installers/append-bootstrap.64
-
 echo "Downloading RHCOS to TIER ${TIER}"
 if [ ${TIER} == "vsphere" ]
 then
-    cd ${OCP_USER_PATH}/installers/
+    cd ${OCP_USER_PATH}/shared
     wget ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova
 fi

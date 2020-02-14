@@ -5,7 +5,7 @@ file=/tmp/supervisor.sock
 logfile=/tmp/supervisord.log
 logfile_maxbytes=5MB
 pidfile=/tmp/supervisord.pid
-user=ocp3900
+user=ocp{{ OCP_USERID }}
 nodaemon=true
 stdout_logfile=/dev/stdout
 stdout_logfile_maxbytes=0
@@ -18,7 +18,7 @@ serverurl=unix:///tmp/supervisor.sock
 
 [program:initiatord]
 command=/initiatord
-user=ocp3900
+user=ocp{{ OCP_USERID }}
 stdout_logfile=/dev/stdout
 stdout_logfile_maxbytes=0
 stderr_logfile=/dev/stderr

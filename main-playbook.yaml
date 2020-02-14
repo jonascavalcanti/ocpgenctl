@@ -32,5 +32,10 @@
         src: ./playbooks/install-config.j2
         dest: ./confs/install-config.yaml
         mode: "0755"
+    - name: Creating supervisord.conf file
+      template: 
+        src: ./playbooks/supervisord.j2
+        dest: ./confs/supervisord.conf
+        mode: "0755"
     # - name: Executing docker-compose
     #   command: /usr/bin/docker-compose up -d --build
