@@ -25,3 +25,11 @@ stderr_logfile=/dev/stderr
 stderr_logfile_maxbytes=0
 priority=1
 
+[program:httpd]
+command=/usr/sbin/apachectl -DFOREGROUND
+user=root
+stdout_logfile=/dev/stdout
+stdout_logfile_maxbytes=0
+stderr_logfile=/dev/stderr
+stderr_logfile_maxbytes=0
+priority=999

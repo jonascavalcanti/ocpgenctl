@@ -58,5 +58,13 @@ echo "Downloading RHCOS to TIER ${TIER}"
 if [ ${TIER} == "vsphere" ]
 then
     cd ${OCP_USER_PATH}/shared
+    rm -rf ${OCP_USER_PATH}/shared/*
     wget ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova
+fi
+
+echo "Initializing Apache to bastion"
+
+if [ -f ${OCP_USER_PATH}/bootstrap.ign ]
+then
+  cp -rv ${OCP_USER_PATH}/bootstrap.ign /var/www/html
 fi

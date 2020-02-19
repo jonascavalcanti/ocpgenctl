@@ -6,6 +6,8 @@ services:
     hostname: ocp-bootstrap-ignition
     restart: always
     network_mode: bridge
+    ports:
+      - 80:80
     environment: 
       - BASE_DOMAIN={{ BASE_DOMAIN }}
       - WORKERS_REPLICS={{ WORKERS_REPLICS }}

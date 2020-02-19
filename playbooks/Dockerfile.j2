@@ -8,7 +8,7 @@ RUN yum update -y && yum install -y \
         curl \
         openssh \
         wget \
-        ansible \
+        httpd \
 		supervisor
 
 #OCP variables
@@ -49,7 +49,8 @@ ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
 ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
 ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
 
-RUN  chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
+RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
+RUN chown ocp${OCP_USERID} /var/www/html -R
 
 ADD confs/initiatord /initiatord
 RUN chmod +x /initiatord
