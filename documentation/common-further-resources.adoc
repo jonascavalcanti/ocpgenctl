@@ -1,0 +1,14 @@
+# Workshop Hands-on - Deploy OCP 4.2 on vSphere
+
+Below you will find further resources for learning about OpenShift and
+running OpenShift on your own computer, as well as details about OpenShift
+Online or other OpenShift related products and services.
+
+* *link:https://mojo.redhat.com/people/rpecora/blog/2019/12/04/dicas-para-implementa%C3%A7%C3%A3o-do-cluster-openshift-42-em-vmware-vsphere[Dicas para Implementação do cluster Openshift 4.2 em Vmware vSphere]* - Artigo detalhado com passo a passo  e dicas de implementação do OpenShift em vSphere feito pelo nosso colega *Rafael Pécora*.
+
+* *link:https://blog.openshift.com/openshift-4-2-vsphere-install-quickstart/[OpenShift 4.2 vSphere Install Quickstart]* - Quick guide to install OpenShift on vSphere.
+
+* *link:https://docs.openshift.com[OpenShift Documentation]* - The landing page for OpenShift documentation.
+
+* *link:https://chat.google.com/room/AAAA2bt6nL0[OpenShift 4 on Google Chat]* - Google chat forum about OpenShift 4
+

@@ -1,0 +1,75 @@
+# Workshop Hands-on - Deploy OCP 4.2 on vSphere
+
+### Generating Install Files
+
+<1> The base domain of the cluster. All DNS records must be sub-domains of this base and include the cluster name.
+<2> The cluster name that you specified in your DNS records.
+<3> The fully-qualified host name or IP address of the vCenter server.
+<4> vCenter credentials. This user must have at least the roles and privileges that are required for [dynamic persistent volume provisioning](https://vmware.github.io/vsphere-storage-for-kubernetes/documentation/vcp-roles.html) in vSphere.
+<5> The vSphere Datacenter.
+<6> Default Datastore to use.
+<7> Pull secret obtained in cloud.redhat.com.
+<8> The public portion of the default SSH key for the core user in Red Hat Enterprise Linux CoreOS (RHCOS).
+
+## Set up your local environment 
+----
+$ cd $HOME
+$ mkdir -p $HOME/ocp/share
+$ chmod 777 $HOME/ocp/share
+$ cd $HOME/ocp/
+$ git clone https://github.com/jonascavalcantineto/ocp-bootstrap-ignition.git
+----
+
+## Variables
+
+**OCP_VERSION** - Openshift versions | ex.: 4.0, 4.1, 4.2, 4.3.
+
+**BASE_DOMAIN** - Base domain of company | ex.: mycompany.com.
+
+**WORKERS_REPLICS** - Amount replics of workers node.
+
+**MASTER_REPLICS** - Amount replics of master node (Control Plane).
+
+**CLUSTER_NAME** - Cluster name of the Openshift.
+
+**TIER** - Environments released: vSphere.
+
+**VCENTER_DNS** - DNS name of the vCenter Server | ex.: vcenter.example.com.
+
+**VCENTER_USER** - Admin user  of the VMWare environment.
+
+**VCENTER_PASS** - Admin password of the VMWare environment.
+
+**VCENTER_STORAGE** - Data Storage of the VMWare where will be install the components Openshift within VMWare enviroment. Default is "datastorage".
+
+**PULL_SECRET** - You can download your PULL Secret on link:https://cloud.redhat.com/openshift/install/vsphere/user-provisioned[Red Hat Openshift Install]
+
+**SSH_KEY** - The SSH Key of the server which will be access the cluster across openssh.
+
+
+## Create ssh keys
+----
+ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa
+----
+
+Generate Pull Secret at https://cloud.redhat.com/openshift/install/vsphere/user-provisioned. Store it in ~/ocp4_pull_secret
+
+
+## Creating the Kubernetes manifest and Ignition config files
+----
+$ cd $HOME/ocp/<repository name>
+$ docker-compose up -d --build
+----
+
+[NOTE]
+RHCOS OVA will be in the **$HOME/ocp/share** of you local machine with name **rhcos-4.3.0-x86_64-vmware.ova**
+
+The RHCOS images might not change with every release of OpenShift Container Platform. You must download an image with the highest version that is less than or equal to the OpenShift Container Platform version that you install. Use the image version that matches your OpenShift Container Platform version if it is available.
+
+## Let's confirm that our webserver is hosting the bootstrap ignition file:
+----
+curl http://10.0.0.5/ocp$GUID/ignition/bootstrap.ign
+----
+
+## References
+link:https://docs.openshift.com/container-platform/4.3/installing/installing_vsphere/installing-vsphere.html[Openshift Documentation]

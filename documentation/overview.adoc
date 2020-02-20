@@ -1,5 +1,5 @@
 
-# Workshop Hands-on - Deploy OCP 4.2 on vSphere
+# Deploy OCP on vSphere
 
 ### Overview
 
@@ -29,61 +29,3 @@ A VM named infra-services has been set up with the following services for each c
 - HAProxy: Infra-services is configured with one public ip for each cluster. HAProxy is set up to balance requisitions from each ip to the corresponding cluster.
 
 image::images/overview-workshop-vsphere-env.png[Workshop environment]
-
-## Clonning repository 
-----
-git clone https://github.com/jonascavalcantineto/ocp-bootstrap-ignition.git
-----
-## Variables
-
-**OCP_VERSION** - Openshift versions | ex.: 4.0, 4.1, 4.2, 4.3.
-
-**BASE_DOMAIN** - Base domain of company | ex.: mycompany.com.
-
-**WORKERS_REPLICS** - Amount replics of workers node.
-
-**MASTER_REPLICS** - Amount replics of master node (Control Plane).
-
-**CLUSTER_NAME** - Cluster name of the Openshift.
-
-**TIER** - Environments released: vSphere.
-
-**VCENTER_DNS** - DNS name of the vCenter Server | ex.: vcenter.example.com.
-
-**VCENTER_USER** - Admin user  of the VMWare environment.
-
-**VCENTER_PASS** - Admin password of the VMWare environment.
-
-**VCENTER_STORAGE** - Data Storage of the VMWare where will be install the components Openshift within VMWare enviroment. Default is "datastorage".
-
-**PULL_SECRET** - You can download your PULL Secret on [Red Hat Openshift Install](https://cloud.redhat.com/openshift/install/vsphere/user-provisioned).
-
-**SSH_KEY**
-The SSH Key of the server which will be access the cluster across openssh.
-Generate ssh key
-
-1. If you do not have an SSH key that is configured for password-less authentication on your computer, create one. For example, on a computer that uses a Linux operating system, run the following command:
-----
-$ ssh-keygen -t rsa -b 4096 -N '' \
-    -f <path>/<file_name> 
-----
-
-## Set up your local environment
-----
-$ cd $HOME
-$ mkdir -p $HOME/ocp/share
-$ chmod 777 $HOME/ocp/share
-----
-
-## Creating the Kubernetes manifest and Ignition config files
-----
-$ docker-compose up -d --build
-----
-
-## Send RHCOS OVA to vSphere. RHCOS OVA is in the **$HOME/ocp/share** of you local machine with name **rhcos-4.3.0-x86_64-vmware.ova**
-
-*The RHCOS images might not change with every release of OpenShift Container Platform. You must download an image with the highest version that is less than or equal to the OpenShift Container Platform version that you install. Use the image version that matches your OpenShift Container Platform version if it is available.*
-
-## References
-
-link:https://docs.openshift.com/container-platform/4.3/installing/installing_vsphere/installing-vsphere.html[Openshift Documentation]
