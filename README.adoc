@@ -21,3 +21,7 @@ link:documentation/common-further-resources.adoc[Further Resources]
 ## References
 
 link:https://github.com/giofontana/ocp4-vsphere-workshop/[Workshop Openshift]
+
+## contributions
+
+link:https://github.com/zanoniluiz/[Zanoni Luiz]
