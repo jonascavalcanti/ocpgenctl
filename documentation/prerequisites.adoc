@@ -4,6 +4,8 @@
 
 The following services are pre-requisites for OpenShift 4.2 installation on vSphere (https://docs.openshift.com/container-platform/4.2/installing/installing_vsphere/installing-vsphere.html#installation-infrastructure-user-infra_installing-vsphere[see more on the official docs for OpenShift]) :
 
+- Networking requirements for user-provisioned infrastructure
+- NETWORK
 - DHCP
 - DNS
 - Load Balancer
@@ -13,6 +15,37 @@ The following services are pre-requisites for OpenShift 4.2 installation on vSph
 ### Minimum resource requirements
 
 image::images/servers-resources.png[Servers Resources]
+
+### Networking requirements for user-provisioned infrastructure
+
+**All machines to all machines**
+image::images/networking.png[Network]
+
+### NETWORK TOPOLOGY REQUIREMENTS
+The infrastructure that you provision for your cluster must meet the following network topology requirements.
+
+[NOTE]
+===
+OpenShift Container Platform requires all nodes to have internet access to pull images for platform containers and provide telemetry data to Red Hat.
+===
+
+**Load balancers** 
+Before you install OpenShift Container Platform, you must provision two layer-4 load balancers. The API requires one load balancer and the default Ingress Controller needs the second load balancer to provide ingress to applications.
+
+image::images/networking01.png[Network Resources]
+
+### ETHERNET ADAPTOR HARDWARE ADDRESS REQUIREMENTS
+When provisioning VMs for the cluster, the ethernet interfaces configured for each VM must use a MAC address from the VMware Organizationally Unique Identifier (OUI) allocation ranges:
+
+00:05:69:00:00:00 to 00:05:69:FF:FF:FF
+
+00:0c:29:00:00:00 to 00:0c:29:FF:FF:FF
+
+00:1c:14:00:00:00 to 00:1c:14:FF:FF:FF
+
+00:50:56:00:00:00 to 00:50:56:FF:FF:FF
+
+If a MAC address outside the VMware OUI is used, the cluster installation will not succeed.
 
 ### Required DNS records
 
@@ -81,11 +114,6 @@ image::images/servers-resources.png[Servers Resources]
 |10     
 |2380 etcd-2.<cluster_name>.<base_domain>.
 |===
-
-
-
-
-
 
 *_DNS Settings:_*
 ----
