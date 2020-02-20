@@ -22,18 +22,7 @@ $ cd $HOME/ocp/ocp-bootstrap-ignition
 $ git checkout release-v4.3-vsphere6.7U2
 ----
 
-## Set up your local environment 
-----
-$ cd $HOME
-$ mkdir -p $HOME/ocp/share
-$ chmod 777 $HOME/ocp/share
-$ cd $HOME/ocp/
-$ git clone https://github.com/jonascavalcantineto/ocp-bootstrap-ignition.git
-$ cd $HOME/ocp/ocp-bootstrap-ignition
-$ git checkout release-v4.3-vsphere6.7U2
-----
-
-## Changing the varibles on main-plybook.yaml file. 
+## Setting the varibles in the main-plybook.yaml file. 
 
 **OCP_VERSION**: Openshift versions | ex.: 4.0, 4.1, 4.2, 4.3.
 
@@ -80,7 +69,6 @@ $ ansible-playbook main-playbook.yaml
 
 $ docker-compose up -d --build
 ----
-
 
 [NOTE]
 RHCOS OVA will be in the **$HOME/ocp/share** of you local machine with name **rhcos-4.3.0-x86_64-vmware.ova**
