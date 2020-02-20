@@ -155,8 +155,8 @@ $TTL    604800
 ; name servers - NS records
     IN      NS      infra-services.ocp1.rhbr-labs.com.
 
+
 ; name servers - A records
-***
 infra-services IN A 10.0.0.5
 bootstrap-0 IN A 10.0.1.100
 master-0 IN A 10.0.1.101
@@ -166,11 +166,10 @@ api-int IN A 10.0.0.5
 apps IN A 10.0.0.5
 *.apps IN A 10.0.0.5
 etcd-0 IN A 10.0.1.101
-***
+
 ; The SRV records ...note the trailing dot at the end.
-***
 _etcd-server-ssl._tcp IN SRV 0 10 2380 etcd-0.ocp1.rhbr-labs.com.
-***
+
 
 [user0@infra-services ~]# sudo cat /var/named/1.0.10.in-addr.arpa.zone 
 $TTL    604800
@@ -185,11 +184,10 @@ $TTL    604800
 
 
 ; PTR Records
-*_
 100 IN PTR bootstrap-0.ocp1.rhbr-labs.com.
 101 IN PTR master-0.ocp1.rhbr-labs.com.
 102 IN PTR worker-0.ocp1.rhbr-labs.com.
-_*
+
 ----
 
 *_DHCP:_*
