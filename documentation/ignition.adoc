@@ -35,29 +35,31 @@ $ git checkout release-v4.3-vsphere6.7U2
 
 ## Changing the varibles on main-plybook.yaml file. 
 
-**OCP_VERSION** - Openshift versions | ex.: 4.0, 4.1, 4.2, 4.3.
+**OCP_VERSION**: Openshift versions | ex.: 4.0, 4.1, 4.2, 4.3.
 
-**BASE_DOMAIN** - Base domain of company | ex.: mycompany.com.
+**BASE_DOMAIN**: Base domain of company | ex.: mycompany.com.
 
-**WORKERS_REPLICS** - Amount replics of workers node.
+**OCP_BOOTSTRAP_IGN_DNSNAME**: Bastion DNS name | ex.: bastion.mycompany.com
 
-**MASTER_REPLICS** - Amount replics of master node (Control Plane).
+**WORKERS_REPLICS**: Amount replics of workers node.
 
-**CLUSTER_NAME** - Cluster name of the Openshift.
+**MASTER_REPLICS**: Amount replics of master node (Control Plane).
 
-**TIER** - Environments released: vSphere.
+**CLUSTER_NAME**: Cluster name of the Openshift.
 
-**VCENTER_DNS** - DNS name of the vCenter Server | ex.: vcenter.example.com.
+**TIER**: Environments released: vSphere.
 
-**VCENTER_USER** - Admin user  of the VMWare environment.
+**VCENTER_DNS**: DNS name of the vCenter Server | ex.: vcenter.example.com.
 
-**VCENTER_PASS** - Admin password of the VMWare environment.
+**VCENTER_USER**: Admin user  of the VMWare environment.
 
-**VCENTER_STORAGE** - Data Storage of the VMWare where will be install the components Openshift within VMWare enviroment. Default is "datastorage".
+**VCENTER_PASS**: Admin password of the VMWare environment.
 
-**PULL_SECRET** - You can download your PULL Secret on link:https://cloud.redhat.com/openshift/install/vsphere/user-provisioned[Red Hat Openshift Install]
+**VCENTER_STORAGE**: Data Storage of the VMWare where will be install the components Openshift within VMWare enviroment. Default is "datastorage".
 
-**SSH_KEY** - The SSH Key of the server which will be access the cluster across openssh.
+**PULL_SECRET**: You can download your PULL Secret on link:https://cloud.redhat.com/openshift/install/vsphere/user-provisioned[Red Hat Openshift Install]
+
+**SSH_KEY**: The SSH Key of the server which will be access the cluster across openssh.
 
 [NOTE]
 
@@ -69,7 +71,7 @@ $ ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa
 
 ### Prerequisits
 
-<1> Instalação do Ansible no seu localhost
+<1> Ansible client
 
 ----
 $ cd $HOME/ocp/<repository name>
@@ -87,7 +89,7 @@ The RHCOS images might not change with every release of OpenShift Container Plat
 
 ## Let's confirm that our webserver is hosting the bootstrap ignition file:
 ----
-curl http://10.0.0.5/ocp$GUID/ignition/bootstrap.ign
+curl http://<OCP_BOOTSTRAP_IGN_DNSNAME>/ocp$GUID/ignition/bootstrap.ign
 ----
 
 ## References
