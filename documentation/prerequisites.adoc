@@ -12,7 +12,7 @@ The following services are pre-requisites for OpenShift 4.2 installation on vSph
 
 ### Minimum resource requirements
 
-image::images/servers-resources.jpg[Servers Resources]
+image::images/servers-resources.png[Servers Resources]
 
 ### Required DNS records
 
