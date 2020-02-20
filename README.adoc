@@ -18,4 +18,6 @@ link:documentation/troubleshooting.adoc[Troubleshooting tips]
 
 link:documentation/common-further-resources.adoc[Further Resources]
 
-link:documentation/common-workshop-links.adoc[Workshop Links]
+## References
+
+link:https://github.com/giofontana/ocp4-vsphere-workshop/[Workshop Openshift]
