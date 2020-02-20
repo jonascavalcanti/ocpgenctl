@@ -1,6 +1,6 @@
 # Deploy OCP on vSphere
 
-### Modules:
+### Chapters:
 
 link:documentation/overview.adoc[Deployment Overview]
 

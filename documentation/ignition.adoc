@@ -46,7 +46,6 @@ $ git clone https://github.com/jonascavalcantineto/ocp-bootstrap-ignition.git
 
 **SSH_KEY** - The SSH Key of the server which will be access the cluster across openssh.
 
-
 ## Create ssh keys
 ----
 ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa
