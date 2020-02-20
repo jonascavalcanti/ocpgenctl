@@ -37,5 +37,3 @@
         src: ./playbooks/supervisord.j2
         dest: ./confs/supervisord.conf
         mode: "0755"
-    # - name: Executing docker-compose
-    #   command: /usr/bin/docker-compose up -d --build

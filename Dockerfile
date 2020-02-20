@@ -9,6 +9,7 @@ RUN yum update -y && yum install -y \
         openssh \
         wget \
         httpd \
+        sudo \
 		supervisor
 
 #OCP variables
@@ -39,10 +40,14 @@ ENV VCENTER_PASS=""
 ENV VCENTER_DC="datacenter"
 ENV VCENTER_DS="datastore"
 
+# Add none root user
 RUN useradd ocp${OCP_USERID}
 
+RUN set -ex \
+    && echo "ocp${OCP_USERID} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user \
+    && chmod 0440 /etc/sudoers.d/user
+
 ADD confs/supervisord.conf /etc/supervisord.conf
-RUN sed -i "s/ocp_userid/ocp${OCP_USERID}/g" /etc/supervisord.conf
 
 ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
 
@@ -52,15 +57,23 @@ ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
 RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
 RUN chown ocp${OCP_USERID} /var/www/html -R
 
-ADD confs/initiatord /initiatord
-RUN chmod +x /initiatord
+ADD confs/init-ocp-configd /init-ocp-configd
+RUN chmod +x /init-ocp-configd && /usr/bin/chown ocp${OCP_USERID} /init-ocp-configd
+
+ADD confs/init-httpd /init-httpd 
+RUN chmod +x /init-httpd 
+
+#&& /usr/bin/chown ocp${OCP_USERID} /init-httpd
+RUN set -ex \
+         && /usr/bin/chown ocp${OCP_USERID}:ocp${OCP_USERID} /run /var/log/httpd/\
+         && sed -i "s/User apache/User ocp${OCP_USERID}/" /etc/httpd/conf/httpd.conf \
+         && sed -i "s/Group apache/Group ocp${OCP_USERID}/" /etc/httpd/conf/httpd.conf
 
 ADD confs/start.sh /start.sh
 RUN chmod +x /start.sh
 
+VOLUME [ "${OCP_USER_PATH}" ]
 USER ocp${OCP_USERID}
 WORKDIR ${OCP_USER_PATH}
-
-VOLUME [ "${OCP_USER_PATH}" ]
 
 CMD ["/start.sh"]

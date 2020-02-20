@@ -1,24 +1,3 @@
-# How to Configure Openshift 4.3 in the vSphere Environment
-### Modules:
-
-link:overview.adoc[Deployment Overview]
-
-link:prerequisites.adoc[Prerequisites Preparation]
-
-link:ignition.adoc[Generating Install Files]
-
-link:vsphere-import-ova.adoc[Import OVA on vSphere]
-
-link:deploy.adoc[Deploy Cluster on vSphere]
-
-link:post-deployment.adoc[Post deployment configuration]
-
-link:troubleshooting.adoc[Troubleshooting tips]
-
-link:common-further-resources.adoc[Further Resources]
-
-link:common-workshop-links.adoc[Workshop Links] 
-
 ## Clonning repository 
 ```
 git clone https://github.com/jonascavalcantineto/ocp-bootstrap-ignition.git
