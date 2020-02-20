@@ -4,12 +4,11 @@
 
 The following services are pre-requisites for OpenShift 4.2 installation on vSphere (https://docs.openshift.com/container-platform/4.2/installing/installing_vsphere/installing-vsphere.html#installation-infrastructure-user-infra_installing-vsphere[see more on the official docs for OpenShift]) :
 
-- Networking requirements for user-provisioned infrastructure
+- RESOURCES
 - NETWORK
-- DHCP
 - DNS
+- DHCP
 - Load Balancer
-- Webserver (to host bootstrap ignition file)
 - vSphere 6.7U2
 
 ### Minimum resource requirements
@@ -157,6 +156,7 @@ $TTL    604800
     IN      NS      infra-services.ocp1.rhbr-labs.com.
 
 ; name servers - A records
+***
 infra-services IN A 10.0.0.5
 bootstrap-0 IN A 10.0.1.100
 master-0 IN A 10.0.1.101
@@ -166,8 +166,11 @@ api-int IN A 10.0.0.5
 apps IN A 10.0.0.5
 *.apps IN A 10.0.0.5
 etcd-0 IN A 10.0.1.101
+***
 ; The SRV records ...note the trailing dot at the end.
+***
 _etcd-server-ssl._tcp IN SRV 0 10 2380 etcd-0.ocp1.rhbr-labs.com.
+***
 
 [user0@infra-services ~]# sudo cat /var/named/1.0.10.in-addr.arpa.zone 
 $TTL    604800
@@ -180,10 +183,13 @@ $TTL    604800
 ; name servers
     IN      NS      infra-services.rhbr-labs.com.
 
+
 ; PTR Records
+*_
 100 IN PTR bootstrap-0.ocp1.rhbr-labs.com.
 101 IN PTR master-0.ocp1.rhbr-labs.com.
 102 IN PTR worker-0.ocp1.rhbr-labs.com.
+_*
 ----
 
 *_DHCP:_*
@@ -270,26 +276,6 @@ server master-0-0 master-0.ocp.rhbr-labs.com:22623 check
 server master-1-0 master-1.ocp.rhbr-labs.com:22623 check
 server master-2-0 master-2.ocp.rhbr-labs.com:22623 check
 ----
-
-*_Apache Webserver:_*
-----
-[root@infra-services ~]# cat /etc/httpd/conf/httpd.conf 
-#
-# This is the main Apache HTTP server configuration file.  It contains the
-# configuration directives that give the server its instructions.
-# See <URL:http://httpd.apache.org/docs/2.4/> for detailed information.
-# In particular, see 
-
-(...)
-#Listen 12.34.56.78:80
-Listen 8080
-----
-
-[NOTE]
-====
-Apache webserver was set to use port 8080 to avoid conflicts with haproxy that is running also in this same server. In a production environment you will use a dedicated Load Balancer so it is not required to change the Apache port.
-====
-
 
 
 ### Pre-requisites validation
