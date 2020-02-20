@@ -32,7 +32,7 @@ cat <<EOF > ${OCP_USER_PATH}/append-bootstrap.ign
     "config": {
       "append": [
         {
-          "source": "http://${OCP_BOOTSTRAP_URL}/ocp${OCP_USERID}/ignition/bootstrap.ign",
+          "source": "http://${OCP_BOOTSTRAP_IGN_DNSNAME}/ocp${OCP_USERID}/ignition/bootstrap.ign",
           "verification": {}
         }
       ]

@@ -18,9 +18,22 @@ $ mkdir -p $HOME/ocp/share
 $ chmod 777 $HOME/ocp/share
 $ cd $HOME/ocp/
 $ git clone https://github.com/jonascavalcantineto/ocp-bootstrap-ignition.git
+$ cd $HOME/ocp/ocp-bootstrap-ignition
+$ git checkout release-v4.3-vsphere6.7U2
 ----
 
-## Variables
+## Set up your local environment 
+----
+$ cd $HOME
+$ mkdir -p $HOME/ocp/share
+$ chmod 777 $HOME/ocp/share
+$ cd $HOME/ocp/
+$ git clone https://github.com/jonascavalcantineto/ocp-bootstrap-ignition.git
+$ cd $HOME/ocp/ocp-bootstrap-ignition
+$ git checkout release-v4.3-vsphere6.7U2
+----
+
+## Changing the varibles on main-plybook.yaml file. 
 
 **OCP_VERSION** - Openshift versions | ex.: 4.0, 4.1, 4.2, 4.3.
 
@@ -46,19 +59,26 @@ $ git clone https://github.com/jonascavalcantineto/ocp-bootstrap-ignition.git
 
 **SSH_KEY** - The SSH Key of the server which will be access the cluster across openssh.
 
-## Create ssh keys
-----
-ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa
-----
+[NOTE]
 
-Generate Pull Secret at https://cloud.redhat.com/openshift/install/vsphere/user-provisioned. Store it in ~/ocp4_pull_secret
-
+----
+$ ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa
+----
 
 ## Creating the Kubernetes manifest and Ignition config files
+
+### Prerequisits
+
+<1> Instalação do Ansible no seu localhost
+
 ----
 $ cd $HOME/ocp/<repository name>
+
+$ ansible-playbook main-playbook.yaml
+
 $ docker-compose up -d --build
 ----
+
 
 [NOTE]
 RHCOS OVA will be in the **$HOME/ocp/share** of you local machine with name **rhcos-4.3.0-x86_64-vmware.ova**

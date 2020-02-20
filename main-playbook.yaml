@@ -1,8 +1,9 @@
 ---
 - hosts: localhost
   vars:
-    OCP_USERID: 3900
     BASE_DOMAIN: mycompany.com
+    OCP_USERID: 3900
+    OCP_BOOTSTRAP_IGN_DNSNAME: bastion.mycompany.com
     WORKERS_REPLICS: 4
     MASTER_REPLICS: 3
     CLUSTER_NAME: cluster1

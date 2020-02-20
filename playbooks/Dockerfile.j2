@@ -15,7 +15,7 @@ RUN yum update -y && yum install -y \
 #OCP variables
 ENV OCP_VERSION="4.3"
 ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest"
-ENV OCP_BOOTSTRAP_URL="bootstrap.mycompany.com"
+ENV OCP_BOOTSTRAP_IGN_DNSNAME="{{ OCP_BOOTSTRAP_IGN_DNSNAME }}"
 
 ENV RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}/latest"
 
@@ -23,22 +23,22 @@ ENV OCP_USERID={{ OCP_USERID }}
 ENV OCP_USER_PATH="/home/ocp${OCP_USERID}"
 
 #Cluster variables
-ENV BASE_DOMAIN=mycompany.com
-ENV WORKERS_REPLICS="4"
-ENV MASTER_REPLICS="3"
-ENV CLUSTER_NAME="cluster-01"
-ENV CLUSTER_CIDR="10.254.0.0/16"
-ENV CLUSTER_SERVICE_NETWORK="172.30.0.0/16"
-ENV TIER="vsphere"
-ENV PULL_SECRET=""
-ENV OCP_SSH_KEY="cat ~/.ssh/id_rsa.pub"
+ENV BASE_DOMAIN="{{ BASE_DOMAIN }}"
+ENV WORKERS_REPLICS="{{ WORKERS_REPLICS }}"
+ENV MASTER_REPLICS="{{ MASTER_REPLICS }}"
+ENV CLUSTER_NAME="{{ CLUSTER_NAME }}"
+ENV CLUSTER_CIDR="{{ CLUSTER_CIDR }}"
+ENV CLUSTER_SERVICE_NETWORK="{{ CLUSTER_SERVICE_NETWORK }}"
+ENV TIER="{{ TIER }}"
+ENV PULL_SECRET='{{ PULL_SECRET }}'
+ENV OCP_SSH_KEY='{{ OCP_SSH_KEY }}'
 
 #vSphere variables
-ENV VCENTER_SERVER="vcenter.local"
-ENV VCENTER_USER=""
-ENV VCENTER_PASS=""
-ENV VCENTER_DC="datacenter"
-ENV VCENTER_DS="datastore"
+ENV VCENTER_SERVER="{{ VCENTER_SERVER }}"
+ENV VCENTER_USER="{{ VCENTER_USER }}"
+ENV VCENTER_PASS="{{ VCENTER_PASS }}"
+ENV VCENTER_DC="{{ VCENTER_DC }}"
+ENV VCENTER_DS="{{ VCENTER_DS }}"
 
 # Add none root user
 RUN useradd ocp${OCP_USERID}
