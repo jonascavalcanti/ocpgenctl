@@ -54,18 +54,19 @@ do
     base64 -w0 < $i.ign > $i.64
 done
 
+mkdir -p /var/www/html/ocp${OCP_USERID}/ignition
+
 echo "Downloading RHCOS to TIER ${TIER}"
 if [ ${TIER} == "vsphere" ]
 then
     cd ${OCP_USER_PATH}/shared
     rm -rf ${OCP_USER_PATH}/shared/*
     wget ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova
+    cp -rv ${OCP_USER_PATH}/shared/rhcos-4.3.0-x86_64-vmware.ova /var/www/html/ocp${OCP_USERID}/ignition
 fi
 
 echo "Initializing Apache to bastion"
-
 if [ -f ${OCP_USER_PATH}/bootstrap.ign ]
 then
-  mkdir -p /var/www/html/ocp${OCP_USERID}/ignition
   cp -rv ${OCP_USER_PATH}/bootstrap.ign /var/www/html/ocp${OCP_USERID}/ignition
 fi
