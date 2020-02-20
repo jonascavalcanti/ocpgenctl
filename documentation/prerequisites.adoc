@@ -19,6 +19,7 @@ image::images/servers-resources.png[Servers Resources]
 ### Networking requirements for user-provisioned infrastructure
 
 **All machines to all machines**
+
 image::images/networking.png[Network]
 
 ### NETWORK TOPOLOGY REQUIREMENTS
