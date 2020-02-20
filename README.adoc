@@ -1,19 +1,21 @@
+# Deploy OCP on vSphere
+
 ### Modules:
 
 link:documentation/overview.adoc[Deployment Overview]
 
 link:documentation/prerequisites.adoc[Prerequisites Preparation]
 
-link:ignition.adoc[Generating Install Files]
+link:documentation/ignition.adoc[Generating Install Files]
 
-link:vsphere-import-ova.adoc[Import OVA on vSphere]
+link:documentation/vsphere-import-ova.adoc[Import OVA on vSphere]
 
-link:deploy.adoc[Deploy Cluster on vSphere]
+link:documentation/deploy.adoc[Deploy Cluster on vSphere]
 
-link:post-deployment.adoc[Post deployment configuration]
+link:documentation/post-deployment.adoc[Post deployment configuration]
 
-link:troubleshooting.adoc[Troubleshooting tips]
+link:documentation/troubleshooting.adoc[Troubleshooting tips]
 
-link:common-further-resources.adoc[Further Resources]
+link:documentation/common-further-resources.adoc[Further Resources]
 
-link:common-workshop-links.adoc[Workshop Links]
+link:documentation/common-workshop-links.adoc[Workshop Links]

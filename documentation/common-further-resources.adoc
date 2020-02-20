@@ -1,4 +1,4 @@
-# Workshop Hands-on - Deploy OCP 4.2 on vSphere
+# Deploy OCP on vSphere
 
 Below you will find further resources for learning about OpenShift and
 running OpenShift on your own computer, as well as details about OpenShift

@@ -1,4 +1,4 @@
-# Workshop Hands-on - Deploy OCP 4.2 on vSphere
+# Deploy OCP on vSphere
 
 ### Generating Install Files
 
