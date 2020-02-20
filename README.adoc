@@ -1,8 +1,8 @@
 ### Modules:
 
-link:overview.adoc[Deployment Overview]
+link:documentation/overview.adoc[Deployment Overview]
 
-link:prerequisites.adoc[Prerequisites Preparation]
+link:documentation/prerequisites.adoc[Prerequisites Preparation]
 
 link:ignition.adoc[Generating Install Files]
 
