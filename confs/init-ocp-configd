@@ -70,3 +70,13 @@ if [ -f ${OCP_USER_PATH}/bootstrap.ign ]
 then
   cp -rv ${OCP_USER_PATH}/bootstrap.ign /var/www/html/ocp${OCP_USERID}/ignition
 fi
+
+if [ -d ${OCP_USER_PATH}/auth ]
+then
+  cp -rv ${OCP_USER_PATH}/auth ${OCP_USER_PATH}/sharedfolder/
+fi
+
+echo "Generated configurations files on your localpath"
+echo "Configurations Files: ~/ocp/sharedfolder/"
+echo "URL to access ignation and RHCOS OVA: http://${OCP_BOOTSTRAP_IGN_DNSNAME}/ocp${OCP_USERID}/ignition/"
+echo "OCP access files: ~/ocp/sharedfolder/auth"

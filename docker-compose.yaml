@@ -9,5 +9,5 @@ services:
     ports:
       - 80:80
     volumes: 
-      - ${HOME}/ocp/shared:/home/ocp3900/shared
+      - ${HOME}/ocp/sharedfolder:/home/ocp3900/sharedfolder
           

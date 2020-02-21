@@ -63,7 +63,7 @@ $ ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa
 <1> Ansible client
 
 ----
-$ cd $HOME/ocp/<repository name>
+$ cd $HOME/ocp/ocp-bootstrap-ignition
 
 $ ansible-playbook main-playbook.yaml
 
@@ -78,6 +78,15 @@ The RHCOS images might not change with every release of OpenShift Container Plat
 ## Let's confirm that our webserver is hosting the bootstrap ignition file:
 ----
 curl http://<OCP_BOOTSTRAP_IGN_DNSNAME>/ocp$GUID/ignition/bootstrap.ign
+----
+
+### Generated configurations files on your localpath"
+----
+Configurations Files: $HOME/ocp/sharedfolder"
+
+URL to access ignation and RHCOS OVA: http://${OCP_BOOTSTRAP_IGN_DNSNAME}/ocp${OCP_USERID}/ignition/"
+
+OCP access files: $HOME/ocp/sharedfolder/auth"
 ----
 
 ## References
