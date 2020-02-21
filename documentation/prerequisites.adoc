@@ -51,7 +51,7 @@ If a MAC address outside the VMware OUI is used, the cluster installation will n
 
 ##### Set your DNS spreedsheet
 
-link:documentation/spreedsheets/ocp-dns-registries.xlsx[get the XLSX]
+link:https://github.com/jonascavalcantineto/ocp-bootstrap-ignition/blob/release-v4.3-vsphere6.7U2/documentation/spreedsheets/ocp-dns-registries.xlsx[get the XLSX]
 
 [cols="5,2,3",options=header]
 |===
