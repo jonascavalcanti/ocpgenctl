@@ -14,8 +14,8 @@
 ## Set up your local environment 
 ----
 $ cd $HOME
-$ mkdir -p $HOME/ocp/share
-$ chmod 777 $HOME/ocp/share
+$ mkdir -p $HOME/ocp/sharedfolder
+$ chmod 777 $HOME/ocp/sharedfolder
 $ cd $HOME/ocp/
 $ git clone https://github.com/jonascavalcantineto/ocp-bootstrap-ignition.git
 $ cd $HOME/ocp/ocp-bootstrap-ignition
@@ -71,7 +71,7 @@ $ docker-compose up -d --build
 ----
 
 [NOTE]
-RHCOS OVA will be in the **$HOME/ocp/share** of you local machine with name **rhcos-4.3.0-x86_64-vmware.ova**
+RHCOS OVA will be in the **$HOME/ocp/sharedfolder** of you local machine with name **rhcos-4.3.0-x86_64-vmware.ova**
 
 The RHCOS images might not change with every release of OpenShift Container Platform. You must download an image with the highest version that is less than or equal to the OpenShift Container Platform version that you install. Use the image version that matches your OpenShift Container Platform version if it is available.
 

@@ -59,10 +59,10 @@ mkdir -p /var/www/html/ocp${OCP_USERID}/ignition
 echo "Downloading RHCOS to TIER ${TIER}"
 if [ ${TIER} == "vsphere" ]
 then
-    cd ${OCP_USER_PATH}/shared
-    rm -rf ${OCP_USER_PATH}/shared/*
+    cd ${OCP_USER_PATH}/sharedfolder
+    rm -rf ${OCP_USER_PATH}/sharedfolder/*
     wget ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova
-    cp -rv ${OCP_USER_PATH}/shared/rhcos-4.3.0-x86_64-vmware.ova /var/www/html/ocp${OCP_USERID}/ignition
+    cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-vmware.ova /var/www/html/ocp${OCP_USERID}/ignition
 fi
 
 echo "Initializing Apache to bastion"
