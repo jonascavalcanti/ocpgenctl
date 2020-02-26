@@ -18,39 +18,72 @@ Note 1: To save time, this OVA is has been already imported. The steps below is 
 Note 2: *NEVER, NEVER, NEVER start up the template*. The ignition process runs on first boot, so booting the template would mean any ignition files provided after that wouldn't be evaluated.
 ====
 
-Navigate to “VMs and Templates” (it’s the icon that looks like a piece of paper). From here right click on your datacenter and select New Folder → New VM and Template Folder. Name this new folder the name of your cluster id: ocp<GUID>
+1. In the vSphere Client, create a folder in your datacenter to store your VMs.
+
+    a. Click the VMs and Templates view.
+
+    b. Right-click the name of your datacenter.
+
+    c. Click New Folder → New VM and Template Folder.
+
+    d. In the window that is displayed, enter the folder name. The folder name must match the cluster name that you specified in the *install-config.yaml* file.
 
 image::images/01-vcenter-create-folder.png[Creating Folder]
 
-Next, import the OVA by right clicking the folder and select “Deploy OVF Template”. 
+2. In the vSphere Client, create a template for the OVA image.
+
+[NOTE] 
+In the following steps, you use the same template for all of your cluster machines and provide the location for the Ignition config file for that machine type when you provision the VMs.
+
+a. From the Hosts and Clusters tab, right-click your cluster’s name and click Deploy OVF Template.
 
 image::images/02-vcenter-deploy-ova.png[Deploying OVA]
 
-Add the url to RHCOS OVA (https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.2/latest/[see here]) and click on NEXT button:
+b. On the Select an OVF tab, specify the name of the RHCOS OVA file that you downloaded or Add the url to RHCOS OVA (https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.3/latest/[see here]) and click on NEXT button:
 
 image::images/03-vcenter-ova-url.png[Deploying OVA]
 
-Select the folder you created before and click on NEXT button:
+c. On the Select a name and folder tab, set a Virtual machine name, such as RHCOS, click the name of your vSphere cluster, and select the folder you created in the previous step.
 
 image::images/04-vcenter-ova-folder.png[Deploying OVA]
 
-Select the compute resource and click on NEXT button:
+d. On the Select a compute resource tab, click the name of your vSphere cluster.
 
 image::images/05-vcenter-ova-compute.png[Deploying OVA]
 
-Select the datastore you filled in the installation conf file:
+e. On the Select storage tab, configure the storage options for your VM.
+
+    * Select Thin Provision.
+
+    * Select the datastore that you specified in your *install-config.yaml* file.
 
 image::images/06-vcenter-ova-storage.png[Deploying OVA]
 
-Select the network and click on NEXT button:
+f. On the Select network tab, specify the network that you configured for the cluster, if available.
 
 image::images/07-vcenter-ova-network.png[Deploying OVA]
 
-Don't fill anything yet (these parameters will be filled further). Click NEXT.
+g. If you plan to use the same template for all cluster machine types, do not specify values on the Customize template tab.
 
+    * Don't fill anything yet (these parameters will be filled further). Click NEXT.
+    
 image::images/08-vcenter-ova-template.png[Deploying OVA]
 
-Click em Finish in the next screen
+    * Click em Finish in the next screen
 
 image::images/09-vcenter-ova-finish.png[Deploying OVA]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
