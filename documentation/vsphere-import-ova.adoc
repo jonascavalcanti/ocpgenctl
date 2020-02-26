@@ -1,6 +1,4 @@
-# Deploy OCP on vSphere
-
-### Import OVA on vSphere
+# Import OVA on vSphere
 
 Access the vCenter web ui:
 ----
