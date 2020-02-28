@@ -63,6 +63,9 @@ then
     rm -rf ${OCP_USER_PATH}/sharedfolder/*
     wget ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova
     cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-vmware.ova /var/www/html/ocp${OCP_USERID}/ignition
+
+    echo "Copy generated files .64 to ${OCP_USER_PATH}/sharedfolder/"
+    cp -rv ${OCP_USER_PATH}/*.64  ${OCP_USER_PATH}/sharedfolder/
 fi
 
 echo "Initializing Apache to bastion"
