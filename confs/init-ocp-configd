@@ -1,7 +1,8 @@
 #!/bin/bash
 
 OCP_LATEST_VERSION=$(curl -s ${OCP_BASEURL}/release.txt | grep 'Version: ' | awk '{print $2}')
-
+OCP_API="api api-int"
+OCP_APPS='*.apps'
 echo "------------------!!Listing configured DNS names!!------------------"
 echo "###########################"
 for nodeName in ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${WORKERS_DNS_NAMES}
@@ -24,15 +25,15 @@ do
   fi
   sleep 2
   echo "------------------Testing $nodeType nodes dns names------------------"
-  for node in $nodes; do
-    echo "Testing $node.${CLUSTER_NAME}.${BASE_DOMAIN}"
-    IP=`dig $node.${CLUSTER_NAME}.${BASE_DOMAIN} +short`
+  for nodeName in $OCP_API $OCP_APPS $nodes; do
+    echo "Testing $nodeName.${CLUSTER_NAME}.${BASE_DOMAIN}"
+    IP=`dig $nodeName.${CLUSTER_NAME}.${BASE_DOMAIN} +short`
     if [ "$IP" != "" ]
     then
       echo "OK"
     else
       echo "----------------------------------------------------------------------------"
-      echo "!!DNS $node.${CLUSTER_NAME}.${BASE_DOMAIN} is not configured!!"
+      echo "!!DNS $nodeName.${CLUSTER_NAME}.${BASE_DOMAIN} is not configured!!"
       echo "!!For proceed the installation you need to configure all DNS listed before!!"
       echo "----------------------------------------------------------------------------"
       exit 1

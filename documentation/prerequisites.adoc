@@ -121,32 +121,6 @@ link:https://github.com/jonascavalcantineto/ocp-bootstrap-ignition/blob/release-
 
 *_DNS Settings:_ Example*
 ----
-[user0@infra-services ~]$ sudo cat /etc/named.conf
-acl internal_nets { 10.0.0.0/16; };
-options {
-listen-on port 53 { 127.0.0.1; 10.0.0.5; };
-listen-on-v6 port 53 { none; };
-directory "/var/named";
-dump-file "/var/named/data/cache_dump.db";
-statistics-file "/var/named/data/named_stats.txt";
-memstatistics-file "/var/named/data/named_mem_stats.txt";
-secroots-file "/var/named/data/named.secroots";
-(...)
-zone "ocp1.rhbr-labs.com" {
-type master;
-file "ocp1.rhbr-labs.com.zone";
-allow-query { any; };
-allow-transfer { none; };
-allow-update { none; };
-};
-zone "1.0.10.in-addr.arpa" {
-type master;
-file "1.0.10.in-addr.arpa.zone";
-allow-query { any; };
-allow-transfer { none; };
-allow-update { none; };
-};
-
 [user0@infra-services ~]# sudo cat /var/named/ocp.rhbr-labs.com.zone 
 $ORIGIN .
 $TTL 3600	; 1 hour
@@ -166,6 +140,7 @@ $ORIGIN ocp1.etice.corp.
 lb		CNAME		host30.ocp.rhbr-labs.com.
 api		CNAME		host30.ocp.rhbr-labs.com.
 api-int		CNAME		host30.ocp.rhbr-labs.com.
+*.api		CNAME		host30.ocp.rhbr-labs.com.
 master-0	A		192.168.0.110
 master-1	A		192.168.0.111
 master-2	A		192.168.0.112
@@ -180,7 +155,6 @@ bootstrap	A		192.168.0.155
 _etcd-server-ssl._tcp		SRV		0		10		2380	 etcd-0	
 _etcd-server-ssl._tcp		SRV     0       10      2380     etcd-1
 _etcd-server-ssl._tcp		SRV     0       10      2380     etcd-2
-
 
 
 [user0@infra-services ~]# sudo cat /var/named/0.168.192.in-addr.arpa
@@ -214,10 +188,10 @@ $ORIGIN 3.26.172.in-addr.arpa.
 default-lease-time 900;
 max-lease-time 7200;
 subnet 10.0.0.0 netmask 255.255.0.0 {
-option routers 10.0.0.2;
-option subnet-mask 255.255.0.0;
-option domain-name-servers 10.0.0.5;
-next-server 10.0.0.5;
+	option routers 10.0.0.2;
+	option subnet-mask 255.255.0.0;
+	option domain-name-servers 10.0.0.5;
+	next-server 10.0.0.5;
 }
 
 #### CLUSTER OCP
