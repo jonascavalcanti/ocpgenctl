@@ -3,6 +3,7 @@
 OCP_LATEST_VERSION=$(curl -s ${OCP_BASEURL}/release.txt | grep 'Version: ' | awk '{print $2}')
 OCP_API="api api-int"
 OCP_APPS='*.apps'
+
 echo "------------------!!Listing configured DNS names!!------------------"
 echo "###########################"
 for nodeName in ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${WORKERS_DNS_NAMES}
@@ -20,6 +21,18 @@ do
   elif [ $nodeType == "etcds" ]
   then
     nodes=${ETCD_DNS_NAMES}
+    echo "Testing SRV _etcd-server-ssl._tcp.${CLUSTER_NAME}.${BASE_DOMAIN}"
+    IP=`dig _etcd-server-ssl._tcp.${CLUSTER_NAME}.${BASE_DOMAIN} SRV +short`
+    if [ "$IP" != "" ]
+    then
+      echo "OK"
+    else
+      echo "----------------------------------------------------------------------------"
+      echo "!!DNS _etcd-server-ssl._tcp.${CLUSTER_NAME}.${BASE_DOMAIN} is not configured!!"
+      echo "!!For proceed the installation you need to configure all DNS listed before!!"
+      echo "----------------------------------------------------------------------------"
+      exit 1
+    fi
   else
     nodes=${WORKERS_DNS_NAMES}
   fi
