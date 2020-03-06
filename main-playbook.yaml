@@ -1,12 +1,15 @@
 ---
 - hosts: localhost
   vars:
-    BASE_DOMAIN: mycompany.com
+    BASE_DOMAIN: etice.corp
     OCP_USERID: 3900
-    OCP_BOOTSTRAP_IGN_DNSNAME: bastion.mycompany.com
+    OCP_BOOTSTRAP_IGN_DNSNAME: bootstrap
     WORKERS_REPLICS: 4
+    WORKERS_DNS_NAMES: "worker-0 worker-1 worker-2 worker-3"
     MASTER_REPLICS: 3
-    CLUSTER_NAME: cluster1
+    MASTERS_DNS_NAMES: "master-0 master-1 master-2"
+    ETCD_DNS_NAMES: "etcd-0 etcd-1 etcd-2"
+    CLUSTER_NAME: ocp1
     CLUSTER_CIDR: "10.254.0.0/16"
     CLUSTER_SERVICE_NETWORK: "172.30.0.0/16"
     TIER: vsphere

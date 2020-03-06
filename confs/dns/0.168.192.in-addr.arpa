@@ -1,0 +1,20 @@
+$ORIGIN .
+$TTL 3600	; 1 hour
+3.26.172.in-addr.arpa	IN SOA	ns1.example.com. netmaster.example.com. (
+				2020030501 ; serial
+				86400      ; refresh (1 day)
+				3600       ; retry (1 hour)
+				86400      ; expire (1 day)
+				3600       ; minimum (1 hour)
+				)
+			NS	ns1.example.com.
+			NS	ns2.example.com.
+			NS	ns3.example.com.
+$ORIGIN 3.26.172.in-addr.arpa.
+110		PTR	master-0.ocp1.example.com.
+111		PTR	master-1.ocp1.example.com.
+112		PTR	master-2.ocp1.example.com.
+113		PTR	worker-0.ocp1.example.com.
+114		PTR	worker-1.ocp1.example.com.
+115		PTR	worker-2.ocp1.example.com.
+116		PTR	worker-3.ocp1.example.com.

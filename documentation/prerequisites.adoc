@@ -119,7 +119,7 @@ link:https://github.com/jonascavalcantineto/ocp-bootstrap-ignition/blob/release-
 |2380 etcd-2.<cluster_name>.<base_domain>.
 |===
 
-*_DNS Settings:_*
+*_DNS Settings:_ Example*
 ----
 [user0@infra-services ~]$ sudo cat /etc/named.conf
 acl internal_nets { 10.0.0.0/16; };
@@ -147,51 +147,63 @@ allow-transfer { none; };
 allow-update { none; };
 };
 
-[user0@infra-services ~]# sudo cat /var/named/ocp1.rhbr-labs.com.zone 
-$TTL    604800
-@       IN      SOA     infra-services.ocp1.rhbr-labs.com. admin.ocp1.rhbr-labs.com. (
-            3       ; Serial
-            604800     ; Refresh
-            86400     ; Retry
-            2419200     ; Expire
-            604800 )   ; Negative Cache TTL
-;
-; name servers - NS records
-    IN      NS      infra-services.ocp1.rhbr-labs.com.
+[user0@infra-services ~]# sudo cat /var/named/ocp.rhbr-labs.com.zone 
+$ORIGIN .
+$TTL 3600	; 1 hour
+etice.corp		IN SOA	ns1.ocp.rhbr-labs.com. netmaster.ocp.rhbr-labs.com. (
+				2020030501 ; serial
+				86400      ; refresh (1 day)
+				3600       ; retry (1 hour)
+				86400      ; expire (1 day)
+				3600       ; minimum (1 hour)
+				)
+			NS	ns2.ocp.rhbr-labs.com.
+			NS	ns3.ocp.rhbr-labs.com.
+			NS	ns1.ocp.rhbr-labs.com.
+$ORIGIN etice.corp.
+;CLUSTER-01 K8S
+$ORIGIN ocp1.etice.corp.
+lb		CNAME		host30.ocp.rhbr-labs.com.
+api		CNAME		host30.ocp.rhbr-labs.com.
+api-int		CNAME		host30.ocp.rhbr-labs.com.
+master-0	A		192.168.0.110
+master-1	A		192.168.0.111
+master-2	A		192.168.0.112
+worker-0	A		192.168.0.113
+worker-1	A		192.168.0.114
+worker-2	A		192.168.0.115
+worker-4	A		192.168.0.116
+etcd-0		A		192.168.0.110	
+etcd-1		A		192.168.0.111
+etcd-2		A		192.168.0.112
+bootstrap	A		192.168.0.155
+_etcd-server-ssl._tcp		SRV		0		10		2380	 etcd-0	
+_etcd-server-ssl._tcp		SRV     0       10      2380     etcd-1
+_etcd-server-ssl._tcp		SRV     0       10      2380     etcd-2
 
 
-; name servers - A records
 
-infra-services IN A 10.0.0.5
-bootstrap-0 IN A 10.0.1.100
-master-0 IN A 10.0.1.101
-worker-0 IN A 10.0.1.102
-api IN A 10.0.0.5
-api-int IN A 10.0.0.5
-apps IN A 10.0.0.5
-*.apps IN A 10.0.0.5
-etcd-0 IN A 10.0.1.101
-
-; The SRV records ...note the trailing dot at the end.
-_etcd-server-ssl._tcp IN SRV 0 10 2380 etcd-0.ocp1.rhbr-labs.com.
-
-
-[user0@infra-services ~]# sudo cat /var/named/1.0.10.in-addr.arpa.zone 
-$TTL    604800
-@       IN      SOA     infra-services.rhbr-labs.com. admin.rhbr-labs.com. (
-                        3         ; Serial
-                        604800         ; Refresh
-                        86400         ; Retry
-                        2419200         ; Expire
-                        604800 )       ; Negative Cache TTL
-; name servers
-    IN      NS      infra-services.rhbr-labs.com.
-
-
-; PTR Records
-100 IN PTR bootstrap-0.ocp1.rhbr-labs.com.
-101 IN PTR master-0.ocp1.rhbr-labs.com.
-102 IN PTR worker-0.ocp1.rhbr-labs.com.
+[user0@infra-services ~]# sudo cat /var/named/0.168.192.in-addr.arpa
+$ORIGIN .
+$TTL 3600	; 1 hour
+3.26.172.in-addr.arpa	IN SOA	ns1.ocp.rhbr-labs.com. netmaster.ocp.rhbr-labs.com. (
+				2020030501 ; serial
+				86400      ; refresh (1 day)
+				3600       ; retry (1 hour)
+				86400      ; expire (1 day)
+				3600       ; minimum (1 hour)
+				)
+			NS	ns1.ocp.rhbr-labs.com.
+			NS	ns2.ocp.rhbr-labs.com.
+			NS	ns3.ocp.rhbr-labs.com.
+$ORIGIN 3.26.172.in-addr.arpa.
+110		PTR	master-0.ocp1.ocp.rhbr-labs.com.
+111		PTR	master-1.ocp1.ocp.rhbr-labs.com.
+112		PTR	master-2.ocp1.ocp.rhbr-labs.com.
+113		PTR	worker-0.ocp1.ocp.rhbr-labs.com.
+114		PTR	worker-1.ocp1.ocp.rhbr-labs.com.
+115		PTR	worker-2.ocp1.ocp.rhbr-labs.com.
+116		PTR	worker-3.ocp1.ocp.rhbr-labs.com.
 
 ----
 
@@ -210,14 +222,14 @@ next-server 10.0.0.5;
 
 #### CLUSTER OCP
 host bootstrap-0 {
-hardware ethernet 00:50:56:01:00:01;
-fixed-address 10.0.0.100;
-option host-name "bootstrap-0.ocp.rhbr-labs.com";
+    hardware ethernet 00:50:56:01:00:01;
+    fixed-address 10.0.0.100;
+    option host-name "bootstrap-0.ocp.rhbr-labs.com";
 }
 host master-0 {
-hardware ethernet 00:50:56:01:00:02;
-fixed-address 10.0.0.101;
-option host-name "master-0.ocp.rhbr-labs.com";
+    hardware ethernet 00:50:56:01:00:02;
+    fixed-address 10.0.0.101;
+    option host-name "master-0.ocp.rhbr-labs.com";
 }
 (...)
 ----
