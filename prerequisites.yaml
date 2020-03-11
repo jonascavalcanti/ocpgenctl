@@ -3,7 +3,7 @@
   vars:
     BASE_DOMAIN: jdhlab.corp
     OCP_USERID: 3900
-    OCP_BOOTSTRAP_IGN_DNSNAME: bootstrap
+    OCP_BOOTSTRAP_IGN_DNSNAME: bastion1
     WORKERS_REPLICS: 4
     WORKERS_DNS_NAMES: "worker1 worker2 worker3 worker4"
     MASTER_REPLICS: 3
