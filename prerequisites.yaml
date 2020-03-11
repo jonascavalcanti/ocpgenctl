@@ -9,7 +9,7 @@
     MASTER_REPLICS: 3
     MASTERS_DNS_NAMES: "master-0 master-1 master-2"
     ETCD_DNS_NAMES: "etcd-0 etcd-1 etcd-2"
-    CLUSTER_NAME: ocp1
+    CLUSTER_NAME: ocp
     CLUSTER_CIDR: "10.254.0.0/16"
     CLUSTER_SERVICE_NETWORK: "172.30.0.0/16"
     TIER: vsphere
