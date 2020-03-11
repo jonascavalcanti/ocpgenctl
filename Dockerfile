@@ -11,10 +11,11 @@ RUN yum update -y && yum install -y \
         httpd \
         sudo \
         bind-utils \
+        ansible \
 		supervisor
 
 #OCP variables
-ENV OCP_VERSION="4.3"
+ENV OCP_VERSION="3.11"
 ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest"
 ENV OCP_BOOTSTRAP_IGN_DNSNAME="bootstrap"
 
@@ -24,7 +25,7 @@ ENV OCP_USERID=3900
 ENV OCP_USER_PATH="/home/ocp${OCP_USERID}"
 
 #Cluster variables
-ENV BASE_DOMAIN="etice.corp"
+ENV BASE_DOMAIN="jdhlab.corp"
 ENV CLUSTER_NAME="ocp1"
 ENV CLUSTER_CIDR="10.254.0.0/16"
 ENV CLUSTER_SERVICE_NETWORK="172.30.0.0/16"
@@ -32,7 +33,7 @@ ENV TIER="vsphere"
 
 #OCP variables
 ENV WORKERS_REPLICS="4"
-ENV WORKERS_DNS_NAMES="worker-0 worker-1 worker-2 worker-3"
+ENV WORKERS_DNS_NAMES="worker1 worker2 worker3 worker4"
 ENV MASTER_REPLICS="3"
 ENV MASTERS_DNS_NAMES="master-0 master-1 master-2"
 ENV ETCD_DNS_NAMES="etcd-0 etcd-1 etcd-2"
@@ -56,6 +57,9 @@ RUN set -ex \
 ADD confs/supervisord.conf /etc/supervisord.conf
 
 ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
+
+ADD confs/hosts /etc/ansible/hosts
+ADD confs/playbook-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/playbook-prepare-nodes.yaml
 
 ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
 ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub

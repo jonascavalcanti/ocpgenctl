@@ -1,0 +1,4 @@
+[masters]
+master1.ocp.jdhlab.corp
+[workers]
+worker[1:4].ocp.jdhlab.corp

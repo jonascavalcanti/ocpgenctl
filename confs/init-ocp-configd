@@ -50,10 +50,20 @@ do
   done
 done
 
-exit 55
-
 echo "Setting permission to $(whoami) user "
 sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R
+
+exit 1
+
+echo "Preparing Nodes to OCP ${OCP_VERSION}"
+ansible-playbook -f ${OCP_USER_PATH}/playbooks
+
+
+
+
+
+
+
 
 echo "Downloading openshift-install cli"
 if [ ! -f ${OCP_USER_PATH}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz ]

@@ -1,0 +1,38 @@
+---
+- hosts: 
+    - masters
+    - workers
+  vars:
+    USERNAME: 'jonas.cavalcanti@goldentechnologia.com.br'
+    PASSWORD: 'J7b9c1n1!'
+    PACKAGES: ['vim', 'telnet', 'bind-utils']
+  tasks:
+    - name: Register as user "{{ USERNAME }}" with password "{{ PASSWORD }}" and auto-subscribe to available content.
+      redhat_subscription:
+        state: present
+        username: "{{ USERNAME }}"
+        password: "{{ PASSWORD }}"
+        #auto_attach: true
+
+    - name: Ensure SELinux is set to enforcing mode
+      lineinfile:
+        path: /etc/selinux/config
+        regexp: '^SELINUX='
+        line: SELINUX=enforcing
+
+    - name: install network packages
+      yum:
+        name: "{{ PACKAGES }}"
+        state: present
+    
+    - name: Insert/Update NM_CONTROLLED and PEERDNS
+      blockinfile:
+        path: /etc/sysconfig/network-scripts/ifcfg-{{ ansible_default_ipv4.interface }}
+        block: |
+          NM_CONTROLLED=yes
+          PEERDNS=yes
+    - name: Enable Firewall
+      service:
+        name: firewalld 
+        state: started 
+        enabled: "true"

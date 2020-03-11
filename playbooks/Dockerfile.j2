@@ -11,10 +11,11 @@ RUN yum update -y && yum install -y \
         httpd \
         sudo \
         bind-utils \
+        ansible \
 		supervisor
 
 #OCP variables
-ENV OCP_VERSION="4.3"
+ENV OCP_VERSION="3.11"
 ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest"
 ENV OCP_BOOTSTRAP_IGN_DNSNAME="{{ OCP_BOOTSTRAP_IGN_DNSNAME }}"
 
@@ -56,6 +57,9 @@ RUN set -ex \
 ADD confs/supervisord.conf /etc/supervisord.conf
 
 ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
+
+ADD confs/hosts /etc/ansible/hosts
+ADD confs/playbook-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/playbook-prepare-nodes.yaml
 
 ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
 ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub

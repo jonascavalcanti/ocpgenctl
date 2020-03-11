@@ -1,11 +1,11 @@
 ---
 - hosts: localhost
   vars:
-    BASE_DOMAIN: etice.corp
+    BASE_DOMAIN: jdhlab.corp
     OCP_USERID: 3900
     OCP_BOOTSTRAP_IGN_DNSNAME: bootstrap
     WORKERS_REPLICS: 4
-    WORKERS_DNS_NAMES: "worker-0 worker-1 worker-2 worker-3"
+    WORKERS_DNS_NAMES: "worker1 worker2 worker3 worker4"
     MASTER_REPLICS: 3
     MASTERS_DNS_NAMES: "master-0 master-1 master-2"
     ETCD_DNS_NAMES: "etcd-0 etcd-1 etcd-2"
