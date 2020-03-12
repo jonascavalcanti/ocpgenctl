@@ -7,6 +7,7 @@ RUN yum update -y && yum install -y \
         vim \
         curl \
         openssh \
+        openssh-client \
         wget \
         httpd \
         sudo \
