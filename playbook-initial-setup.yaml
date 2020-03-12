@@ -2,6 +2,7 @@
 - hosts: localhost
   vars:
     BASE_DOMAIN: etice.corp
+    OCP_VERSION: "4.3"
     OCP_USERID: 3900
     OCP_BOOTSTRAP_IGN_DNSNAME: bootstrap
     WORKERS_REPLICS: 4
@@ -9,6 +10,7 @@
     MASTER_REPLICS: 3
     MASTERS_DNS_NAMES: "master-0 master-1 master-2"
     ETCD_DNS_NAMES: "etcd-0 etcd-1 etcd-2"
+    isNodesWithDHCP: "false"
     CLUSTER_NAME: ocp1
     CLUSTER_CIDR: "10.254.0.0/16"
     CLUSTER_SERVICE_NETWORK: "172.30.0.0/16"
