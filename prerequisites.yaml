@@ -3,11 +3,12 @@
   vars:
     BASE_DOMAIN: jdhlab.corp
     OCP_USERID: 3900
+    OCP_VERSION: "3.11"
     OCP_BOOTSTRAP_IGN_DNSNAME: bastion1
     WORKERS_REPLICS: 4
     WORKERS_DNS_NAMES: "worker1 worker2 worker3 worker4"
     MASTER_REPLICS: 3
-    MASTERS_DNS_NAMES: "master-0 master-1 master-2"
+    MASTERS_DNS_NAMES: "master1"
     ETCD_DNS_NAMES: "etcd-0 etcd-1 etcd-2"
     CLUSTER_NAME: ocp
     CLUSTER_CIDR: "10.254.0.0/16"
