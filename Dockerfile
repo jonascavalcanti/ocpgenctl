@@ -63,6 +63,11 @@ ADD confs/playbook-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/playbook-prepar
 
 ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
 ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
+RUN set -ex \
+            && chmod 700 ~/.ssh \
+            && chmod 644 ~/.ssh/known_hosts \
+            && chmod 600 ~/.ssh/id_rsa \
+            && chmod 644 ~/.ssh/id_rsa.pub
 
 RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
 RUN chown ocp${OCP_USERID} /var/www/html -R
