@@ -55,11 +55,10 @@ done
 echo "Setting permission to $(whoami) user "
 sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R
 
-exit 1
-
 echo "Preparing Nodes to OCP ${OCP_VERSION}"
 ansible-playbook -f ${OCP_USER_PATH}/playbooks
 
+exit 1
 
 
 
