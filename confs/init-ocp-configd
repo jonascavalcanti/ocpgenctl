@@ -35,7 +35,7 @@ do
   elif [ $nodeType == "etcds" ]
   then
     nodes=${ETCD_DNS_NAMES}
-    nodeName="_etcd-server-ssl._tcp."
+    nodeName="_etcd-server-ssl._tcp"
     echo "Testing SRV ${nodeName}.${CLUSTER_NAME}.${BASE_DOMAIN}"
     IP=`dig ${nodeName}.${CLUSTER_NAME}.${BASE_DOMAIN} SRV +short`
     test_dns_to_ip
