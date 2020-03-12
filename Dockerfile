@@ -57,7 +57,7 @@ RUN set -ex \
 
 ADD confs/supervisord.conf /etc/supervisord.conf
 
-ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
+#ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
 
 ADD confs/hosts /etc/ansible/hosts
 ADD confs/playbook-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/playbook-prepare-nodes.yaml

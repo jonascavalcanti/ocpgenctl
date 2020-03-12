@@ -31,6 +31,16 @@
         block: |
           NM_CONTROLLED=yes
           PEERDNS=yes
+
+    - name: Setting swap to off
+      blockinfile:
+        path: /etc/bashrc
+        block: |
+          swapoff -a
+
+    - name: Diable swap on OS
+      command: swapoff -a 
+      
     - name: Enable Firewall
       service:
         name: firewalld 
