@@ -1,4 +1,4 @@
-FROM centos:8
+FROM centos:7.7.1908
 
 RUN yum update -y && yum install -y \
 		epel-release
@@ -66,7 +66,6 @@ ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
 ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
 RUN set -ex \
             && chmod 700 ${OCP_USER_PATH}/.ssh \
-            && chmod 644 ${OCP_USER_PATH}/.ssh/known_hosts \
             && chmod 600 ${OCP_USER_PATH}/.ssh/id_rsa \
             && chmod 644 ${OCP_USER_PATH}/.ssh/id_rsa.pub
 
