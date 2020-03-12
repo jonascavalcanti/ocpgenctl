@@ -59,11 +59,12 @@ ADD confs/supervisord.conf /etc/supervisord.conf
 
 #ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
 
-ADD confs/hosts /etc/ansible/hosts
-ADD confs/playbook-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/playbook-prepare-nodes.yaml
+#Ansible Configurations
+ADD confs/ansible/hosts /etc/ansible/hosts
+ADD confs/ansible/playbook-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/playbook-prepare-nodes.yaml
+ADD confs/ansible/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
 
-ADD confs/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
-
+#SSH Configurations
 ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
 ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
 RUN set -ex \
