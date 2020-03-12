@@ -1,9 +1,9 @@
 version: '3.7'
 services:
-  ocp-bootstrap-ignition:
+  ocp-bootstrap:
     build: .
-    container_name: ocp-bootstrap-ignition
-    hostname: ocp-bootstrap-ignition
+    container_name: ocp-bootstrap
+    hostname: ocp-bootstrap
     restart: always
     network_mode: host
     ports:
