@@ -44,6 +44,8 @@ checking_cluster_dns_nodes_names() {
       echo "[DNS OK] - ${node}.${CLUSTER_NAME}.${BASE_DOMAIN}"
     else
       echo "[DNS FAIL] - ${node}.${CLUSTER_NAME}.${BASE_DOMAIN}"
+      echo "It is need to configurate DNS Names"
+      exit 1
     fi  
   done
   echo "------------------END checking_cluster_dns_nodes_names---------------------"
@@ -68,9 +70,13 @@ downloading_installers(){
     if [ "${isNodesWithDHCP}" == "false" ]
     then
       echo "Enviroment without DHCP server to Nodes"
-      echo "Downloading ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-metal.raw.gz"
+      echo "Downloading RHCOS Bare Metal Fle ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-metal.raw.gz"
       curl ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-metal.raw.gz -o ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-metal.raw.gz -#
       cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-metal.raw.gz /var/www/html/ocp${OCP_USERID}/ignition
+
+      echo "Downloading RHCOS ISO Fle ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-metal.raw.gz"
+      curl ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-installer.iso -o ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-installer.iso -#
+      cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-installer.iso /var/www/html/ocp${OCP_USERID}/ignition
     fi
   fi
 
@@ -135,22 +141,27 @@ configuring_webserver_nginx(){
 }
 
 copying_configurations_to_shared_folder(){
+  if [ ! -f ${OCP_USER_PATH}/sharedfolder/configurations.txt ]
+  then
+    cd ${OCP_USER_PATH}/sharedfolder
+    rm -rf ${OCP_USER_PATH}/sharedfolder/*
 
-  cd ${OCP_USER_PATH}/sharedfolder
-  rm -rf ${OCP_USER_PATH}/sharedfolder/*
+    echo "Copy generated files .64 to ${OCP_USER_PATH}/sharedfolder/"
+    cp -rv ${OCP_USER_PATH}/*.64 ${OCP_USER_PATH}/auth ${OCP_USER_PATH}/sharedfolder/
 
-  echo "Copy generated files .64 to ${OCP_USER_PATH}/sharedfolder/"
-  cp -rv ${OCP_USER_PATH}/*.64 ${OCP_USER_PATH}/auth ${OCP_USER_PATH}/sharedfolder/
+    echo "Instalation Information----------" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
+    echo "Files configurated on: ~/ocp/sharedfolder/" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
+    echo "URL to access ignation and RHCOS OVA: http://${OCP_BOOTSTRAP_IGN_DNSNAME}.${CLUSTER_NAME}.${BASE_DOMAIN}/ocp${OCP_USERID}/ignition/" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
+    echo "Openshift credentials files: ~/ocp/sharedfolder/auth" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
+    list_cluster_nodes_names >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
+    echo "--------------------------------" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
+  else
+    echo "There is configuration files on path: ${OCP_USER_PATH}/sharedfolder/"
+    echo "!!You need delete and running again for create the Openshift Enviroment!!"
+  fi
 
-  echo "Instalation Information----------" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-  echo "Files configurated on: ~/ocp/sharedfolder/" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-  echo "URL to access ignation and RHCOS OVA: http://${OCP_BOOTSTRAP_IGN_DNSNAME}.${CLUSTER_NAME}.${BASE_DOMAIN}/ocp${OCP_USERID}/ignition/" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-  echo "Openshift credentials files: ~/ocp/sharedfolder/auth" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-  list_cluster_nodes_names >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-  echo "--------------------------------" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-
+  echo "Following the configurations of the Cluster OCP below:"
   cat ${OCP_USER_PATH}/sharedfolder/configurations.txt
-
 }
 
 checking_cluster_dns_nodes_names
