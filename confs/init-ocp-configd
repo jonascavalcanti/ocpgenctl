@@ -3,7 +3,7 @@
 OCP_LATEST_VERSION=$(curl -s ${OCP_BASEURL}/release.txt | grep 'Version: ' | awk '{print $2}')
 OCP_API="api api-int"
 OCP_APPS='*.apps'
-nodes="_etcd-server-ssl._tcp ${OCP_BOOTSTRAP_IGN_DNSNAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${WORKERS_DNS_NAMES}"
+nodes="_etcd-server-ssl._tcp ${OCP_CLUSTER_INSTALLER_NAME} ${OCP_BOOTSTRAP_IGN_DNSNAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${WORKERS_DNS_NAMES}"
 
 
 echo "Setting permission to $(whoami) user "
@@ -104,7 +104,7 @@ generate_ignitions_files(){
       "config": {
         "append": [
           {
-            "source": "http://${OCP_BOOTSTRAP_IGN_DNSNAME}.${CLUSTER_NAME}.${BASE_DOMAIN}/ocp${OCP_USERID}/ignition/bootstrap.ign",
+            "source": "http://${OCP_CLUSTER_INSTALLER_NAME}.${CLUSTER_NAME}.${BASE_DOMAIN}/ocp${OCP_USERID}/ignition/bootstrap.ign",
             "verification": {}
           }
         ]
