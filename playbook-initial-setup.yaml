@@ -5,6 +5,7 @@
     OCP_VERSION: "4.3"
     OCP_USERID: 3900
     OCP_CLUSTER_INSTALLER_NAME: installer
+    OCP_WEBSERVER_IP: 172.26.2.155
     OCP_BOOTSTRAP_IGN_DNSNAME: bootstrap
     WORKERS_REPLICS: 4
     WORKERS_DNS_NAMES: "worker-0 worker-1 worker-2 worker-3"

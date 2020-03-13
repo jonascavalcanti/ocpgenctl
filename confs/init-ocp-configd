@@ -104,7 +104,7 @@ generate_ignitions_files(){
       "config": {
         "append": [
           {
-            "source": "http://${OCP_CLUSTER_INSTALLER_NAME}.${CLUSTER_NAME}.${BASE_DOMAIN}/ocp${OCP_USERID}/ignition/bootstrap.ign",
+            "source": "http://${OCP_WEBSERVER_IP}/ocp${OCP_USERID}/ignition/bootstrap.ign",
             "verification": {}
           }
         ]
@@ -151,7 +151,7 @@ copying_configurations_to_shared_folder(){
 
     echo "Instalation Information----------" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
     echo "Files configurated on: ~/ocp/sharedfolder/" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-    echo "URL to access ignation and RHCOS OVA: http://${OCP_BOOTSTRAP_IGN_DNSNAME}.${CLUSTER_NAME}.${BASE_DOMAIN}/ocp${OCP_USERID}/ignition/" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
+    echo "URL to access ignation and RHCOS OVA: http://${OCP_WEBSERVER_IP}/ocp${OCP_USERID}/ignition/" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
     echo "Openshift credentials files: ~/ocp/sharedfolder/auth" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
     list_cluster_nodes_names >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
     echo "--------------------------------" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
