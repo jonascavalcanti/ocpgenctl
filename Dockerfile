@@ -16,7 +16,9 @@ RUN yum update -y && yum install -y \
 #OCP variables
 ENV OCP_VERSION="4.3"
 ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest"
+ENV OCP_CLUSTER_INSTALLER_NAME="installer"
 ENV OCP_BOOTSTRAP_IGN_DNSNAME="bootstrap"
+ENV OCP_WEBSERVER_IP="172.26.2.155"
 
 ENV RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}/latest"
 
@@ -66,6 +68,9 @@ RUN chown ocp${OCP_USERID} /var/www/html -R
 
 ADD confs/init-ocp-configd /init-ocp-configd
 RUN chmod +x /init-ocp-configd && /usr/bin/chown ocp${OCP_USERID} /init-ocp-configd
+
+ADD confs/ocspray.sh /ocspray.sh
+RUN chmod +x /ocspray.sh && /usr/bin/chown ocp${OCP_USERID} /ocspray.sh
 
 ADD confs/init-httpd /init-httpd 
 RUN chmod +x /init-httpd 
