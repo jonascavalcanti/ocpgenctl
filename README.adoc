@@ -8,7 +8,9 @@ link:documentation/prerequisites.adoc[Prerequisites Preparation]
 
 link:documentation/ignition.adoc[Generating Install Files]
 
-link:documentation/vsphere-import-ova.adoc[Import OVA on vSphere]
+link:documentation/vsphere-import-ova-with-dhcp.adoc[Import OVA on vSphere]
+
+link:documentation/vsphere-import-iso-with-no-dhcp.adoc[Import OVA on vSphere]
 
 link:documentation/deploy.adoc[Deploy Cluster on vSphere]
 
