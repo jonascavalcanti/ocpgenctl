@@ -127,6 +127,7 @@ EOF
 
   echo "Copy ${OCP_USER_PATH}/*.ign to WebServer"
   cp -rv ${OCP_USER_PATH}/*.ign /var/www/html/ocp${OCP_USERID}/ignition
+  cp -rv ${OCP_USER_PATH}/*.64 /var/www/html/ocp${OCP_USERID}/ignition
 
   echo "------------------END generate_ignitions_files------------------------"
 }
