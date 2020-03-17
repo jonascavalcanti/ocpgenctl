@@ -5,18 +5,12 @@ OCP_API="api api-int"
 OCP_APPS='*.apps'
 nodes="_etcd-server-ssl._tcp ${OCP_CLUSTER_INSTALLER_NAME} ${OCP_BOOTSTRAP_IGN_DNSNAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${WORKERS_DNS_NAMES}"
 
-echo "Generating ssh keys"
-ssh-keygen -t rsa -b 4096 -N '' -f ${OCP_USER_PATH}/.ssh/id_rsa
+echo "Enable SSH KEYS"
 eval "$(ssh-agent -s)"
-chmod 700  ${OCP_USER_PATH}/.ssh
-chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa
-chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
 ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
 
 echo "Setting permission to $(whoami) user "
 sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R
-
-        
 
 ifFQDNisActive(){
   if [ ${node} == "_etcd-server-ssl._tcp" ]

@@ -63,8 +63,13 @@ ADD confs/supervisord.conf /etc/supervisord.conf
 
 ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
 
-#ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
-#ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
+ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
+ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
+
+RUN set -x \
+        && chmod 700  ${OCP_USER_PATH}/.ssh \
+        && chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa \
+        && chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
 
 RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
 RUN chown ocp${OCP_USERID} /var/www/html -R
