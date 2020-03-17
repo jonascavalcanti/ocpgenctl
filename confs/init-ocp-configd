@@ -5,9 +5,18 @@ OCP_API="api api-int"
 OCP_APPS='*.apps'
 nodes="_etcd-server-ssl._tcp ${OCP_CLUSTER_INSTALLER_NAME} ${OCP_BOOTSTRAP_IGN_DNSNAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${WORKERS_DNS_NAMES}"
 
+echo "Generating ssh keys"
+ssh-keygen -t rsa -b 4096 -N '' -f ${OCP_USER_PATH}/.ssh/id_rsa
+eval "$(ssh-agent -s)"
+chmod 700  ${OCP_USER_PATH}/.ssh
+chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa
+chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
+ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
 
 echo "Setting permission to $(whoami) user "
 sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R
+
+        
 
 ifFQDNisActive(){
   if [ ${node} == "_etcd-server-ssl._tcp" ]
@@ -54,31 +63,35 @@ checking_cluster_dns_nodes_names() {
 downloading_installers(){
   echo "------------------downloading_installers------------------------"
 
-  echo "Downloading openshift-install cli"
-  if [ ! -f ${OCP_USER_PATH}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz ]
+  if [ ! -f ${OCP_USER_PATH}/sharedfolder/configurations.txt ]
   then
+    if [ ${TIER} == "vsphere" -a ! -f ${OCP_USER_PATH}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz ]
+    then
+      echo "Downloading openshift-install cli"
       curl -s ${OCP_BASEURL}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_USER_PATH} oc kubectl
       curl -s ${OCP_BASEURL}/openshift-install-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_USER_PATH} openshift-install
-  fi
 
-  if [ ${TIER} == "vsphere" ]
-  then
-    echo "Downloading ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova"
-    curl ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova -o ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-vmware.ova -#
-    cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-vmware.ova /var/www/html/ocp${OCP_USERID}/ignition
-    
-    if [ "${isNodesWithDHCP}" == "false" ]
-    then
-      echo "Enviroment without DHCP server to Nodes"
-      echo "Downloading RHCOS Bare Metal Fle ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-metal.raw.gz"
-      curl ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-metal.raw.gz -o ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-metal.raw.gz -#
-      cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-metal.raw.gz /var/www/html/ocp${OCP_USERID}/ignition
+      echo "Downloading ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova"
+      curl ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova -o ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-vmware.ova -#
+      cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-vmware.ova /var/www/html/ocp${OCP_USERID}/ignition
+      
+      if [ "${isNodesWithDHCP}" == "false" ]
+      then
+        echo "Enviroment without DHCP server to Nodes"
+        echo "Downloading RHCOS Bare Metal Fle ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-metal.raw.gz"
+        curl ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-metal.raw.gz -o ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-metal.raw.gz -#
+        cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-metal.raw.gz /var/www/html/ocp${OCP_USERID}/ignition
 
-      echo "Downloading RHCOS ISO Fle ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-metal.raw.gz"
-      curl ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-installer.iso -o ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-installer.iso -#
-      cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-installer.iso /var/www/html/ocp${OCP_USERID}/ignition
+        echo "Downloading RHCOS ISO Fle ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-metal.raw.gz"
+        curl ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-installer.iso -o ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-installer.iso -#
+        cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-installer.iso /var/www/html/ocp${OCP_USERID}/ignition
+      fi
     fi
-  fi
+    else
+      echo "There is configuration files on path: ${OCP_USER_PATH}/sharedfolder/"
+      echo "!!You need delete and running again for create the Openshift Enviroment!!"
+    fi
+
 
   echo "------------------End downloading_installers------------------------"
 }
@@ -150,10 +163,13 @@ copying_configurations_to_shared_folder(){
     echo "Copy generated files .64 to ${OCP_USER_PATH}/sharedfolder/"
     cp -rv ${OCP_USER_PATH}/*.64 ${OCP_USER_PATH}/auth ${OCP_USER_PATH}/sharedfolder/
 
+    echo "Copying ssh keys ${OCP_USER_PATH}/sharedfolder/auth/"
+    cp -rv ${OCP_USER_PATH}/.ssh/id_rsa* ${OCP_USER_PATH}/sharedfolder/auth/
+
     echo "Instalation Information----------" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-    echo "Files configurated on: ~/ocp/sharedfolder/" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
+    echo "Files configurated on:  ${OCP_USER_PATH}/ocp/sharedfolder/" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
     echo "URL to access ignation and RHCOS OVA: http://${OCP_WEBSERVER_IP}/ocp${OCP_USERID}/ignition/" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-    echo "Openshift credentials files: ~/ocp/sharedfolder/auth" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
+    echo "Openshift credentials files:  ${OCP_USER_PATH}/ocp/sharedfolder/auth" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
     list_cluster_nodes_names >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
     echo "--------------------------------" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
   else

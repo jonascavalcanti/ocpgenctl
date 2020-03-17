@@ -7,9 +7,12 @@ RUN yum update -y && yum install -y \
         vim \
         curl \
         openssh \
+        openssh-clients \
+        telnet \
         wget \
         httpd \
         sudo \
+        iproute \
         bind-utils \
 		supervisor
 
@@ -60,8 +63,8 @@ ADD confs/supervisord.conf /etc/supervisord.conf
 
 ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
 
-ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
-ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
+#ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
+#ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
 
 RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
 RUN chown ocp${OCP_USERID} /var/www/html -R
@@ -86,6 +89,7 @@ RUN chmod +x /start.sh
 
 VOLUME [ "${OCP_USER_PATH}" ]
 USER ocp${OCP_USERID}
+
 WORKDIR ${OCP_USER_PATH}
 
 CMD ["/start.sh"]
