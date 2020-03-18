@@ -77,8 +77,11 @@ RUN chown ocp${OCP_USERID} /var/www/html -R
 ADD confs/init-ocp-configd /init-ocp-configd
 RUN chmod +x /init-ocp-configd && /usr/bin/chown ocp${OCP_USERID} /init-ocp-configd
 
-ADD confs/ocspray.sh /ocspray.sh
-RUN chmod +x /ocspray.sh && /usr/bin/chown ocp${OCP_USERID} /ocspray.sh
+ADD confs/monitor-bootstrap-complete.sh /monitor-bootstrap-complete.sh
+RUN chmod +x /monitor-bootstrap-complete.sh && /usr/bin/chown ocp${OCP_USERID} /monitor-bootstrap-complete.sh
+
+ADD confs/monitor-install-completion.sh /monitor-install-completion.sh
+RUN chmod +x /monitor-install-completion.sh && /usr/bin/chown ocp${OCP_USERID} /monitor-install-completion.sh
 
 ADD confs/init-httpd /init-httpd 
 RUN chmod +x /init-httpd 
