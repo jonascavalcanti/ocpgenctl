@@ -4,19 +4,19 @@ RUN yum update -y && yum install -y \
 		epel-release
 
 RUN yum update -y && yum install -y \
-        vim \
-        curl \
-        openssh \
-        openssh-clients \
-        telnet \
-        wget \
-        httpd \
-        sudo \
-        iproute \
-        ansible \
-        bind-utils \
-        ansible \
-		supervisor
+                            vim \
+                            curl \
+                            openssh \
+                            openssh-clients \
+                            telnet \
+                            wget \
+                            httpd \
+                            sudo \
+                            iproute \
+                            ansible \
+                            bind-utils \
+                            ansible \
+                            supervisor
 
 #OCP variables
 ENV OCP_VERSION="{{ OCP_VERSION }}"
@@ -65,31 +65,25 @@ ADD confs/supervisord.conf /etc/supervisord.conf
 
 #ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
 
-#ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
-#ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
-#RUN set -x \
-#        && chmod 700  ${OCP_USER_PATH}/.ssh \
-#        && chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa \
-#        && chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
-
 #Ansible Configurations
-ADD confs/ansible/hosts /etc/ansible/hosts
-ADD confs/ansible/playbook-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/playbook-prepare-nodes.yaml
-ADD confs/ansible/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
+ADD ansible/confs/hosts /etc/ansible/hosts
+ADD ansible/confs/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
+ADD ansible/playbooks/1-subscribe-nodes.yaml ${OCP_USER_PATH}/playbooks/1-subscribe-nodes.yaml
+ADD ansible/playbooks/2-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/2-prepare-nodes.yaml
 
 RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
 RUN chown ocp${OCP_USERID} /var/www/html -R
 
-ADD confs/init-ocp-configd /init-ocp-configd
+ADD scripts/init-ocp-configd /init-ocp-configd
 RUN chmod +x /init-ocp-configd && /usr/bin/chown ocp${OCP_USERID} /init-ocp-configd
 
-ADD confs/monitor-bootstrap-complete.sh /monitor-bootstrap-complete.sh
+ADD scripts/monitor-bootstrap-complete.sh /monitor-bootstrap-complete.sh
 RUN chmod +x /monitor-bootstrap-complete.sh && /usr/bin/chown ocp${OCP_USERID} /monitor-bootstrap-complete.sh
 
-ADD confs/monitor-install-completion.sh /monitor-install-completion.sh
+ADD scripts/monitor-install-completion.sh /monitor-install-completion.sh
 RUN chmod +x /monitor-install-completion.sh && /usr/bin/chown ocp${OCP_USERID} /monitor-install-completion.sh
 
-ADD confs/init-httpd /init-httpd 
+ADD scripts/init-httpd /init-httpd 
 RUN chmod +x /init-httpd 
 
 #&& /usr/bin/chown ocp${OCP_USERID} /init-httpd
@@ -98,7 +92,7 @@ RUN set -ex \
          && sed -i "s/User apache/User ocp${OCP_USERID}/" /etc/httpd/conf/httpd.conf \
          && sed -i "s/Group apache/Group ocp${OCP_USERID}/" /etc/httpd/conf/httpd.conf
 
-ADD confs/start.sh /start.sh
+ADD scripts/start.sh /start.sh
 RUN chmod +x /start.sh
 
 VOLUME [ "${OCP_USER_PATH}" ]

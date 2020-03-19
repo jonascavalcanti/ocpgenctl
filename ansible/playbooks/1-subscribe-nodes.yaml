@@ -1,0 +1,35 @@
+---
+- hosts:
+    - masters
+    - workers
+    
+  vars:
+      rh_user: 'jonas.cavalcanti@goldentechnologia.com.br'
+
+  vars_prompt:
+    - name: rh_password
+      prompt: "Digite sua senha:"
+      private: yes
+      
+  tasks:
+    - name: redhat_subscription Nodes
+      redhat_subscription:
+        state: present
+        username: "{{ rh_user }}"
+        password: "{{ rh_password }}"
+
+    - name: Disable all Repositories
+      command: subscription-manager repos --disable="*"
+
+    - name: Refresh Subscription
+      command: "subscription-manager refresh"
+
+    - name: Active Openshift Repositories
+      command: "subscription-manager repos --enable={{ item }}"
+      with_items:
+        - rhel-7-server-rpms
+        - rhel-7-server-extras-rpms
+        - rhel-7-server-ose-3.11-rpms
+        - rhel-7-server-rh-common-rpms
+        - rhel-7-server-ansible-2.6-rpms
+  
