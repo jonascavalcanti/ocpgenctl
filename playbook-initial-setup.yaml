@@ -13,7 +13,7 @@
     MASTERS_DNS_NAMES: "master1"
     ETCD_DNS_NAMES: "etcd-0"
     isNodesWithDHCP: "false"
-    CLUSTER_NAME: ocp1
+    CLUSTER_NAME: ocp
     CLUSTER_CIDR: "10.254.0.0/16"
     CLUSTER_SERVICE_NETWORK: "172.30.0.0/16"
     TIER: vsphere
