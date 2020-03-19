@@ -6,13 +6,13 @@ OCP_APPS='*.apps'
 nodes="_etcd-server-ssl._tcp ${OCP_CLUSTER_INSTALLER_NAME} ${OCP_BOOTSTRAP_IGN_DNSNAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${WORKERS_DNS_NAMES}"
 
 echo "Enable SSH KEYS"
-if [ ${OCP_SSH_KEY} == "sshkey"]
+if [ ${OCP_SSH_KEY} == "sshkey" ]
 then
-   ssh-keygen -t rsa -b 4096 -N '' ${OCP_USER_PATH}/.ssh/id_rsa
+   ssh-keygen -t rsa -b 4096 -N '' -f ${OCP_USER_PATH}/.ssh/id_rsa
 fi
 
-chmod 700  ${OCP_USER_PATH}/.ssh \
-chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa \
+chmod 700  ${OCP_USER_PATH}/.ssh
+chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa
 chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
 
 eval "$(ssh-agent -s)"
@@ -22,7 +22,7 @@ echo "Setting permission to $(whoami) user "
 sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R
 
 
-ansible-
+exit 1
 
 ifFQDNisActive(){
   if [ ${node} == "_etcd-server-ssl._tcp" ]
