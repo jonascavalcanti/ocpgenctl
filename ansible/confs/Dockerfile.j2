@@ -74,6 +74,9 @@ ADD ansible/playbooks/2-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/2-prepare-
 RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
 RUN chown ocp${OCP_USERID} /var/www/html -R
 
+ADD scripts/set-ssh-keys-nodes.sh /set-ssh-keys-nodes.sh
+RUN chmod +x /set-ssh-keys-nodes.sh && /usr/bin/chown ocp${OCP_USERID} /set-ssh-keys-nodes.sh
+
 ADD scripts/init-ocp-configd /init-ocp-configd
 RUN chmod +x /init-ocp-configd && /usr/bin/chown ocp${OCP_USERID} /init-ocp-configd
 
