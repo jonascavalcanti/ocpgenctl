@@ -7,9 +7,6 @@
     PASSWORD: 'J7b9c1n1!'
     PACKAGES: ['vim', 'telnet', 'bind-utils']
   tasks:
-    - name: Register ssh key at serverB
-      command: ssh-copy-id -i ~/.ssh/id_rsa.pub -o StrictHostKeyChecking=no
-
     - name: Register as user "{{ USERNAME }}" with password "{{ PASSWORD }}" and auto-subscribe to available content.
       redhat_subscription:
         state: present
