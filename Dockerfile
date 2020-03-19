@@ -8,9 +8,12 @@ RUN yum update -y && yum install -y \
         curl \
         openssh \
         openssh-clients \
+        telnet \
         wget \
         httpd \
         sudo \
+        iproute \
+        ansible \
         bind-utils \
         ansible \
 		supervisor
@@ -18,16 +21,18 @@ RUN yum update -y && yum install -y \
 #OCP variables
 ENV OCP_VERSION="3.11"
 ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest"
-ENV OCP_BOOTSTRAP_IGN_DNSNAME="bastion1"
+ENV OCP_CLUSTER_INSTALLER_NAME="installer"
+ENV OCP_BOOTSTRAP_IGN_DNSNAME="bootstrap"
+ENV OCP_WEBSERVER_IP="172.26.2.155"
 
 ENV RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}/latest"
 
-ENV OCP_USERID="3900" 
+ENV OCP_USERID="3900"
 ENV OCP_USER_PATH="/home/ocp${OCP_USERID}"
 
 #Cluster variables
 ENV BASE_DOMAIN="jdhlab.corp"
-ENV CLUSTER_NAME="ocp"
+ENV CLUSTER_NAME="ocp1"
 ENV CLUSTER_CIDR="10.254.0.0/16"
 ENV CLUSTER_SERVICE_NETWORK="172.30.0.0/16"
 ENV TIER="vsphere"
@@ -35,11 +40,12 @@ ENV TIER="vsphere"
 #OCP variables
 ENV WORKERS_REPLICS="4"
 ENV WORKERS_DNS_NAMES="worker1 worker2 worker3 worker4"
-ENV MASTER_REPLICS="3"
+ENV MASTER_REPLICS="1"
 ENV MASTERS_DNS_NAMES="master1"
 ENV ETCD_DNS_NAMES="etcd-0"
-ENV PULL_SECRET='"{"auths":{"cloud.openshift.com":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K2pvbmFzY2F2YWxjYW50aWdvbGRlbnRlY2hub2xvZ2lhY29tYnIxcmp1NzJqeHl0dDY3cGRhcGRpa3JhNmtnOWI6NjlTQ0NGQklWQTY2Tk1BTjBEVUdaTjIxUU5OSERKQVgzSU5ER0dDQlpPV1hINDlGNEg2MTJHRExUWDlONjJRMQ==","email":"jonas.cavalcanti@goldentechnologia.com.br"},"quay.io":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K2pvbmFzY2F2YWxjYW50aWdvbGRlbnRlY2hub2xvZ2lhY29tYnIxcmp1NzJqeHl0dDY3cGRhcGRpa3JhNmtnOWI6NjlTQ0NGQklWQTY2Tk1BTjBEVUdaTjIxUU5OSERKQVgzSU5ER0dDQlpPV1hINDlGNEg2MTJHRExUWDlONjJRMQ==","email":"jonas.cavalcanti@goldentechnologia.com.br"},"registry.connect.redhat.com":{"auth":"NTI4OTA4MjZ8dWhjLTFSanU3Mkp4WVRUNjdwZGFwRGlrckE2a0c5YjpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSmtaREF4TnpFeU1HUm1OVEEwTURBM09EZGxPVFk0WldJNU16TTVaR1kyTnlKOS5SRlU0Mk56QkdYaGp1UFl1cmNLN0ZiMU9UMVFBZ2g4d3BQc2hKYkNobFBwMS1fMVI0M3pnVFFyaXVqUkQ2TDdjczRhNk1HLVhxTjVILUpIVnlKTGhYUG54S2JiVmtXZjlEc1pGM0ZKTnplUEtGeDZjWVVVQUFnUTFjcmtEcWlTemp5R05LOGhOUGRSQk5XREFqZjBQX2l5WFFsUklvRmdPNVgzMlhaV05SRnNfeVJrbC03X0VBNXlMYndSUGhSRTE2Q2QwbGVlNHM3bU44TWdwRUhfWlhCRW90YmpkQ2ttR3Q1TmhRMmUzeUlYOTJJRmcweW54TUZjMHJqLXdaZlRSX2U3eEktb0VUbjlLQjRzdlFiMmNoZDdoc3BTRUZhZXZoY0xCYVBGRkYyeFNwMklwZzRTcWVuTmstaU5lakx1c29vcWR4UlBQYTFkWWJobnJRTmE0dFNzcHc3OWNxYVRsNzhudlZfVXl5SDJ3LXBBcjRXN245bGxHZWdidm1VNHI3Z3d1NjE4TGdIcjZaYnc4MWE2T01lVnBtRU5QckVYOFFpMVdPel9Bemx4dmRjRFd5N3JNTEtVLU91ZUZiMFRLRl82UlF2c2lDdjhDNmp1SlNSYzJHUjZKNU9OWDJ5UTFuWURlSGFkekE5YWhKNWRINlR2T0FxNHFtNElHb28zYnJfV2E5MmZSRE1iOTRHakZqbWdoamFWbGU2aC15R3pBZE55b1NDaENMU25adG93M1Q4M2ZIT3hWczVzRFhzS0h3TGprZXQ2dU5nNU9uSnhHenMzTWFSdXVJeTdkbnRjU2Rxd2JvS1RWUDhIaDJyRk1fVVpPUFlNTHNGeEZteEh3cTJ0NnA0QTlxLWlOUzlwNlp1cUFiU2ZSdE5qNWdQZzhIQmpOMG5BRndldw==","email":"jonas.cavalcanti@goldentechnologia.com.br"},"registry.redhat.io":{"auth":"NTI4OTA4MjZ8dWhjLTFSanU3Mkp4WVRUNjdwZGFwRGlrckE2a0c5YjpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSmtaREF4TnpFeU1HUm1OVEEwTURBM09EZGxPVFk0WldJNU16TTVaR1kyTnlKOS5SRlU0Mk56QkdYaGp1UFl1cmNLN0ZiMU9UMVFBZ2g4d3BQc2hKYkNobFBwMS1fMVI0M3pnVFFyaXVqUkQ2TDdjczRhNk1HLVhxTjVILUpIVnlKTGhYUG54S2JiVmtXZjlEc1pGM0ZKTnplUEtGeDZjWVVVQUFnUTFjcmtEcWlTemp5R05LOGhOUGRSQk5XREFqZjBQX2l5WFFsUklvRmdPNVgzMlhaV05SRnNfeVJrbC03X0VBNXlMYndSUGhSRTE2Q2QwbGVlNHM3bU44TWdwRUhfWlhCRW90YmpkQ2ttR3Q1TmhRMmUzeUlYOTJJRmcweW54TUZjMHJqLXdaZlRSX2U3eEktb0VUbjlLQjRzdlFiMmNoZDdoc3BTRUZhZXZoY0xCYVBGRkYyeFNwMklwZzRTcWVuTmstaU5lakx1c29vcWR4UlBQYTFkWWJobnJRTmE0dFNzcHc3OWNxYVRsNzhudlZfVXl5SDJ3LXBBcjRXN245bGxHZWdidm1VNHI3Z3d1NjE4TGdIcjZaYnc4MWE2T01lVnBtRU5QckVYOFFpMVdPel9Bemx4dmRjRFd5N3JNTEtVLU91ZUZiMFRLRl82UlF2c2lDdjhDNmp1SlNSYzJHUjZKNU9OWDJ5UTFuWURlSGFkekE5YWhKNWRINlR2T0FxNHFtNElHb28zYnJfV2E5MmZSRE1iOTRHakZqbWdoamFWbGU2aC15R3pBZE55b1NDaENMU25adG93M1Q4M2ZIT3hWczVzRFhzS0h3TGprZXQ2dU5nNU9uSnhHenMzTWFSdXVJeTdkbnRjU2Rxd2JvS1RWUDhIaDJyRk1fVVpPUFlNTHNGeEZteEh3cTJ0NnA0QTlxLWlOUzlwNlp1cUFiU2ZSdE5qNWdQZzhIQmpOMG5BRndldw==","email":"jonas.cavalcanti@goldentechnologia.com.br"}}}"'
-ENV OCP_SSH_KEY='"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCwYJ7n17NSKgF4stmxnRUVOVF2oqlucSb192Cz1vwbdRcnQMIyKGv8oJTnM6B9THi4OzAEHS5/JTUe0yhnlIoPe47Dz1n6XL4zMExF93C8NwIhnP2VDjp8W4cU+ArEi7GD4hUSUt20eSjPscPJ/mI+MN1mDnPM94XzVcfb/icBhBq43vM/lLywEsUgvG1zkg3ZEVQT13eZ0iHG3L3kvuDtGSAuB0FOAXu0vdzZS4tDtT/fQ7oMNPXIpBRWdJ3iZjw2ZAQ+mr6LV9ioTvCLAeezOCWwELH9N5LBsu5mbw9O0etgfbGOR9JL2Kiy+ss4xJ8jMABSppDli8eofer1RK4gnESqvaqFzkDnGlqHN6j2HwJI21KWcWKyieQ/xPTSufmWfgsvpIxbHvbj+FJaILoUKPNuc3IoL3PS8gbejgEz+5ybKdFu/YsY8QyIHe55+zUvZhiue+Y9sgKfS/0l4FjHHg+X2sBUsQR4hR+ntmq+HnW6Y8kPwywrTTfy5YdIIUoig7U4rnzqKYbq3gvgLWdzkyOQV02Uk+ZJOuKsuNFtEHCMsATVMPzZY1tNST0C5htShvB1VzOjGUROJfCik16nQPLZXZ8RXVnHGFnxyKUmgJXBRcLRPyPVJiKkz8tEQ137KXC4NJpxAzoRlL6W8IwPjw4H2a8MTZZTM9vFjDsRrQ== initiator@ocp-bootstrap-ignition"'
+ENV PULL_SECRET='{"auths":{"cloud.openshift.com":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K2pvbmFzY2F2YWxjYW50aWdvbGRlbnRlY2hub2xvZ2lhY29tYnIxcmp1NzJqeHl0dDY3cGRhcGRpa3JhNmtnOWI6NjlTQ0NGQklWQTY2Tk1BTjBEVUdaTjIxUU5OSERKQVgzSU5ER0dDQlpPV1hINDlGNEg2MTJHRExUWDlONjJRMQ==","email":"jonas.cavalcanti@goldentechnologia.com.br"},"quay.io":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K2pvbmFzY2F2YWxjYW50aWdvbGRlbnRlY2hub2xvZ2lhY29tYnIxcmp1NzJqeHl0dDY3cGRhcGRpa3JhNmtnOWI6NjlTQ0NGQklWQTY2Tk1BTjBEVUdaTjIxUU5OSERKQVgzSU5ER0dDQlpPV1hINDlGNEg2MTJHRExUWDlONjJRMQ==","email":"jonas.cavalcanti@goldentechnologia.com.br"},"registry.connect.redhat.com":{"auth":"NTI4OTA4MjZ8dWhjLTFSanU3Mkp4WVRUNjdwZGFwRGlrckE2a0c5YjpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSmtaREF4TnpFeU1HUm1OVEEwTURBM09EZGxPVFk0WldJNU16TTVaR1kyTnlKOS5SRlU0Mk56QkdYaGp1UFl1cmNLN0ZiMU9UMVFBZ2g4d3BQc2hKYkNobFBwMS1fMVI0M3pnVFFyaXVqUkQ2TDdjczRhNk1HLVhxTjVILUpIVnlKTGhYUG54S2JiVmtXZjlEc1pGM0ZKTnplUEtGeDZjWVVVQUFnUTFjcmtEcWlTemp5R05LOGhOUGRSQk5XREFqZjBQX2l5WFFsUklvRmdPNVgzMlhaV05SRnNfeVJrbC03X0VBNXlMYndSUGhSRTE2Q2QwbGVlNHM3bU44TWdwRUhfWlhCRW90YmpkQ2ttR3Q1TmhRMmUzeUlYOTJJRmcweW54TUZjMHJqLXdaZlRSX2U3eEktb0VUbjlLQjRzdlFiMmNoZDdoc3BTRUZhZXZoY0xCYVBGRkYyeFNwMklwZzRTcWVuTmstaU5lakx1c29vcWR4UlBQYTFkWWJobnJRTmE0dFNzcHc3OWNxYVRsNzhudlZfVXl5SDJ3LXBBcjRXN245bGxHZWdidm1VNHI3Z3d1NjE4TGdIcjZaYnc4MWE2T01lVnBtRU5QckVYOFFpMVdPel9Bemx4dmRjRFd5N3JNTEtVLU91ZUZiMFRLRl82UlF2c2lDdjhDNmp1SlNSYzJHUjZKNU9OWDJ5UTFuWURlSGFkekE5YWhKNWRINlR2T0FxNHFtNElHb28zYnJfV2E5MmZSRE1iOTRHakZqbWdoamFWbGU2aC15R3pBZE55b1NDaENMU25adG93M1Q4M2ZIT3hWczVzRFhzS0h3TGprZXQ2dU5nNU9uSnhHenMzTWFSdXVJeTdkbnRjU2Rxd2JvS1RWUDhIaDJyRk1fVVpPUFlNTHNGeEZteEh3cTJ0NnA0QTlxLWlOUzlwNlp1cUFiU2ZSdE5qNWdQZzhIQmpOMG5BRndldw==","email":"jonas.cavalcanti@goldentechnologia.com.br"},"registry.redhat.io":{"auth":"NTI4OTA4MjZ8dWhjLTFSanU3Mkp4WVRUNjdwZGFwRGlrckE2a0c5YjpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSmtaREF4TnpFeU1HUm1OVEEwTURBM09EZGxPVFk0WldJNU16TTVaR1kyTnlKOS5SRlU0Mk56QkdYaGp1UFl1cmNLN0ZiMU9UMVFBZ2g4d3BQc2hKYkNobFBwMS1fMVI0M3pnVFFyaXVqUkQ2TDdjczRhNk1HLVhxTjVILUpIVnlKTGhYUG54S2JiVmtXZjlEc1pGM0ZKTnplUEtGeDZjWVVVQUFnUTFjcmtEcWlTemp5R05LOGhOUGRSQk5XREFqZjBQX2l5WFFsUklvRmdPNVgzMlhaV05SRnNfeVJrbC03X0VBNXlMYndSUGhSRTE2Q2QwbGVlNHM3bU44TWdwRUhfWlhCRW90YmpkQ2ttR3Q1TmhRMmUzeUlYOTJJRmcweW54TUZjMHJqLXdaZlRSX2U3eEktb0VUbjlLQjRzdlFiMmNoZDdoc3BTRUZhZXZoY0xCYVBGRkYyeFNwMklwZzRTcWVuTmstaU5lakx1c29vcWR4UlBQYTFkWWJobnJRTmE0dFNzcHc3OWNxYVRsNzhudlZfVXl5SDJ3LXBBcjRXN245bGxHZWdidm1VNHI3Z3d1NjE4TGdIcjZaYnc4MWE2T01lVnBtRU5QckVYOFFpMVdPel9Bemx4dmRjRFd5N3JNTEtVLU91ZUZiMFRLRl82UlF2c2lDdjhDNmp1SlNSYzJHUjZKNU9OWDJ5UTFuWURlSGFkekE5YWhKNWRINlR2T0FxNHFtNElHb28zYnJfV2E5MmZSRE1iOTRHakZqbWdoamFWbGU2aC15R3pBZE55b1NDaENMU25adG93M1Q4M2ZIT3hWczVzRFhzS0h3TGprZXQ2dU5nNU9uSnhHenMzTWFSdXVJeTdkbnRjU2Rxd2JvS1RWUDhIaDJyRk1fVVpPUFlNTHNGeEZteEh3cTJ0NnA0QTlxLWlOUzlwNlp1cUFiU2ZSdE5qNWdQZzhIQmpOMG5BRndldw==","email":"jonas.cavalcanti@goldentechnologia.com.br"}}}'
+ENV OCP_SSH_KEY='sshkey'
+ENV isNodesWithDHCP="false"
 
 #vSphere variables
 ENV VCENTER_SERVER="vcenter.local"
@@ -59,24 +65,29 @@ ADD confs/supervisord.conf /etc/supervisord.conf
 
 #ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
 
+#ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
+#ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
+#RUN set -x \
+#        && chmod 700  ${OCP_USER_PATH}/.ssh \
+#        && chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa \
+#        && chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
+
 #Ansible Configurations
 ADD confs/ansible/hosts /etc/ansible/hosts
 ADD confs/ansible/playbook-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/playbook-prepare-nodes.yaml
 ADD confs/ansible/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
-
-#SSH Configurations
-ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
-ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
-RUN set -ex \
-            && chmod 700 ${OCP_USER_PATH}/.ssh \
-            && chmod 600 ${OCP_USER_PATH}/.ssh/id_rsa \
-            && chmod 644 ${OCP_USER_PATH}/.ssh/id_rsa.pub
 
 RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
 RUN chown ocp${OCP_USERID} /var/www/html -R
 
 ADD confs/init-ocp-configd /init-ocp-configd
 RUN chmod +x /init-ocp-configd && /usr/bin/chown ocp${OCP_USERID} /init-ocp-configd
+
+ADD confs/monitor-bootstrap-complete.sh /monitor-bootstrap-complete.sh
+RUN chmod +x /monitor-bootstrap-complete.sh && /usr/bin/chown ocp${OCP_USERID} /monitor-bootstrap-complete.sh
+
+ADD confs/monitor-install-completion.sh /monitor-install-completion.sh
+RUN chmod +x /monitor-install-completion.sh && /usr/bin/chown ocp${OCP_USERID} /monitor-install-completion.sh
 
 ADD confs/init-httpd /init-httpd 
 RUN chmod +x /init-httpd 
@@ -92,6 +103,7 @@ RUN chmod +x /start.sh
 
 VOLUME [ "${OCP_USER_PATH}" ]
 USER ocp${OCP_USERID}
+
 WORKDIR ${OCP_USER_PATH}
 
 CMD ["/start.sh"]
