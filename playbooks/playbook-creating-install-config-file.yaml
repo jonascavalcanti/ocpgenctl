@@ -1,0 +1,7 @@
+- hosts: localhost
+  tasks:
+    - name: Creating install-config.yaml file
+      template: 
+        src: ./playbooks/install-config.j2
+        dest: ./confs/install-config.yaml
+        mode: "0755"

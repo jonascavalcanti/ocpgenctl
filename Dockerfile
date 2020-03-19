@@ -13,6 +13,7 @@ RUN yum update -y && yum install -y \
         httpd \
         sudo \
         iproute \
+        ansible \
         bind-utils \
 		supervisor
 
@@ -42,7 +43,7 @@ ENV MASTER_REPLICS="3"
 ENV MASTERS_DNS_NAMES="master-0 master-1 master-2"
 ENV ETCD_DNS_NAMES="etcd-0 etcd-1 etcd-2"
 ENV PULL_SECRET='{"auths":{"cloud.openshift.com":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K2pvbmFzY2F2YWxjYW50aWdvbGRlbnRlY2hub2xvZ2lhY29tYnIxcmp1NzJqeHl0dDY3cGRhcGRpa3JhNmtnOWI6NjlTQ0NGQklWQTY2Tk1BTjBEVUdaTjIxUU5OSERKQVgzSU5ER0dDQlpPV1hINDlGNEg2MTJHRExUWDlONjJRMQ==","email":"jonas.cavalcanti@goldentechnologia.com.br"},"quay.io":{"auth":"b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K2pvbmFzY2F2YWxjYW50aWdvbGRlbnRlY2hub2xvZ2lhY29tYnIxcmp1NzJqeHl0dDY3cGRhcGRpa3JhNmtnOWI6NjlTQ0NGQklWQTY2Tk1BTjBEVUdaTjIxUU5OSERKQVgzSU5ER0dDQlpPV1hINDlGNEg2MTJHRExUWDlONjJRMQ==","email":"jonas.cavalcanti@goldentechnologia.com.br"},"registry.connect.redhat.com":{"auth":"NTI4OTA4MjZ8dWhjLTFSanU3Mkp4WVRUNjdwZGFwRGlrckE2a0c5YjpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSmtaREF4TnpFeU1HUm1OVEEwTURBM09EZGxPVFk0WldJNU16TTVaR1kyTnlKOS5SRlU0Mk56QkdYaGp1UFl1cmNLN0ZiMU9UMVFBZ2g4d3BQc2hKYkNobFBwMS1fMVI0M3pnVFFyaXVqUkQ2TDdjczRhNk1HLVhxTjVILUpIVnlKTGhYUG54S2JiVmtXZjlEc1pGM0ZKTnplUEtGeDZjWVVVQUFnUTFjcmtEcWlTemp5R05LOGhOUGRSQk5XREFqZjBQX2l5WFFsUklvRmdPNVgzMlhaV05SRnNfeVJrbC03X0VBNXlMYndSUGhSRTE2Q2QwbGVlNHM3bU44TWdwRUhfWlhCRW90YmpkQ2ttR3Q1TmhRMmUzeUlYOTJJRmcweW54TUZjMHJqLXdaZlRSX2U3eEktb0VUbjlLQjRzdlFiMmNoZDdoc3BTRUZhZXZoY0xCYVBGRkYyeFNwMklwZzRTcWVuTmstaU5lakx1c29vcWR4UlBQYTFkWWJobnJRTmE0dFNzcHc3OWNxYVRsNzhudlZfVXl5SDJ3LXBBcjRXN245bGxHZWdidm1VNHI3Z3d1NjE4TGdIcjZaYnc4MWE2T01lVnBtRU5QckVYOFFpMVdPel9Bemx4dmRjRFd5N3JNTEtVLU91ZUZiMFRLRl82UlF2c2lDdjhDNmp1SlNSYzJHUjZKNU9OWDJ5UTFuWURlSGFkekE5YWhKNWRINlR2T0FxNHFtNElHb28zYnJfV2E5MmZSRE1iOTRHakZqbWdoamFWbGU2aC15R3pBZE55b1NDaENMU25adG93M1Q4M2ZIT3hWczVzRFhzS0h3TGprZXQ2dU5nNU9uSnhHenMzTWFSdXVJeTdkbnRjU2Rxd2JvS1RWUDhIaDJyRk1fVVpPUFlNTHNGeEZteEh3cTJ0NnA0QTlxLWlOUzlwNlp1cUFiU2ZSdE5qNWdQZzhIQmpOMG5BRndldw==","email":"jonas.cavalcanti@goldentechnologia.com.br"},"registry.redhat.io":{"auth":"NTI4OTA4MjZ8dWhjLTFSanU3Mkp4WVRUNjdwZGFwRGlrckE2a0c5YjpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSmtaREF4TnpFeU1HUm1OVEEwTURBM09EZGxPVFk0WldJNU16TTVaR1kyTnlKOS5SRlU0Mk56QkdYaGp1UFl1cmNLN0ZiMU9UMVFBZ2g4d3BQc2hKYkNobFBwMS1fMVI0M3pnVFFyaXVqUkQ2TDdjczRhNk1HLVhxTjVILUpIVnlKTGhYUG54S2JiVmtXZjlEc1pGM0ZKTnplUEtGeDZjWVVVQUFnUTFjcmtEcWlTemp5R05LOGhOUGRSQk5XREFqZjBQX2l5WFFsUklvRmdPNVgzMlhaV05SRnNfeVJrbC03X0VBNXlMYndSUGhSRTE2Q2QwbGVlNHM3bU44TWdwRUhfWlhCRW90YmpkQ2ttR3Q1TmhRMmUzeUlYOTJJRmcweW54TUZjMHJqLXdaZlRSX2U3eEktb0VUbjlLQjRzdlFiMmNoZDdoc3BTRUZhZXZoY0xCYVBGRkYyeFNwMklwZzRTcWVuTmstaU5lakx1c29vcWR4UlBQYTFkWWJobnJRTmE0dFNzcHc3OWNxYVRsNzhudlZfVXl5SDJ3LXBBcjRXN245bGxHZWdidm1VNHI3Z3d1NjE4TGdIcjZaYnc4MWE2T01lVnBtRU5QckVYOFFpMVdPel9Bemx4dmRjRFd5N3JNTEtVLU91ZUZiMFRLRl82UlF2c2lDdjhDNmp1SlNSYzJHUjZKNU9OWDJ5UTFuWURlSGFkekE5YWhKNWRINlR2T0FxNHFtNElHb28zYnJfV2E5MmZSRE1iOTRHakZqbWdoamFWbGU2aC15R3pBZE55b1NDaENMU25adG93M1Q4M2ZIT3hWczVzRFhzS0h3TGprZXQ2dU5nNU9uSnhHenMzTWFSdXVJeTdkbnRjU2Rxd2JvS1RWUDhIaDJyRk1fVVpPUFlNTHNGeEZteEh3cTJ0NnA0QTlxLWlOUzlwNlp1cUFiU2ZSdE5qNWdQZzhIQmpOMG5BRndldw==","email":"jonas.cavalcanti@goldentechnologia.com.br"}}}'
-ENV OCP_SSH_KEY='ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDi3aUYgo1Q25tPxqwlsI4MTTS4iL0oVOtUPuwy8vB6R5sJvuEqq6/dryE03Ph8hjWm70/pRqKdpSHz2xDIG+RFTEBMPWIAEWAbrBjF0n2BsU1do/AW2Z/Xv7JtD0wtlp4ybWa6dwiGVKwQ81j0RxFJ5aLiC/kABZxPUlrWOGrAL0swUna3AaOjfC0azmNjgvNPmX6HGY3KTP3h4vudjDnN37dI/Mx0iNh90LMptShxgwQ06fweNkxQJh0b0gwDLuQww/Sr47D+LzejdY8y7z58cEA5zksifThyWw2PA5VXOZaiRkcvjOkLTIhp0ELPqgD5hRLUQ2y7H5ZFZFl2kFdTCP0hcGIqiv/u2vSy+a/DiLAGG+yDUN1q3GkTZ+GycH8MqnWvsli9EDrbu0joyoQCArx+kj1hj0HtNCm+bsnT09Vrw8jNiXc9fwQHPVN7dWzVBNWnoUZCVtcMvwn2jyosIgCWPAj+YSGBmqpZqm7zjQmP1v2mtA/9f/+ElsD91qeYFnDvwpNjhzPfEovamwzYcJCMsA+36ITNc79cOSk39GJ/JP2hVqxrZYm+ZCs5VkPpqdE6IRbNef9AGzq3Vgs/UJaz8HZH4pAEJ3ihAxhlfXc7jj+JiZyizWmV2aA6BXTKb7OpZ2s6LC+UC+4+BTGp7IFBLk8ZHk7BxCzU5rvqGQ== ocp3900@ocp4.3-bootstrap'
+ENV OCP_SSH_KEY='sshkey'
 ENV isNodesWithDHCP="false"
 
 #vSphere variables
@@ -63,13 +64,12 @@ ADD confs/supervisord.conf /etc/supervisord.conf
 
 ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
 
-ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
-ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
-
-RUN set -x \
-        && chmod 700  ${OCP_USER_PATH}/.ssh \
-        && chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa \
-        && chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
+#ADD confs/ssh/id_rsa ${OCP_USER_PATH}/.ssh/id_rsa
+#ADD confs/ssh/id_rsa.pub ${OCP_USER_PATH}/.ssh/id_rsa.pub
+#RUN set -x \
+#        && chmod 700  ${OCP_USER_PATH}/.ssh \
+#        && chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa \
+#        && chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
 
 RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
 RUN chown ocp${OCP_USERID} /var/www/html -R
