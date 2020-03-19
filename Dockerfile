@@ -66,9 +66,10 @@ ADD confs/supervisord.conf /etc/supervisord.conf
 #ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
 
 #Ansible Configurations
-ADD ansible/confs/ansible/hosts /etc/ansible/hosts
-ADD ansible/confs/ansible/playbook-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/playbook-prepare-nodes.yaml
-ADD ansible/confs/ansible/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
+ADD ansible/confs/hosts /etc/ansible/hosts
+ADD ansible/confs/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
+ADD ansible/playbooks/1-subscribe-nodes.yaml ${OCP_USER_PATH}/playbooks/1-subscribe-nodes.yaml
+ADD ansible/playbooks/2-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/2-prepare-nodes.yaml
 
 RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
 RUN chown ocp${OCP_USERID} /var/www/html -R
