@@ -5,21 +5,17 @@ OCP_API="api api-int"
 OCP_APPS='*.apps'
 nodes="_etcd-server-ssl._tcp ${OCP_BOOTSTRAP_IGN_DNSNAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
 
-echo "Enable SSH KEYS"
-if [ ${OCP_SSH_KEY} == "sshkey" ]
-then
-   ssh-keygen -t rsa -b 4096 -N '' -f ${OCP_USER_PATH}/.ssh/id_rsa
-fi
+echo "Setting permission to $(whoami) user "
+sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R
 
+echo "Enable SSH KEYS"
+ssh-keygen -t rsa -b 4096 -N '' -f ${OCP_USER_PATH}/.ssh/id_rsa
 chmod 700  ${OCP_USER_PATH}/.ssh
 chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa
 chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
 
 eval "$(ssh-agent -s)"
 ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
-
-echo "Setting permission to $(whoami) user "
-sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R
 
 ifFQDNisActive(){
   if [ ${node} == "_etcd-server-ssl._tcp" ]
@@ -101,9 +97,10 @@ downloading_installers(){
   echo "------------------End downloading_installers------------------------"
 }
 
-creatingInstallConfigFile(){
-  sed -i "/user_home/${OCP_USER_PATH}/g" ${OCP_USER_PATH}/playbooks/0-creating-install-config-file.yaml
-  ansible-playbook ${OCP_USER_PATH}/playbooks/0-creating-install-config-file.yaml
+settingSshKeyOnInstallConfigFile(){
+  ssh_key_rsa_pub=`cat ${OCP_USER_PATH}/.ssh/id_rsa.pub`
+  sed -i "s/OCP_SSH_KEY/$ssh_key_rsa_pub/" ${OCP_USER_PATH}/playbooks/install-config.yaml
+  mv ${OCP_USER_PATH}/playbooks/install-config.yaml ${OCP_USER_PATH}/
 }
 
 generate_manisfests_files(){
