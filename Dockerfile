@@ -64,41 +64,31 @@ RUN set -ex \
 
 ADD confs/supervisord.conf /etc/supervisord.conf
 
-#ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
-
 #Ansible Configurations
 ADD ansible/confs/hosts /etc/ansible/hosts
 ADD ansible/confs/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
-ADD ansible/playbooks/1-subscribe-nodes.yaml ${OCP_USER_PATH}/playbooks/1-subscribe-nodes.yaml
-ADD ansible/playbooks/2-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/2-prepare-nodes.yaml
-ADD ansible/playbooks/3-prepare-docker-nodes.yaml ${OCP_USER_PATH}/playbooks/3-prepare-docker-nodes.yaml
+ADD ansible/playbooks/ocp${OCP_VERSION}/* ${OCP_USER_PATH}/playbooks/
+
+#ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
+
+
+
+#Inicializations Scripts
+ADD scripts/ocp${OCP_VERSION}/*.sh /
+RUN chmod +x /*.sh && /usr/bin/chown ocp${OCP_USERID} /*.sh
+
+
 
 RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
 RUN chown ocp${OCP_USERID} /var/www/html -R
 
-ADD scripts/set-ssh-keys-nodes.sh /set-ssh-keys-nodes.sh
-RUN chmod +x /set-ssh-keys-nodes.sh && /usr/bin/chown ocp${OCP_USERID} /set-ssh-keys-nodes.sh
-
-ADD scripts/ocp4.3sprayconfig.sh /ocp4.3sprayconfig.sh
-RUN chmod +x /ocp4.3sprayconfig.sh && /usr/bin/chown ocp${OCP_USERID} /ocp4.3sprayconfig.sh
-
-ADD scripts/ocp3.11sprayconfig.sh /ocp3.11sprayconfig.sh
-RUN chmod +x /ocp3.11sprayconfig.sh && /usr/bin/chown ocp${OCP_USERID} /ocp3.11sprayconfig.sh
-
-ADD scripts/monitor-bootstrap-complete.sh /monitor-bootstrap-complete.sh
-RUN chmod +x /monitor-bootstrap-complete.sh && /usr/bin/chown ocp${OCP_USERID} /monitor-bootstrap-complete.sh
-
-ADD scripts/monitor-install-completion.sh /monitor-install-completion.sh
-RUN chmod +x /monitor-install-completion.sh && /usr/bin/chown ocp${OCP_USERID} /monitor-install-completion.sh
-
-ADD scripts/init-httpd /init-httpd 
-RUN chmod +x /init-httpd 
-
-#&& /usr/bin/chown ocp${OCP_USERID} /init-httpd
 RUN set -ex \
          && /usr/bin/chown ocp${OCP_USERID}:ocp${OCP_USERID} /run /var/log/httpd/\
          && sed -i "s/User apache/User ocp${OCP_USERID}/" /etc/httpd/conf/httpd.conf \
          && sed -i "s/Group apache/Group ocp${OCP_USERID}/" /etc/httpd/conf/httpd.conf
+
+ADD scripts/init-httpd /init-httpd 
+RUN chmod +x /init-httpd 
 
 ADD scripts/start.sh /start.sh
 RUN chmod +x /start.sh
