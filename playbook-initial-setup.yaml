@@ -8,7 +8,8 @@
     OCP_WEBSERVER_IP: 172.26.2.155
     OCP_BOOTSTRAP_IGN_DNSNAME: bootstrap
     WORKERS_REPLICS: 4
-    WORKERS_DNS_NAMES: "worker1 worker2 worker3 worker4"
+    INFRA_NODES_DNS_NAMES: "worker1 worker2"
+    APP_NODES_DNS_NAMES: "worker3 worker4"
     MASTER_REPLICS: 1
     MASTERS_DNS_NAMES: "master1"
     ETCD_DNS_NAMES: "etcd-0"

@@ -1,4 +1,6 @@
 [masters]
 master1.ocp.jdhlab.corp ansible_user=root
-[workers]
-worker[1:4].ocp.jdhlab.corp ansible_user=root
+[infra]
+worker[1:2].ocp.jdhlab.corp ansible_user=root
+[appnodes]
+worker[3:4].ocp.jdhlab.corp ansible_user=root

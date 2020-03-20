@@ -39,7 +39,8 @@ ENV TIER="vsphere"
 
 #OCP variables
 ENV WORKERS_REPLICS="4"
-ENV WORKERS_DNS_NAMES="worker1 worker2 worker3 worker4"
+ENV INFRA_NODES_DNS_NAMES="worker1 worker2"
+ENV APP_NODES_DNS_NAMES="worker3 worker4"
 ENV MASTER_REPLICS="1"
 ENV MASTERS_DNS_NAMES="master1"
 ENV ETCD_DNS_NAMES="etcd-0"
@@ -78,8 +79,8 @@ RUN chown ocp${OCP_USERID} /var/www/html -R
 ADD scripts/set-ssh-keys-nodes.sh /set-ssh-keys-nodes.sh
 RUN chmod +x /set-ssh-keys-nodes.sh && /usr/bin/chown ocp${OCP_USERID} /set-ssh-keys-nodes.sh
 
-ADD scripts/init-ocp-configd /init-ocp-configd
-RUN chmod +x /init-ocp-configd && /usr/bin/chown ocp${OCP_USERID} /init-ocp-configd
+ADD scripts/oc4.3sprayconfig.sh /oc4.3sprayconfig.sh
+RUN chmod +x /oc4.3sprayconfig.sh && /usr/bin/chown ocp${OCP_USERID} /oc4.3sprayconfig.sh
 
 ADD scripts/monitor-bootstrap-complete.sh /monitor-bootstrap-complete.sh
 RUN chmod +x /monitor-bootstrap-complete.sh && /usr/bin/chown ocp${OCP_USERID} /monitor-bootstrap-complete.sh
