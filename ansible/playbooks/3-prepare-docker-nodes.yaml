@@ -1,6 +1,6 @@
 ---
 - hosts: 
-    - infra
+    - infras
     - appnodes 
 
   vars:

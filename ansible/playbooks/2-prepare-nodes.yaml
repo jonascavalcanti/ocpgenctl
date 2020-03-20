@@ -1,7 +1,7 @@
 ---
 - hosts: 
     - masters
-    - infra
+    - infras
     - appnodes
   
   tasks:
@@ -13,6 +13,15 @@
         policy: targeted
         state: enforcing
 
+    - name: Active Openshift Repositories
+      command: "subscription-manager repos --enable={{ item }}"
+      with_items:
+        - rhel-7-server-rpms
+        - rhel-7-server-extras-rpms
+        - rhel-7-server-ose-3.11-rpms
+        - rhel-7-server-rh-common-rpms
+        - rhel-7-server-ansible-2.6-rpms
+        
     - name: Install Required Packages
       yum: name={{ item }} state=installed
       with_items:

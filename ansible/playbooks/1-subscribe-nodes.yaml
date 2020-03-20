@@ -1,7 +1,7 @@
 ---
 - hosts:
     - masters
-    - infra
+    - infras
     - appnodes
     
   vars:
@@ -25,12 +25,17 @@
     - name: Refresh Subscription
       command: "subscription-manager refresh"
 
-    - name: Active Openshift Repositories
-      command: "subscription-manager repos --enable={{ item }}"
-      with_items:
-        - rhel-7-server-rpms
-        - rhel-7-server-extras-rpms
-        - rhel-7-server-ose-3.11-rpms
-        - rhel-7-server-rh-common-rpms
-        - rhel-7-server-ansible-2.6-rpms
-  
+- hosts: masters
+  tasks:
+    - name: Subscribe Masters
+      shell: 'subscription-manager attach --pool={{master_pool}}'
+
+- hosts: infras
+  tasks:
+    - name: Subscribe Infras
+      shell: 'subscription-manager attach --pool={{infra_pool}}'
+
+- hosts: appnodes
+  tasks:
+    - name: Subscribe AppNodes
+      shell: 'subscription-manager attach --pool={{app_pool}}'
