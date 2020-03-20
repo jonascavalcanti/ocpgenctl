@@ -18,10 +18,14 @@
         state: enforcing
 
     - name: Active Openshift Repositories
-      command: "subscription-manager repos --enable={{ rhel-packages }}"
+      command: "subscription-manager repos --enable={{ item }}"
+      with_items:
+        - "{{ rhel-packages }}"
         
     - name: Install Required Packages
-      yum: name={{ system-packages }} state=installed
+      yum: name={{ item }} state=installed
+      with_items:
+        - "{{ system-packages }}"
       
     - name: Insert/Update NM_CONTROLLED and PEERDNS
       blockinfile:

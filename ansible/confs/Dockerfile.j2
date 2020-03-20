@@ -77,8 +77,6 @@ ADD ansible/playbooks/ocp${OCP_VERSION}/* ${OCP_USER_PATH}/playbooks/
 ADD scripts/ocp${OCP_VERSION}/*.sh /
 RUN chmod +x /*.sh && /usr/bin/chown ocp${OCP_USERID} /*.sh
 
-
-
 RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
 RUN chown ocp${OCP_USERID} /var/www/html -R
 
