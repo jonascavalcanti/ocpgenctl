@@ -9,5 +9,5 @@ services:
     ports:
       - 80:80
     volumes: 
-      - ${HOME}/ocp/sharedfolder:/home/ocp{{ OCP_USERID }}/sharedfolder
+      - /opt/ocp{{ OCP_VERSION }}/sharedfolder:/home/ocp{{ OCP_USERID }}/sharedfolder
           
