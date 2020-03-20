@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  ocp4.3-bastion:
+  openshift4.3-bastion:
     build: .
     container_name: ocp4.3-bastion
     hostname: ocp4.3-bastion
