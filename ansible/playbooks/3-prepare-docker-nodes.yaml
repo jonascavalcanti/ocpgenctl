@@ -1,6 +1,7 @@
 ---
 - hosts: 
-    - workers 
+    - infra
+    - appnodes 
 
   vars:
     docker_version: "docker"

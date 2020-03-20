@@ -1,7 +1,7 @@
 #!/bin/bash
 
 setSSHKeyOnNodes(){
-    /set-ssh-key-nodes.sh
+    /set-ssh-keys-nodes.sh
 }
 
 subscribeNodes(){
