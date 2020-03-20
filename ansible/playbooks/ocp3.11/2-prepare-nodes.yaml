@@ -5,7 +5,7 @@
     - appnodes
   
   vars:
-    rhelpkgs: [rhel-7-server-rpms, rhel-7-server-ose-3.11-rpms, rhel-7-server-rh-common-rpms, rhel-7-server-ansible-2.8-rpms]
+    ocppkgs: [rhel-7-server-ose-3.11-rpms]
     
   tasks:
     - name: Clean all Repositories and make repolist
@@ -16,12 +16,7 @@
         policy: targeted
         state: enforcing
 
-    - name: Active Openshift Repositories
-      command: "subscription-manager repos --enable={{ item }}"
-      with_items:
-        - "{{ rhelpkgs }}"
-        
-    - name: Install Required Packages
+    - name: Install Required RHEL Packages
       yum: 
         name: 
           - wget
@@ -69,8 +64,8 @@
 
     - name: Update the System
       yum: state=latest name='*'
-
-    - name: Configure Selinux Policy
-      selinux:
-        policy: targeted
-        state: enforcing
+    
+    - name: Active Openshift Repositories
+      command: "subscription-manager repos --enable={{ item }}"
+      with_items:
+        - "{{ ocppkgs }}"
