@@ -2,8 +2,8 @@ version: '3.7'
 services:
   openshift4.3-bastion:
     build: .
-    container_name: ocp4.3-bastion
-    hostname: ocp4.3-bastion
+    container_name: openshift4.3-bastion
+    hostname: openshift4.3-bastion
     restart: always
     network_mode: host
     ports:
