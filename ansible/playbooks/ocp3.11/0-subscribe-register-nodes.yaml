@@ -1,0 +1,34 @@
+---
+- hosts:
+    - masters
+    - infras
+    - appnodes
+    
+  vars:
+      rh_user: 'jonas.cavalcanti@goldentechnologia.com.br'
+      rhelpkgs: [rhel-7-server-rpms, rhel-7-server-rh-common-rpms, rhel-7-server-ansible-2.8-rpms]
+
+  vars_prompt:
+    - name: rh_password
+      prompt: "Your Subscription Password:"
+      private: yes
+      
+  tasks:
+    - name: SET RHEL Subscriptions on Nodes
+      redhat_subscription:
+        state: present
+        username: "{{ rh_user }}"
+        password: "{{ rh_password }}"
+        auto_attach: true
+
+    - name: Disable all RHEL Repositories
+      command: subscription-manager repos --disable="*"
+
+    - name: Refresh RHEL Subscription
+      command: "subscription-manager refresh"
+    
+    - name: Active RHEL Repositories
+      command: "subscription-manager repos --enable={{ item }}"
+      with_items:
+        - "{{ rhelpkgs }}"
+

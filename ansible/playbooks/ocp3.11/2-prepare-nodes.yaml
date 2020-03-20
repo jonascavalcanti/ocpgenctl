@@ -1,0 +1,71 @@
+---
+- hosts: 
+    - masters
+    - infras
+    - appnodes
+  
+  vars:
+    ocppkgs: [rhel-7-server-ose-3.11-rpms]
+    
+  tasks:
+    - name: Clean all Repositories and make repolist
+      shell: yum clean all && yum repolist
+
+    - name: Configure Selinux Policy
+      selinux:
+        policy: targeted
+        state: enforcing
+
+    - name: Install Required RHEL Packages
+      yum: 
+        name: 
+          - wget
+          - git
+          - net-tools
+          - bind-utils
+          - iptables-services
+          - bridge-utils
+          - bash-completion
+          - kexec-tools
+          - sos
+          - psacct
+          - yum-utils
+        state: installed
+  
+    - name: Insert/Update NM_CONTROLLED and PEERDNS
+      blockinfile:
+        path: /etc/sysconfig/network-scripts/ifcfg-{{ ansible_default_ipv4.interface }}
+        block: |
+          NM_CONTROLLED=yes
+          PEERDNS=yes
+
+    - name: Install Network Manager
+      yum:
+        name: NetworkManager
+        state:  latest
+
+    - name: Enable Network Manager
+      service: name=NetworkManager enabled=true state=started
+
+    - name: Setting swap to off
+      blockinfile:
+        path: /etc/bashrc
+        block: |
+          swapoff -a
+
+    - name: Diable swap on OS
+      command: swapoff -a 
+      
+    - name: Enable Firewall
+      service:
+        name: firewalld 
+        state: started 
+        enabled: "true"
+
+    - name: Update the System
+      yum: state=latest name='*'
+    
+    - name: Active Openshift Repositories
+      command: "subscription-manager repos --enable={{ item }}"
+      with_items:
+        - "{{ ocppkgs }}"

@@ -1,0 +1,12 @@
+[all:vars]
+ansible_become=yes
+master_pool=aaaaaaa
+infra_pool=aaaaaaa
+app_pool=bbbbbbb
+
+[masters]
+master1.ocp.jdhlab.corp ansible_user=root
+[infras]
+worker[1:2].ocp.jdhlab.corp ansible_user=root
+[appnodes]
+worker[3:4].ocp.jdhlab.corp ansible_user=root

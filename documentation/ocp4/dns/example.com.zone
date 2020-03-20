@@ -1,0 +1,32 @@
+$ORIGIN .
+$TTL 3600	; 1 hour
+etice.corp		IN SOA	ns1.example.com. netmaster.example.com. (
+				2020030501 ; serial
+				86400      ; refresh (1 day)
+				3600       ; retry (1 hour)
+				86400      ; expire (1 day)
+				3600       ; minimum (1 hour)
+				)
+			NS	ns2.example.com.
+			NS	ns3.example.com.
+			NS	ns1.example.com.
+$ORIGIN etice.corp.
+;CLUSTER-01 K8S
+$ORIGIN ocp1.etice.corp.
+lb		CNAME		host30.example.com.
+api		CNAME		host30.example.com.
+api-int		CNAME		host30.example.com.
+master-0	A		192.168.0.110
+master-1	A		192.168.0.111
+master-2	A		192.168.0.112
+worker-0	A		192.168.0.113
+worker-1	A		192.168.0.114
+worker-2	A		192.168.0.115
+worker-4	A		192.168.0.116
+etcd-0		A		192.168.0.110	
+etcd-1		A		192.168.0.111
+etcd-2		A		192.168.0.112
+bootstrap	A		192.168.0.155
+_etcd-server-ssl._tcp		SRV		0		10		2380	 etcd-0	
+_etcd-server-ssl._tcp		SRV     0       10      2380     etcd-1
+_etcd-server-ssl._tcp		SRV     0       10      2380     etcd-2

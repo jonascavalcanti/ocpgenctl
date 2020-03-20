@@ -1,0 +1,99 @@
+FROM centos:7.7.1908
+
+RUN yum update -y && yum install -y \
+		epel-release
+
+RUN yum update -y && yum install -y \
+                            vim \
+                            curl \
+                            openssh \
+                            openssh-clients \
+                            telnet \
+                            wget \
+                            httpd \
+                            sudo \
+                            iproute \
+                            ansible \
+                            bind-utils \
+                            ansible \
+                            supervisor
+
+#OCP variables
+ENV OCP_VERSION="{{ OCP_VERSION }}"
+ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest"
+ENV OCP_CLUSTER_INSTALLER_NAME="{{ OCP_CLUSTER_INSTALLER_NAME }}"
+ENV OCP_BOOTSTRAP_IGN_DNSNAME="{{ OCP_BOOTSTRAP_IGN_DNSNAME }}"
+ENV OCP_WEBSERVER_IP="{{ OCP_WEBSERVER_IP }}"
+
+ENV RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}/latest"
+
+ENV OCP_USERID="{{ OCP_USERID }}"
+ENV OCP_USER_PATH="/home/ocp${OCP_USERID}"
+
+#Cluster variables
+ENV BASE_DOMAIN="{{ BASE_DOMAIN }}"
+ENV CLUSTER_NAME="{{ CLUSTER_NAME }}"
+ENV CLUSTER_CIDR="{{ CLUSTER_CIDR }}"
+ENV CLUSTER_SERVICE_NETWORK="{{ CLUSTER_SERVICE_NETWORK }}"
+ENV TIER="{{ TIER }}"
+
+#OCP variables
+ENV WORKERS_REPLICS="{{ WORKERS_REPLICS }}"
+ENV INFRA_NODES_DNS_NAMES="{{ INFRA_NODES_DNS_NAMES }}"
+ENV APP_NODES_DNS_NAMES="{{ APP_NODES_DNS_NAMES }}"
+ENV MASTER_REPLICS="{{ MASTER_REPLICS }}"
+ENV MASTERS_DNS_NAMES="{{ MASTERS_DNS_NAMES }}"
+ENV ETCD_DNS_NAMES="{{ETCD_DNS_NAMES}}"
+ENV PULL_SECRET='{{ PULL_SECRET }}'
+ENV OCP_SSH_KEY='{{ OCP_SSH_KEY }}'
+ENV isNodesWithDHCP="{{ isNodesWithDHCP }}"
+
+#vSphere variables
+ENV VCENTER_SERVER="{{ VCENTER_SERVER }}"
+ENV VCENTER_USER="{{ VCENTER_USER }}"
+ENV VCENTER_PASS="{{ VCENTER_PASS }}"
+ENV VCENTER_DC="{{ VCENTER_DC }}"
+ENV VCENTER_DS="{{ VCENTER_DS }}"
+
+# Add none root user
+RUN useradd ocp${OCP_USERID}
+
+RUN set -ex \
+    && echo "ocp${OCP_USERID} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user \
+    && chmod 0440 /etc/sudoers.d/user
+
+ADD confs/supervisord.conf /etc/supervisord.conf
+
+#Ansible Configurations
+ADD ansible/confs/hosts /etc/ansible/hosts
+ADD ansible/confs/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
+ADD ansible/playbooks/ocp${OCP_VERSION}/* ${OCP_USER_PATH}/playbooks/
+
+#ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
+
+
+
+#Inicializations Scripts
+ADD scripts/ocp${OCP_VERSION}/*.sh /
+RUN chmod +x /*.sh && /usr/bin/chown ocp${OCP_USERID} /*.sh
+
+RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
+RUN chown ocp${OCP_USERID} /var/www/html -R
+
+RUN set -ex \
+         && /usr/bin/chown ocp${OCP_USERID}:ocp${OCP_USERID} /run /var/log/httpd/\
+         && sed -i "s/User apache/User ocp${OCP_USERID}/" /etc/httpd/conf/httpd.conf \
+         && sed -i "s/Group apache/Group ocp${OCP_USERID}/" /etc/httpd/conf/httpd.conf
+
+ADD scripts/init-httpd /init-httpd 
+RUN chmod +x /init-httpd 
+
+ADD scripts/start.sh /start.sh
+RUN chmod +x /start.sh
+
+VOLUME [ "${OCP_USER_PATH}" ]
+USER ocp${OCP_USERID}
+
+WORKDIR ${OCP_USER_PATH}
+
+CMD ["/start.sh"]

@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  ocp{{ OCP_VERSION }}-bastion:
+    build: .
+    container_name: ocp{{ OCP_VERSION }}-bastion
+    hostname: ocp{{ OCP_VERSION }}-bastion
+    restart: always
+    network_mode: host
+    ports:
+      - 80:80
+    volumes: 
+      - ${HOME}/ocp/sharedfolder:/home/ocp{{ OCP_USERID }}/sharedfolder
+          

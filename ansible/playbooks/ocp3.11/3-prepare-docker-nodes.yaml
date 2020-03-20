@@ -1,0 +1,51 @@
+---
+- hosts: 
+    - infras
+    - appnodes 
+
+  vars:
+    docker_version: "docker"
+    stor_drv: "overlay2"
+    devs: "/dev/sdb"
+    docker_cidr: "10.252.0.1/24"
+
+  tasks:
+    - name: Installing {{ docker_version }}
+      become: true
+      yum:
+        name: "{{ docker_version }}"
+        state: latest
+    
+    - name: Stop Docker Service
+      service:
+        name: docker
+        state: stopped
+    
+    - name: Wipe Docker Device
+      shell: wipefs -af {{devs}}
+
+    - name: Remove Docker Content from /var/lib/docker
+      command: rm -rf /var/lib/docker/*
+
+    - name: Remove Docker Storage File if exist
+      command: rm -rf /etc/sysconfig/docker-storage-setup
+
+    - name: Configure Docker Storage File
+      copy:
+        content: "STORAGE_DRIVER={{ stor_drv }}\nDEVS={{devs}}\nVG=docker-vg\nCONTAINER_ROOT_LV_NAME=docker-lv\nCONTAINER_ROOT_LV_SIZE=100%FREE\nDATA_SIZE=100%FREE\nCONTAINER_ROOT_LV_MOUNT_PATH=/var/lib/docker"
+        dest: "/etc/sysconfig/docker-storage-setup"
+
+    - name: Setup Docker Storage
+      command: docker-storage-setup
+
+    - name: Create file daemon.json to change docker0 interface IP
+      become: true  
+      copy:
+        content: '{ "bip": "{{ docker_cidr }}" }'
+        dest: "/etc/docker/daemon.json"
+
+    - name: Enable and Start Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: yes

@@ -1,0 +1,41 @@
+[unix_http_server]
+file=/tmp/supervisor.sock
+
+[supervisord]
+logfile=/tmp/supervisord.log
+logfile_maxbytes=5MB
+pidfile=/tmp/supervisord.pid
+user=ocp{{ OCP_USERID }}
+nodaemon=true
+#stdout_logfile=/dev/stdout
+#stdout_logfile_maxbytes=0
+stderr_logfile=/dev/stderr
+stderr_logfile_maxbytes=0
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory=supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=unix:///tmp/supervisor.sock
+
+#[program:init-ocp-configd]
+#command=/init-ocp-configd
+#user=ocp{{ OCP_USERID }}
+#autostart=true
+#autorestart=false
+#stdout_logfile=/dev/stdout
+#stdout_logfile_maxbytes=0
+#stderr_logfile=/dev/stderr
+#stderr_logfile_maxbytes=0
+#priority=1
+
+[program:init-httpd]
+command=/init-httpd
+user=ocp{{ OCP_USERID }}
+autostart=true
+autorestart=false
+stdout_logfile=/dev/stdout
+stdout_logfile_maxbytes=0
+stderr_logfile=/dev/stderr
+stderr_logfile_maxbytes=0
+priority=999
