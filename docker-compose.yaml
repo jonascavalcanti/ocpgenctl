@@ -1,9 +1,9 @@
 version: '3.7'
 services:
-  ocp4.3-bootstrap:
+  ocp4.3-bastion:
     build: .
-    container_name: ocp4.3-bootstrap
-    hostname: ocp4.3-bootstrap
+    container_name: ocp4.3-bastion
+    hostname: ocp4.3-bastion
     restart: always
     network_mode: host
     ports:
