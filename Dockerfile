@@ -19,7 +19,7 @@ RUN yum update -y && yum install -y \
                             supervisor
 
 #OCP variables
-ENV OCP_VERSION="3.11"
+ENV OCP_VERSION="4.3"
 ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest"
 ENV OCP_CLUSTER_INSTALLER_NAME="installer"
 ENV OCP_BOOTSTRAP_IGN_DNSNAME="bastion1"

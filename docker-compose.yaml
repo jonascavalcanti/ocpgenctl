@@ -1,9 +1,9 @@
 version: '3.7'
 services:
-  ocp3.11-bootstrap:
+  ocp4.3-bootstrap:
     build: .
-    container_name: ocp3.11-bootstrap
-    hostname: ocp3.11-bootstrap
+    container_name: ocp4.3-bootstrap
+    hostname: ocp4.3-bootstrap
     restart: always
     network_mode: host
     ports:

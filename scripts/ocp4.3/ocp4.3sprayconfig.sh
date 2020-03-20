@@ -21,9 +21,6 @@ ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
 echo "Setting permission to $(whoami) user "
 sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R
 
-
-exit 1
-
 ifFQDNisActive(){
   if [ ${node} == "_etcd-server-ssl._tcp" ]
   then

@@ -2,7 +2,7 @@
 - hosts: localhost
   vars:
     BASE_DOMAIN: jdhlab.corp
-    OCP_VERSION: "3.11"
+    OCP_VERSION: "4.3"
     OCP_USERID: 3900
     OCP_CLUSTER_INSTALLER_NAME: installer
     OCP_WEBSERVER_IP: 172.26.2.155
