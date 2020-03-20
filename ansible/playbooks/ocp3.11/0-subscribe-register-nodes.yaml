@@ -14,17 +14,17 @@
       private: yes
       
   tasks:
-    - name: redhat_subscription Nodes
+    - name: SET RHEL Subscriptions on Nodes
       redhat_subscription:
         state: present
         username: "{{ rh_user }}"
         password: "{{ rh_password }}"
         auto_attach: true
 
-    - name: Disable all redhat_subscription Repositories
+    - name: Disable all RHEL Repositories
       command: subscription-manager repos --disable="*"
 
-    - name: Refresh redhat_subscription Subscription
+    - name: Refresh RHEL Subscription
       command: "subscription-manager refresh"
     
     - name: Active RHEL Repositories
