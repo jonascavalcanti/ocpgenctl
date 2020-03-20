@@ -24,8 +24,10 @@
         
     - name: Install Required Packages
       yum: 
-        name: {{ yum-pkgs }} 
+        name: {{ item }} 
         state: installed
+      with_items:
+      - "{{ yum-pkgs }}"
       
     - name: Insert/Update NM_CONTROLLED and PEERDNS
       blockinfile:
