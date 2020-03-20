@@ -79,11 +79,11 @@ RUN chown ocp${OCP_USERID} /var/www/html -R
 ADD scripts/set-ssh-keys-nodes.sh /set-ssh-keys-nodes.sh
 RUN chmod +x /set-ssh-keys-nodes.sh && /usr/bin/chown ocp${OCP_USERID} /set-ssh-keys-nodes.sh
 
-ADD scripts/oc4.3sprayconfig.sh /oc4.3sprayconfig.sh
-RUN chmod +x /oc4.3sprayconfig.sh && /usr/bin/chown ocp${OCP_USERID} /oc4.3sprayconfig.sh
+ADD scripts/ocp4.3sprayconfig.sh /ocp4.3sprayconfig.sh
+RUN chmod +x /ocp4.3sprayconfig.sh && /usr/bin/chown ocp${OCP_USERID} /ocp4.3sprayconfig.sh
 
-ADD scripts/oc3.11sprayconfig.sh /oc3.11sprayconfig.sh
-RUN chmod +x /oc3.11sprayconfig.sh && /usr/bin/chown ocp${OCP_USERID} /oc3.11sprayconfig.sh
+ADD scripts/ocp3.11sprayconfig.sh /ocp3.11sprayconfig.sh
+RUN chmod +x /ocp3.11sprayconfig.sh && /usr/bin/chown ocp${OCP_USERID} /ocp3.11sprayconfig.sh
 
 ADD scripts/monitor-bootstrap-complete.sh /monitor-bootstrap-complete.sh
 RUN chmod +x /monitor-bootstrap-complete.sh && /usr/bin/chown ocp${OCP_USERID} /monitor-bootstrap-complete.sh
