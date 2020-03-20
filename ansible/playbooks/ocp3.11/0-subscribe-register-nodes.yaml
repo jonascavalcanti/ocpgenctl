@@ -18,6 +18,7 @@
         state: present
         username: "{{ rh_user }}"
         password: "{{ rh_password }}"
+        auto_attach: true
 
     - name: Disable all redhat_subscription Repositories
       command: subscription-manager repos --disable="*"
