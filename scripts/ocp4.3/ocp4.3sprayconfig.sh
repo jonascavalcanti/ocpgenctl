@@ -102,6 +102,7 @@ downloading_installers(){
 }
 
 creatingInstallConfigFile(){
+  sed -i "/user_home/${OCP_USER_PATH}/g" ${OCP_USER_PATH}/playbooks/0-creating-install-config-file.yaml
   ansible-playbook ${OCP_USER_PATH}/playbooks/0-creating-install-config-file.yaml
 }
 

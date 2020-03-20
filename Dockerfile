@@ -70,10 +70,6 @@ ADD ansible/confs/hosts /etc/ansible/hosts
 ADD ansible/confs/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
 ADD ansible/playbooks/ocp${OCP_VERSION}/* ${OCP_USER_PATH}/playbooks/
 
-#ADD confs/install-config.yaml ${OCP_USER_PATH}/install-config.yaml
-
-
-
 #Inicializations Scripts
 ADD scripts/ocp${OCP_VERSION}/*.sh /
 RUN chmod +x /*.sh && /usr/bin/chown ocp${OCP_USERID} /*.sh

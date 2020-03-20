@@ -2,6 +2,6 @@
   tasks:
     - name: Creating install-config.yaml file
       template: 
-        src: ./playbooks/install-config.j2
-        dest: ./confs/install-config.yaml
+        src: user_home/playbooks/install-config.j2
+        dest: user_home/install-config.yaml
         mode: "0755"
