@@ -82,6 +82,9 @@ RUN chmod +x /set-ssh-keys-nodes.sh && /usr/bin/chown ocp${OCP_USERID} /set-ssh-
 ADD scripts/oc4.3sprayconfig.sh /oc4.3sprayconfig.sh
 RUN chmod +x /oc4.3sprayconfig.sh && /usr/bin/chown ocp${OCP_USERID} /oc4.3sprayconfig.sh
 
+ADD scripts/oc3.11sprayconfig.sh /oc3.11sprayconfig.sh
+RUN chmod +x /oc3.11sprayconfig.sh && /usr/bin/chown ocp${OCP_USERID} /oc3.11sprayconfig.sh
+
 ADD scripts/monitor-bootstrap-complete.sh /monitor-bootstrap-complete.sh
 RUN chmod +x /monitor-bootstrap-complete.sh && /usr/bin/chown ocp${OCP_USERID} /monitor-bootstrap-complete.sh
 
