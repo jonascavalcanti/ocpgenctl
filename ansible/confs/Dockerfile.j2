@@ -70,6 +70,7 @@ ADD ansible/confs/hosts /etc/ansible/hosts
 ADD ansible/confs/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
 ADD ansible/playbooks/1-subscribe-nodes.yaml ${OCP_USER_PATH}/playbooks/1-subscribe-nodes.yaml
 ADD ansible/playbooks/2-prepare-nodes.yaml ${OCP_USER_PATH}/playbooks/2-prepare-nodes.yaml
+ADD ansible/playbooks/3-prepare-docker-nodes.yaml ${OCP_USER_PATH}/playbooks/3-prepare-docker-nodes.yaml
 
 RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
 RUN chown ocp${OCP_USERID} /var/www/html -R
