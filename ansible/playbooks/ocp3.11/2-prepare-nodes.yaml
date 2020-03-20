@@ -6,7 +6,6 @@
   
   vars:
     rhel-pkgs: [rhel-7-server-rpms, rhel-7-server-ose-3.11-rpms, rhel-7-server-rh-common-rpms, rhel-7-server-ansible-2.8-rpms]
-    yum-pkgs: [wget, git, net-tools, bind-utils, iptables-services, bridge-utils, bash-completion, kexec-tools, sos, psacct, yum-utils]
     
   tasks:
     - name: Clean all Repositories and make repolist
@@ -24,11 +23,20 @@
         
     - name: Install Required Packages
       yum: 
-        name: {{ item }} 
+        name: 
+          - wget
+          - git
+          - net-tools
+          - bind-utils
+          - iptables-services
+          - bridge-utils
+          - bash-completion
+          - kexec-tools
+          - sos
+          - psacct
+          - yum-utils
         state: installed
-      with_items:
-      - "{{ yum-pkgs }}"
-      
+  
     - name: Insert/Update NM_CONTROLLED and PEERDNS
       blockinfile:
         path: /etc/sysconfig/network-scripts/ifcfg-{{ ansible_default_ipv4.interface }}

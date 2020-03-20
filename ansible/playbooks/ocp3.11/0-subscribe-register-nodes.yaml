@@ -19,9 +19,9 @@
         username: "{{ rh_user }}"
         password: "{{ rh_password }}"
 
-    - name: Disable all Repositories
+    - name: Disable all redhat_subscription Repositories
       command: subscription-manager repos --disable="*"
 
-    - name: Refresh Subscription
+    - name: Refresh redhat_subscription Subscription
       command: "subscription-manager refresh"
 
