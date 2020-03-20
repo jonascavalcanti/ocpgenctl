@@ -2,7 +2,7 @@
 
 nodes="${MASTERS_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
 
-echo "Nodes Password:"
+echo "Your Nodes Password:"
 read nodes_pass
 
 for node in ${nodes}

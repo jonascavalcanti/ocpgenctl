@@ -9,7 +9,7 @@
 
   vars_prompt:
     - name: rh_password
-      prompt: "Digite sua senha:"
+      prompt: "Your Subscription Password:"
       private: yes
       
   tasks:
