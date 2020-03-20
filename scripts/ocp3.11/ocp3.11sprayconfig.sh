@@ -69,8 +69,12 @@ setSSHKeyOnNodes(){
     /set-ssh-keys-nodes.sh
 }
 
-subscribeNodes(){
-    ansible-playbook ${OCP_USER_PATH}/playbooks/1-subscribe-nodes.yaml
+subscribeRegisterNodes(){
+    ansible-playbook ${OCP_USER_PATH}/playbooks/0-subscribe-register-nodes.yaml
+}
+
+subscribePoolNodes(){
+    ansible-playbook ${OCP_USER_PATH}/playbooks/1-subscribe-pool-nodes.yaml
 }
 
 prepareNodes(){
@@ -85,7 +89,7 @@ checking_cluster_dns_nodes_names
 
 setSSHKeyOnNodes
 
-subscribeNodes
+subscribeRegisterNodes
 
 prepareNodes
 
