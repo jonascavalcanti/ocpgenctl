@@ -101,6 +101,10 @@ downloading_installers(){
   echo "------------------End downloading_installers------------------------"
 }
 
+creatingInstallConfigFile(){
+  ansible-playbook ${OCP_USER_PATH}/playbooks/0-creating-install-config-file.yaml
+}
+
 generate_manisfests_files(){
   echo "------------------generate_manisfests_files------------------------"
 
@@ -191,6 +195,8 @@ checking_cluster_dns_nodes_names
 configuring_webserver_nginx
 
 downloading_installers
+
+creatingInstallConfigFile
 
 generate_manisfests_files
 
