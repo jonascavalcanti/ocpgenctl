@@ -1,5 +1,21 @@
 #!/bin/bash
 
+echo "Enable SSH KEYS"
+if [ ${OCP_SSH_KEY} == "sshkey" ]
+then
+   ssh-keygen -t rsa -b 4096 -N '' -f ${OCP_USER_PATH}/.ssh/id_rsa
+fi
+
+chmod 700  ${OCP_USER_PATH}/.ssh
+chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa
+chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
+
+eval "$(ssh-agent -s)"
+ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
+
+echo "Setting permission to $(whoami) user "
+sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R
+
 setSSHKeyOnNodes(){
     /set-ssh-keys-nodes.sh
 }
