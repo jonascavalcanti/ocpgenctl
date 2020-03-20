@@ -15,6 +15,7 @@ RUN yum update -y && yum install -y \
                             iproute \
                             ansible \
                             bind-utils \
+                            zip \
                             ansible \
                             supervisor
 
