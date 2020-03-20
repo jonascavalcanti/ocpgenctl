@@ -25,11 +25,6 @@ ifFQDNisActive(){
   then
     fqdn="${node}.${CLUSTER_NAME}.${BASE_DOMAIN} SRV"
   else
-    echo "----------------------------------------------------------------------------"
-    echo "!!DNS ${nodeName}.${CLUSTER_NAME}.${BASE_DOMAIN} is not configured!!"
-    echo "!!For proceed the installation you need to configure all DNS listed before!!"
-    echo "----------------------------------------------------------------------------"
-    exit 1
     fqdn="${node}.${CLUSTER_NAME}.${BASE_DOMAIN}"
   fi
 
@@ -59,8 +54,10 @@ checking_cluster_dns_nodes_names() {
     then
       echo "[DNS OK] - ${node}.${CLUSTER_NAME}.${BASE_DOMAIN}"
     else
+      echo "----------------------------------------------------------------------------"
       echo "[DNS FAIL] - ${node}.${CLUSTER_NAME}.${BASE_DOMAIN}"
-      echo "It is need to configurate DNS Names"
+      echo "!!For proceed the installation you need to configure all DNS listed before!!"
+      echo "----------------------------------------------------------------------------"
       exit 1
     fi  
   done
