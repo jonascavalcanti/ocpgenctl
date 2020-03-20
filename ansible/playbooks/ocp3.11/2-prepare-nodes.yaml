@@ -23,9 +23,9 @@
         - "{{ rhel-pkgs }}"
         
     - name: Install Required Packages
-      yum: name={{ item }} state=installed
-      with_items:
-        - "{{ yum-pkgs }}"
+      yum: 
+        name: {{ yum-pkgs }} 
+        state: installed
       
     - name: Insert/Update NM_CONTROLLED and PEERDNS
       blockinfile:
