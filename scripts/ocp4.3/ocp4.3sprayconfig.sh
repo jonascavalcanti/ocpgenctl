@@ -8,15 +8,6 @@ nodes="_etcd-server-ssl._tcp ${OCP_BOOTSTRAP_IGN_DNSNAME} ${OCP_API} ${OCP_APPS}
 echo "Setting permission to $(whoami) user "
 sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R
 
-echo "Enable SSH KEYS"
-ssh-keygen -t rsa -b 4096 -N '' -f ${OCP_USER_PATH}/.ssh/id_rsa
-chmod 700  ${OCP_USER_PATH}/.ssh
-chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa
-chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
-
-eval "$(ssh-agent -s)"
-ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
-
 ifFQDNisActive(){
   if [ ${node} == "_etcd-server-ssl._tcp" ]
   then
@@ -98,6 +89,15 @@ downloading_installers(){
 }
 
 settingSshKeyOnInstallConfigFile(){
+  echo "Enable SSH KEYS"
+  ssh-keygen -t rsa -b 4096 -N '' -f ${OCP_USER_PATH}/.ssh/id_rsa
+  chmod 700  ${OCP_USER_PATH}/.ssh
+  chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa
+  chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
+
+  eval "$(ssh-agent -s)"
+  ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
+
   ssh_key_rsa_pub=`cat ${OCP_USER_PATH}/.ssh/id_rsa.pub`
   sed -i "s/OCP_SSH_KEY/$ssh_key_rsa_pub/" ${OCP_USER_PATH}/playbooks/install-config.yaml
   mv ${OCP_USER_PATH}/playbooks/install-config.yaml ${OCP_USER_PATH}/
@@ -194,7 +194,9 @@ configuring_webserver_nginx
 
 downloading_installers
 
-creatingInstallConfigFile
+settingSshKeyOnInstallConfigFile
+
+exit 1
 
 generate_manisfests_files
 
