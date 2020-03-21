@@ -192,11 +192,11 @@ checking_cluster_dns_nodes_names
 
 configuring_webserver_nginx
 
-downloading_installers
-
 settingSshKeyOnInstallConfigFile
 
 exit 1
+
+downloading_installers
 
 generate_manisfests_files
 
