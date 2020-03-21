@@ -99,8 +99,8 @@ settingSshKeyOnInstallConfigFile(){
   ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
 
   ssh_key_rsa_pub=`cat ${OCP_USER_PATH}/.ssh/id_rsa.pub`
-  sed -i "s/OCP_SSH_KEY/$ssh_key_rsa_pub/" ${OCP_USER_PATH}/playbooks/install-config.yaml
   mv ${OCP_USER_PATH}/playbooks/install-config.yaml ${OCP_USER_PATH}/
+  sed -i "s|OCP_SSH_KEY|$ssh_key_rsa_pub|" ${OCP_USER_PATH}/install-config.yaml
 }
 
 generate_manisfests_files(){
