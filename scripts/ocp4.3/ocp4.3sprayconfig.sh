@@ -100,6 +100,8 @@ settingSshKeyOnInstallConfigFile(){
 
   ssh_key_rsa_pub=`cat ${OCP_USER_PATH}/.ssh/id_rsa.pub`
   mv ${OCP_USER_PATH}/playbooks/install-config.yaml ${OCP_USER_PATH}/
+
+  echo "Settin SSH Key Pub on ${OCP_USER_PATH}/install-config.yaml"
   sed -i "s|OCP_SSH_KEY|$ssh_key_rsa_pub|" ${OCP_USER_PATH}/install-config.yaml
 }
 
@@ -193,8 +195,6 @@ checking_cluster_dns_nodes_names
 configuring_webserver_nginx
 
 settingSshKeyOnInstallConfigFile
-
-exit 1
 
 downloading_installers
 
