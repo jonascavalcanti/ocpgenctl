@@ -4,19 +4,6 @@ OCP_API="api api-int"
 OCP_APPS='*.apps'
 nodes="_etcd-server-ssl._tcp ${OCP_BOOTSTRAP_IGN_DNSNAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
 
-echo "Enable SSH KEYS"
-if [ ${OCP_SSH_KEY} == "sshkey" ]
-then
-   ssh-keygen -t rsa -b 4096 -N '' -f ${OCP_USER_PATH}/.ssh/id_rsa
-fi
-
-chmod 700  ${OCP_USER_PATH}/.ssh
-chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa
-chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
-
-eval "$(ssh-agent -s)"
-ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
-
 echo "Setting permission to $(whoami) user "
 sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R
 
@@ -66,7 +53,15 @@ checking_cluster_dns_nodes_names() {
 
 
 setSSHKeyOnNodes(){
-    /set-ssh-keys-nodes.sh
+  echo "Enable SSH KEYS"
+  ssh-keygen -t rsa -b 4096 -N '' -f ${OCP_USER_PATH}/.ssh/id_rsa
+  chmod 700  ${OCP_USER_PATH}/.ssh
+  chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa
+  chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
+
+  eval "$(ssh-agent -s)"
+  ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
+  /set-ssh-keys-nodes.sh
 }
 
 subscribeRegisterNodes(){
