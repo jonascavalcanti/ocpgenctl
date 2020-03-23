@@ -1,8 +1,8 @@
 [all:vars]
 ansible_become=yes
-master_pool=aaaaaaa
-infra_pool=aaaaaaa
-app_pool=bbbbbbb
+master_pool=8a85f99c70d0557f017107151ac73f0c
+infra_pool=8a85f99b70d0559c017107153c6d4889
+app_pool=8a85f99b70d0559c017107153ebf489a
 
 [masters]
 master1.ocp.jdhlab.corp ansible_user=root
