@@ -14,6 +14,7 @@ RUN yum update -y && yum install -y \
                             sudo \
                             iproute \
                             ansible \
+                            screen \
                             bind-utils \
                             zip \
                             ansible \
