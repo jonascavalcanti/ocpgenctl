@@ -8,10 +8,10 @@
     ocppkgs: [rhel-7-server-ose-3.11-rpms]
     
   tasks:
-    - name: Clean all Repositories and make repolist
+    - name: Clean all YUM Repositories and to do RepoList
       shell: yum clean all && yum repolist
 
-    - name: Configure Selinux Policy
+    - name: Configure Selinux Policy to enforcing
       selinux:
         policy: targeted
         state: enforcing
@@ -44,16 +44,16 @@
         name: NetworkManager
         state:  latest
 
-    - name: Enable Network Manager
+    - name: Enable/Start Network Manager
       service: name=NetworkManager enabled=true state=started
 
-    - name: Setting swap to off
+    - name: Setting swap off
       blockinfile:
         path: /etc/bashrc
         block: |
           swapoff -a
 
-    - name: Diable swap on OS
+    - name: Diable swap
       command: swapoff -a 
       
     - name: Enable Firewall
