@@ -86,6 +86,8 @@ setSSHKeyOnNodes
 
 subscribeRegisterNodes
 
+subscribePoolNodes
+
 prepareNodes
 
 prepareDockerNodes
