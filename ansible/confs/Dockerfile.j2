@@ -65,8 +65,8 @@ RUN set -ex \
 ADD confs/supervisord.conf /etc/supervisord.conf
 
 #Ansible Configurations
-ADD ansible/confs/hosts /etc/ansible/hosts
-ADD ansible/confs/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
+ADD ansible/confs/ocp${OCP_VERSION}/hosts /etc/ansible/hosts
+ADD ansible/confs/ocp${OCP_VERSION}/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
 ADD ansible/playbooks/ocp${OCP_VERSION}/* ${OCP_USER_PATH}/playbooks/
 
 #Inicializations Scripts
