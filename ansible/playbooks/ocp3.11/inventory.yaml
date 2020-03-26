@@ -134,32 +134,32 @@ openshift_logging_es_nodeselector={"node-role.kubernetes.io/infra":"true"}
 #######################################################################
 
 [masters]
-master01.ocp.jdhlab.corp
+master1.ocp.jdhlab.corp
 
 
 [etcd]
-master01.ocp.jdhlab.corp
+master1.ocp.jdhlab.corp
 
 # [lb]
 # masterhaproxy.ocp.jdhlab.corp
 # infrahaproxy.ocp.jdhlab.corp
 
 [infra]
-worker01.ocp.jdhlab.corp
-worker02.ocp.jdhlab.corp
+worker1.ocp.jdhlab.corp
+worker2.ocp.jdhlab.corp
 
 [routers]
-worker01.ocp.jdhlab.corp
-worker01.ocp.jdhlab.corp
+worker1.ocp.jdhlab.corp
+worker1.ocp.jdhlab.corp
 
 [nodes]
-master01.ocp.jdhlab.corp    openshift_node_group_name='node-config-master'
+master1.ocp.jdhlab.corp    openshift_node_group_name='node-config-master'
 
-worker01.ocp.jdhlab.corp     openshift_node_group_name='node-config-infra'
-worker02.ocp.jdhlab.corp     openshift_node_group_name='node-config-infra'
+worker1.ocp.jdhlab.corp     openshift_node_group_name='node-config-infra'
+worker2.ocp.jdhlab.corp     openshift_node_group_name='node-config-infra'
 
-worker03.ocp.jdhlab.corp       openshift_node_group_name='node-config-compute-prod'
-worker04.ocp.jdhlab.corp       openshift_node_group_name='node-config-compute-prod'
+worker3.ocp.jdhlab.corp       openshift_node_group_name='node-config-compute-prod'
+worker4.ocp.jdhlab.corp       openshift_node_group_name='node-config-compute-prod'
 
 # app03.ocp.jdhlab.corp       openshift_node_group_name='node-config-compute-prod'
 # app04.ocp.jdhlab.corp       openshift_node_group_name='node-config-compute-hml'
