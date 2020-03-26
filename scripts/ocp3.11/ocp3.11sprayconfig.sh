@@ -65,7 +65,7 @@ setSSHKeyOnNodes(){
 }
 
 subscribeBastionOnOpenshift(){
-  ansible-playbook ${OCP_USER_PATH}/playbooks/0.5-prepare-bastion.yaml
+  subscription-manager repos --enable=rhel-7-server-ose-3.11-rpms
 }
 
 subscribeRegisterNodes(){
