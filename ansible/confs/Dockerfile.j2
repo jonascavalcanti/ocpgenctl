@@ -1,7 +1,11 @@
 #FROM centos:7.7.1908
 FROM registry.redhat.io/rhel7
 
-RUN subscription-manager register --username {{ rh_user }} --password {{ rh_password }} --force --auto-attach
+RUN subscription-manager register \
+                        --username {{ rh_user }} \
+                        --password {{ rh_password }} \
+                        --force \
+                        --auto-attach
 
 RUN  subscription-manager repos \
     --enable="rhel-7-server-rpms" \

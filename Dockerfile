@@ -1,7 +1,11 @@
 #FROM centos:7.7.1908
 FROM registry.redhat.io/rhel7
 
-RUN subscription-manager register --username jonas.cavalcanti@goldentechnologia.com.br --password J7b9c1n1! --force --auto-attach
+RUN subscription-manager register \
+                        --username jonas.cavalcanti@goldentechnologia.com.br \
+                        --password J7b9c1n1! \
+                        --force \
+                        --auto-attach
 
 RUN  subscription-manager repos \
     --enable="rhel-7-server-rpms" \
