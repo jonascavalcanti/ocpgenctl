@@ -6,7 +6,7 @@
     OCP_USERID: 3900
     OCP_CLUSTER_INSTALLER_NAME: installer
     OCP_WEBSERVER_IP: 10.11.2.3
-    OCP_BOOTSTRAP_IGN_DNSNAME: bastion
+    OCP_BOOTSTRAP_IGN_DNSNAME: openshift-bastion-container
     WORKERS_REPLICS: 4
     INFRA_NODES_DNS_NAMES: "worker1 worker2"
     APP_NODES_DNS_NAMES: "worker3 worker4"

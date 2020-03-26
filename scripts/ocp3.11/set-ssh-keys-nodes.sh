@@ -1,6 +1,6 @@
 #!/bin/bash
 
-nodes="${MASTERS_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
+nodes="${OCP_BOOTSTRAP_IGN_DNSNAME} ${MASTERS_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
 
 echo "Your Nodes Password:"
 read nodes_pass
