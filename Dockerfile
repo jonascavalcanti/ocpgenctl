@@ -53,8 +53,8 @@ RUN yum install -y supervisor
 ENV OCP_VERSION="3.11"
 ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest"
 ENV OCP_CLUSTER_INSTALLER_NAME="installer"
-ENV OCP_BOOTSTRAP_IGN_DNSNAME="bastion1"
-ENV OCP_WEBSERVER_IP="172.26.2.155"
+ENV OCP_BOOTSTRAP_IGN_DNSNAME="bastion"
+ENV OCP_WEBSERVER_IP="10.11.2.3"
 
 ENV RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}/latest"
 
