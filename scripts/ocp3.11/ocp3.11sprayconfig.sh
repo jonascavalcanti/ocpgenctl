@@ -65,8 +65,10 @@ setSSHKeyOnNodes(){
 }
 
 subscribeBastionOnOpenshift(){
-  echo "Active Openshift Repositories"
+  echo "Active Openshift rhel-7-server-ose-3.11-rpms Repositorie"
   sudo subscription-manager repos --enable=rhel-7-server-ose-3.11-rpms
+  echo "Intalling openshift-ansible package"
+  sudo yum install openshift-ansible
 }
 
 subscribeRegisterNodes(){
