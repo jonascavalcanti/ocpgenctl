@@ -1,24 +1,48 @@
-FROM centos:7.7.1908
+#FROM centos:7.7.1908
+FROM registry.redhat.io/rhel7
 
-RUN yum update -y && yum install -y \
-		epel-release
+RUN subscription-manager register --username jonas.cavalcanti@goldentechnologia.com.br --password J7b9c1n1! --force --auto-attach
 
-RUN yum update -y && yum install -y \
-                            vim \
-                            curl \
-                            openssh \
-                            openssh-clients \
-                            telnet \
-                            wget \
-                            httpd \
-                            sudo \
-                            iproute \
-                            ansible \
-                            screen \
-                            bind-utils \
-                            zip \
-                            ansible \
-                            supervisor
+RUN  subscription-manager repos \
+    --enable="rhel-7-server-rpms" \
+    --enable="rhel-7-server-extras-rpms" \
+    --enable="rhel-7-server-ansible-2.8-rpms"
+
+RUN yum update 
+
+RUN yum install -y \
+                vim \
+                curl \
+                openssh \
+                openssh-clients \
+                telnet \
+                wget \
+                httpd \
+                sudo \
+                iproute \
+                ansible \
+                screen \
+                bind-utils \
+                zip \
+                ansible \
+                # Openshift packages
+                git \
+                net-tools \
+                bind-utils \
+                yum-utils \
+                iptables-services \
+                bridge-utils \
+                bash-completion \
+                kexec-tools \
+                sos \
+                psacct
+ 
+RUN set -ex \
+        && cd /tmp \
+        && wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
+        && yum install -y /tmp/epel-release-latest-7.noarch.rpm
+
+RUN yum install -y supervisor
 
 #OCP variables
 ENV OCP_VERSION="3.11"
@@ -60,6 +84,7 @@ ENV VCENTER_DS="datastore"
 RUN useradd ocp${OCP_USERID}
 
 RUN set -ex \
+    && mkdir -p /etc/sudoers.d/ \
     && echo "ocp${OCP_USERID} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user \
     && chmod 0440 /etc/sudoers.d/user
 

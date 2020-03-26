@@ -1,13 +1,13 @@
 version: '3.7'
 services:
-  openshift{{ OCP_VERSION }}-bastion:
+  openshift-bastion:
     build: .
-    container_name: openshift{{ OCP_VERSION }}-bastion
-    hostname: openshift{{ OCP_VERSION }}-bastion
+    image: openshift-bastion:{{ OCP_VERSION }}
+    container_name: openshift-bastion
+    hostname: openshift-bastion
     restart: always
     network_mode: host
     ports:
       - 80:80
     volumes: 
-      - /opt/ocp{{ OCP_VERSION }}/sharedfolder:/home/ocp{{ OCP_USERID }}/sharedfolder
-          
+      - ${HOME}/ocp-installer/sharedfolder:/home/ocp{{ OCP_USERID }}/sharedfolder

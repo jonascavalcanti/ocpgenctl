@@ -1,5 +1,6 @@
 ---
 - hosts:
+    - bastion
     - masters
     - infras
     - appnodes

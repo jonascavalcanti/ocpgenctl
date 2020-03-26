@@ -1,14 +1,14 @@
 - hosts: masters
   tasks:
     - name: Subscribe Masters Nodes
-      shell: 'subscription-manager attach --pool={{master_pool}}'
+      shell: 'subscription-manager attach --pool={{ master_subscription_pool_id }}'
 
 - hosts: infras
   tasks:
     - name: Subscribe Infras Nodes
-      shell: 'subscription-manager attach --pool={{infra_pool}}'
+      shell: 'subscription-manager attach --pool={{ infra_subscription_pool_id }}'
 
 - hosts: appnodes
   tasks:
     - name: Subscribe App Nodes
-      shell: 'subscription-manager attach --pool={{app_pool}}'
+      shell: 'subscription-manager attach --pool={{ app_subscription_pool_id }}'

@@ -1,13 +1,13 @@
 version: '3.7'
 services:
-  openshift3.11-bastion:
+  openshift-bastion:
     build: .
-    container_name: openshift3.11-bastion
-    hostname: openshift3.11-bastion
+    image: openshift-bastion:3.11
+    container_name: openshift-bastion
+    hostname: openshift-bastion
     restart: always
     network_mode: host
     ports:
       - 80:80
     volumes: 
-      - /opt/ocp3.11/sharedfolder:/home/ocp3900/sharedfolder
-          
+      - ${HOME}/ocp-installer/sharedfolder:/home/ocp3900/sharedfolder

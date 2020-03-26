@@ -1,12 +1,17 @@
 [all:vars]
 ansible_become=yes
-master_pool=8a85f99c70d0557f017107151ac73f0c
-infra_pool=8a85f99b70d0559c017107153c6d4889
-app_pool=8a85f99b70d0559c017107153ebf489a
+master_subscription_pool_id=8a85f99c70d0557f017107151ac73f0c
+infra_subscription_pool_id=8a85f99b70d0559c017107153c6d4889
+app_subscription_pool_id=8a85f99b70d0559c017107153ebf489a
+
+[bastion]
+localhost
 
 [masters]
 master1.ocp.jdhlab.corp ansible_user=root
+
 [infras]
 worker[1:2].ocp.jdhlab.corp ansible_user=root
+
 [appnodes]
 worker[3:4].ocp.jdhlab.corp ansible_user=root

@@ -64,6 +64,10 @@ setSSHKeyOnNodes(){
   /set-ssh-keys-nodes.sh
 }
 
+subscribeBastionOnOpenshift(){
+  ansible-playbook ${OCP_USER_PATH}/playbooks/0.5-prepare-bastion.yaml
+}
+
 subscribeRegisterNodes(){
     ansible-playbook ${OCP_USER_PATH}/playbooks/0-subscribe-register-nodes.yaml
 }
@@ -83,6 +87,8 @@ prepareDockerNodes(){
 checking_cluster_dns_nodes_names
 
 setSSHKeyOnNodes
+
+subscribeBastionOnOpenshift
 
 subscribeRegisterNodes
 
