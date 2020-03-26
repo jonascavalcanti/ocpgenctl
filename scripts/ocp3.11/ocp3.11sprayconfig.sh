@@ -65,7 +65,8 @@ setSSHKeyOnNodes(){
 }
 
 subscribeBastionOnOpenshift(){
-  subscription-manager repos --enable=rhel-7-server-ose-3.11-rpms
+  echo "Active Openshift Repositories"
+  sudo subscription-manager repos --enable=rhel-7-server-ose-3.11-rpms
 }
 
 subscribeRegisterNodes(){
