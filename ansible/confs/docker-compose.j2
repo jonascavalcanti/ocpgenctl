@@ -6,7 +6,7 @@ services:
     container_name: openshift-bastion
     hostname: openshift-bastion
     restart: always
-    network_mode: host
+    network_mode: bridge
     ports:
       - 80:80
     volumes: 
