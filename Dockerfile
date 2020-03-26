@@ -4,8 +4,9 @@ FROM registry.redhat.io/rhel7
 RUN subscription-manager register \
                         --username jonas.cavalcanti@goldentechnologia.com.br \
                         --password J7b9c1n1! \
+                        --auto-attach \
                         --force \
-                        --auto-attach
+                        --name openshift-bastion-container
 
 RUN  subscription-manager repos \
     --enable="rhel-7-server-rpms" \
