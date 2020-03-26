@@ -1,0 +1,160 @@
+[OSEv3:children]
+masters
+nodes
+etcd
+lb
+
+[OSEv3:vars]
+ansible_ssh_user=root
+ansible_become=true
+openshift_deployment_type=openshift-enterprise
+openshift_clock_enabled=true
+
+
+# Disable Pre-Checks
+openshift_disable_check=memory_availability,disk_availability,docker_storage,docker_storage_driver,docker_image_availability,package_version,package_availability,package_update
+
+##################################################################
+#   OpenShift Version. ​ #1#
+##################################################################
+debug_level=2
+openshift_release=v3.11
+openshift_pkg_version=-3.11.161
+openshift_image_tag=v3.11.161
+
+#######################################################################
+##  Cluster Configs. ​ #2#
+###########################################################################
+
+openshift_master_cluster_method=native
+openshift_master_api_port=6443
+openshift_master_console_port=6443
+openshift_master_cluster_hostname=ocp-interno.empresa.com.br
+openshift_master_cluster_public_hostname=ocp.empresa.com.br
+openshift_master_default_subdomain=apps.empresa.com.br
+openshift_master_dynamic_provisioning_enabled=True
+os_firewall_use_firewalld=False
+openshift_use_dnsmasq=true
+
+#######################################################################
+## Scheduling location. ​ #3#
+###########################################################################
+openshift_node_groups=[{'name': 'node-config-master', 'labels': ['node-role.kubernetes.io/master=true']},{'name': 'node-config-infra', 'labels': ['node-role.kubernetes.io/infra=true']},{'name': 'node-config-compute', 'labels': ['node-role.kubernetes.io/compute=true']},{'name': 'node-config-compute-prod','labels': ['node-role.kubernetes.io/compute=true','type=app','location=prod'],'edits':[{'key': 'kubeletArguments.kube-api-qps','value': ['50']},{'key': 'kubeletArguments.kube-api-burst','value': ['100']}]},{'name': 'node-config-compute-hml','labels': ['node-role.kubernetes.io/compute=true','type=app','location=hml'],'edits':[{'key': 'kubeletArguments.kube-api-qps','value': ['50']},{'key': 'kubeletArguments.kube-api-burst','value': ['100']}]}]
+
+
+#########################################################################  Service Broker and Catalogs #4#
+###########################################################################
+openshift_enable_service_catalog=false
+template_service_broker_install=false
+ansible_service_broker_install=false
+ansible_service_broker_remove=true
+template_service_broker_remove=true
+openshift_service_catalog_remove=true
+
+###########################################################################
+###   Local Providers #5#
+###########################################################################
+openshift_master_htpasswd_users={'admin': '$apr1$kvnxTaIj$F1HZTHuaFhRWLWGfGJGlf.'}
+openshift_master_identity_providers=[{'name': 'Local', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
+
+#######################################################################
+###  Registry Red Hat #6#
+###########################################################################
+oreg_url=registry.redhat.io/openshift3/ose-${component}:${version}
+oreg_auth_user='12705051|ati.linux'
+oreg_auth_password=''
+
+
+#######################################################################
+###   SDN Network #7#
+###########################################################################
+os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
+osm_cluster_network_cidr=10.20.0.0/14
+openshift_portal_net=172.35.0.0/16
+
+#####
+## Vmware Integration
+#####
+
+openshift_cloudprovider_kind=vsphere
+openshift_cloudprovider_vsphere_username=openshift.service@vsphere.local
+openshift_cloudprovider_vsphere_password='senha-aqui'
+openshift_cloudprovider_vsphere_host=gerenciavmware.datacenter.empresa.com.br
+openshift_cloudprovider_vsphere_datacenter=APE
+openshift_cloudprovider_vsphere_datastore=VNX03_OPENSHIFT01
+
+
+#######################################################################
+###    Registry #8#
+###########################################################################
+openshift_hosted_registry_storage_kind=nfs
+openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
+openshift_hosted_registry_storage_host=lnxopenshiftnfs.empresa.com.br
+openshift_hosted_registry_storage_nfs_directory=/dados
+openshift_hosted_registry_storage_volume_name=registry
+openshift_hosted_registry_storage_volume_size=149Gi
+
+#######################################################################
+### Prometheus Monitoring ​ deployment. #9#
+#######################################################################
+openshift_cluster_monitoring_operator_install=true
+openshift_cluster_monitoring_operator_node_selector={"node-role.kubernetes.io/infra":"true"}
+
+#######################################################################
+### Metrics deployment. #10#
+#######################################################################
+openshift_metrics_install_metrics=true
+openshift_metrics_hawkular_nodeselector={"node-role.kubernetes.io/infra": "true"}
+openshift_metrics_cassandra_nodeselector={"node-role.kubernetes.io/infra": "true"}
+openshift_metrics_heapster_nodeselector={"node-role.kubernetes.io/infra": "true"}
+
+
+### Metrics Server for HPA
+openshift_metrics_server_install=true
+
+######################################################################
+##  Aggregating Logging. #11#
+#######################################################################
+openshift_logging_install_logging=true
+openshift_logging_kibana_nodeselector={"node-role.kubernetes.io/infra":"true"}
+openshift_logging_curator_nodeselector={"node-role.kubernetes.io/infra":"true"}
+openshift_logging_es_nodeselector={"node-role.kubernetes.io/infra":"true"}
+
+#######################################################################
+### HOSTS ​ #12#
+#######################################################################
+
+[masters]
+lnxopenshiftmaster01.empresa.com.br
+lnxopenshiftmaster02.empresa.com.br
+lnxopenshiftmaster03.empresa.com.br
+
+[etcd]
+lnxopenshiftmaster01.empresa.com.br
+lnxopenshiftmaster02.empresa.com.br
+lnxopenshiftmaster03.empresa.com.br
+
+[lb]
+lnxopenshiftmasterhaproxy.empresa.com.br
+lnxopenshiftinfrahaproxy.empresa.com.br
+
+[infra]
+lnxopenshiftinfra01.empresa.com.br
+lnxopenshiftinfra02.empresa.com.br
+
+[routers]
+lnxopenshiftinfra01.empresa.com.br
+lnxopenshiftinfra02.empresa.com.br
+
+[nodes]
+lnxopenshiftmaster01.empresa.com.br    openshift_node_group_name='node-config-master'
+lnxopenshiftmaster02.empresa.com.br    openshift_node_group_name='node-config-master'
+lnxopenshiftmaster03.empresa.com.br    openshift_node_group_name='node-config-master'
+
+lnxopenshiftinfra01.empresa.com.br     openshift_node_group_name='node-config-infra'
+lnxopenshiftinfra02.empresa.com.br     openshift_node_group_name='node-config-infra'
+
+lnxopenshiftapp01.empresa.com.br       openshift_node_group_name='node-config-compute-prod'
+lnxopenshiftapp02.empresa.com.br       openshift_node_group_name='node-config-compute-prod'
+lnxopenshiftapp03.empresa.com.br       openshift_node_group_name='node-config-compute-prod'
+lnxopenshiftapp04.empresa.com.br       openshift_node_group_name='node-config-compute-hml'
