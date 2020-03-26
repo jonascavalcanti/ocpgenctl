@@ -5,7 +5,7 @@ infra_subscription_pool_id=8a85f99b70d0559c017107153c6d4889
 app_subscription_pool_id=8a85f99b70d0559c017107153ebf489a
 
 [bastion]
-openshift-bastion.ocp.jdhlab.corp
+openshift-bastion-container.ocp.jdhlab.corp
 
 [masters]
 master1.ocp.jdhlab.corp ansible_user=root
