@@ -95,6 +95,10 @@ prepareDockerNodes(){
     ansible-playbook ${OCP_USER_PATH}/playbooks/5-prepare-docker-nodes.yaml
 }
 
+prepareDockerMasters(){
+    ansible-playbook ${OCP_USER_PATH}/playbooks/5-prepare-docker-master.yaml
+}
+
 checking_cluster_dns_nodes_names
 
 setSSHKeyOnNodes
@@ -112,3 +116,5 @@ subscribeRepositoriesOnNodes
 prepareNodes
 
 prepareDockerNodes
+
+prepareDockerMasters
