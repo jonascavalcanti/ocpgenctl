@@ -8,6 +8,8 @@ RUN subscription-manager register \
                         --force \
                         --name openshift-bastion-container
 
+RUN subscription-manager refresh
+
 RUN  subscription-manager repos \
     --enable="rhel-7-server-rpms" \
     --enable="rhel-7-server-extras-rpms" \
