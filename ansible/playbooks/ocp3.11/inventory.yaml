@@ -9,8 +9,6 @@ ansible_ssh_user=root
 ansible_become=true
 openshift_deployment_type=openshift-enterprise
 openshift_clock_enabled=true
-os_firewall_use_firewalld=True
-
 
 # Disable Pre-Checks
 
@@ -159,8 +157,8 @@ master1.ocp.jdhlab.corp    openshift_node_group_name='node-config-master'
 worker1.ocp.jdhlab.corp     openshift_node_group_name='node-config-infra'
 worker2.ocp.jdhlab.corp     openshift_node_group_name='node-config-infra'
 
-worker3.ocp.jdhlab.corp       openshift_node_group_name='node-config-compute-prod'
-worker4.ocp.jdhlab.corp       openshift_node_group_name='node-config-compute-prod'
+worker3.ocp.jdhlab.corp       openshift_node_group_name='node-config-compute'
+worker4.ocp.jdhlab.corp       openshift_node_group_name='node-config-compute'
 
 # app03.ocp.jdhlab.corp       openshift_node_group_name='node-config-compute-prod'
 # app04.ocp.jdhlab.corp       openshift_node_group_name='node-config-compute-hml'
