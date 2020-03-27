@@ -20,9 +20,9 @@ openshift_disable_check=memory_availability,disk_availability,docker_storage,doc
 ##################################################################
 
 debug_level=2
-openshift_release=v3.11
-#openshift_pkg_version=-3.11.161
-#openshift_image_tag=v3.11.161
+#openshift_release=v3.11
+#openshift_pkg_version=-3.11.0
+#openshift_image_tag=v3.11.0
 
 #######################################################################
 ##  Cluster Configs. ​ #2#
