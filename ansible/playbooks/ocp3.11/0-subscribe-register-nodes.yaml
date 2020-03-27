@@ -19,6 +19,7 @@
         username: "{{ rh_user }}"
         password: "{{ rh_password }}"
         auto_attach: true
+        force_register: true
   
     - name: Pull the latest subscription data from RHSM
       command: "subscription-manager refresh"
