@@ -20,8 +20,8 @@ openshift_disable_check=memory_availability,disk_availability,docker_storage,doc
 
 debug_level=2
 openshift_release=v3.11
-#openshift_pkg_version=-3.11.0
-#openshift_image_tag=v3.11.0
+#openshift_pkg_version=-3.11.161
+#openshift_image_tag=v3.11.161
 
 #######################################################################
 ##  Cluster Configs. ​ #2#
@@ -34,9 +34,11 @@ openshift_master_cluster_hostname=ose-internal.ocp.jdhlab.corp
 openshift_master_cluster_public_hostname=ose.ocp.jdhlab.corp
 openshift_master_default_subdomain=apps.ocp.jdhlab.corp
 openshift_master_dynamic_provisioning_enabled=True
-os_firewall_use_firewalld=False
-openshift_use_dnsmasq=true
 
+os_firewall_use_firewalld=false
+
+openshift_use_dnsmasq=true
+openshift_set_node_ip=true
 #######################################################################
 ## Scheduling location. ​ #3#
 ###########################################################################
@@ -67,6 +69,8 @@ openshift_master_identity_providers=[{'name': 'Local', 'login': 'true', 'challen
 oreg_url=registry.redhat.io/openshift3/ose-${component}:${version}
 oreg_auth_user='jonas.cavalcanti@goldentechnologia.com.br'
 oreg_auth_password='J7b9c1n1!'
+openshift_registry_selector="node-role.kubernetes.io/infra=true"
+openshift_hosted_registry_replicas=2
 
 #######################################################################
 ###   SDN Network #7#

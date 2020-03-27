@@ -7,7 +7,7 @@
     docker_version: "docker"
     stor_drv: "overlay2"
     devs: "/dev/sdb"
-    docker_cidr: "10.252.0.1/24"
+    docker_cidr: "10.252.0.0/16"
 
   tasks:
     - name: Installing {{ docker_version }}
