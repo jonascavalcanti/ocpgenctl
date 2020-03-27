@@ -6,7 +6,7 @@
     
   vars:
       rh_user: 'jonas.cavalcanti@goldentechnologia.com.br'
-      rhelpkgs: [rhel-7-server-rpms, rhel-7-server-extras-rpms, rhel-7-server-ansible-2.8-rpms]
+      rhelpkgs: [rhel-7-server-rpms, rhel-7-server-extras-rpms, rhel-7-server-rh-common-rpms, rhel-7-server-ansible-2.6-rpms]
 
   vars_prompt:
     - name: rh_password
