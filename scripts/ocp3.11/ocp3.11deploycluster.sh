@@ -1,6 +1,6 @@
 #!/bin/bash
 
-openshift-ansible-path="/usr/share/ansible/openshift-ansible"
-inventory_path=${OCP_USER_PATH}/playbooks/inventory.yaml
+openshiftAnsiblePath="/usr/share/ansible/openshift-ansible"
+inventoryPath=${OCP_USER_PATH}/playbooks/inventory.yaml
 
-ansible-playbook -i ${inventory_path} ${openshift-ansible-path}/playbooks/deploy_cluster.yml
+ansible-playbook -i ${inventoryPath} ${openshiftAnsiblePath}/playbooks/deploy_cluster.yml
