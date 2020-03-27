@@ -31,8 +31,8 @@ openshift_image_tag=v3.11.161
 openshift_master_cluster_method=native
 openshift_master_api_port=6443
 openshift_master_console_port=6443
-openshift_master_cluster_hostname=ocp-interno.ocp.jdhlab.corp
-openshift_master_cluster_public_hostname=ocp.ocp.jdhlab.corp
+openshift_master_cluster_hostname=master.ocp.jdhlab.corp
+openshift_master_cluster_public_hostname=master.ocp.jdhlab.corp
 openshift_master_default_subdomain=apps.ocp.jdhlab.corp
 openshift_master_dynamic_provisioning_enabled=True
 os_firewall_use_firewalld=False
@@ -43,7 +43,6 @@ openshift_use_dnsmasq=true
 ###########################################################################
 
 openshift_node_groups=[{'name': 'node-config-master', 'labels': ['node-role.kubernetes.io/master=true']},{'name': 'node-config-infra', 'labels': ['node-role.kubernetes.io/infra=true']},{'name': 'node-config-compute', 'labels': ['node-role.kubernetes.io/compute=true']},{'name': 'node-config-compute-prod','labels': ['node-role.kubernetes.io/compute=true','type=app','location=prod'],'edits':[{'key': 'kubeletArguments.kube-api-qps','value': ['50']},{'key': 'kubeletArguments.kube-api-burst','value': ['100']}]},{'name': 'node-config-compute-hml','labels': ['node-role.kubernetes.io/compute=true','type=app','location=hml'],'edits':[{'key': 'kubeletArguments.kube-api-qps','value': ['50']},{'key': 'kubeletArguments.kube-api-burst','value': ['100']}]}]
-
 
 #########################################################################  Service Broker and Catalogs #4#
 ###########################################################################
@@ -65,17 +64,18 @@ openshift_master_identity_providers=[{'name': 'Local', 'login': 'true', 'challen
 #######################################################################
 ###  Registry Red Hat #6#
 ###########################################################################
-oreg_url=registry.redhat.io/openshift3/ose-${component}:${version}
-oreg_auth_user='12705051|ati.linux'
-oreg_auth_password=''
 
+oreg_url=registry.redhat.io/openshift3/ose-${component}:${version}
+oreg_auth_user='jonas.cavalcanti@goldentechnologia.com.br'
+oreg_auth_password='J7b9c1n1!'
 
 #######################################################################
 ###   SDN Network #7#
 ###########################################################################
+
 os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
-osm_cluster_network_cidr=10.20.0.0/14
-openshift_portal_net=172.35.0.0/16
+osm_cluster_network_cidr=10.254.0.0/16
+openshift_portal_net=172.30.0.0/16
 
 #####
 ## Vmware Integration
