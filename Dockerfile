@@ -54,7 +54,7 @@ RUN yum install -y supervisor
 ENV OCP_VERSION="3.11"
 ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest"
 ENV OCP_CLUSTER_INSTALLER_NAME="installer"
-ENV OCP_BOOTSTRAP_IGN_DNSNAME="openshift-bastion-container"
+ENV OCP_BOOTSTRAP_IGN_DNSNAME="openshift-bastion"
 ENV OCP_WEBSERVER_IP="10.11.2.3"
 
 ENV RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}/latest"
@@ -64,7 +64,7 @@ ENV OCP_USER_PATH="/home/ocp${OCP_USERID}"
 
 #Cluster variables
 ENV BASE_DOMAIN="jdhlab.corp"
-ENV CLUSTER_NAME="ocp"
+ENV CLUSTER_NAME="ose"
 ENV CLUSTER_CIDR="10.254.0.0/16"
 ENV CLUSTER_SERVICE_NETWORK="172.30.0.0/16"
 ENV TIER="vsphere"

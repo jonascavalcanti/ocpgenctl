@@ -9,7 +9,7 @@ controlPlane:
   name: master
   replicas: 1
 metadata:
-  name: ocp
+  name: ose
 networking:
   clusterNetworks:
   - cidr: 10.254.0.0/16
