@@ -3,14 +3,8 @@
     - masters
     - infras
     - appnodes
-  
-  vars:
-    ocppkgs: [rhel-7-server-ose-3.11-rpms]
-    
-  tasks:
-    - name: Clean all YUM Repositories and to do RepoList
-      shell: yum clean all && yum repolist
 
+  tasks:
     - name: Configure Selinux Policy to enforcing
       selinux:
         policy: targeted
@@ -64,8 +58,3 @@
 
     - name: Update the System
       yum: state=latest name='*'
-    
-    - name: Active Openshift Repositories
-      command: "subscription-manager repos --enable={{ item }}"
-      with_items:
-        - "{{ ocppkgs }}"

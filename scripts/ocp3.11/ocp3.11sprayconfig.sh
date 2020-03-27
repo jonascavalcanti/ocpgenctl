@@ -79,12 +79,20 @@ subscribePoolNodes(){
     ansible-playbook ${OCP_USER_PATH}/playbooks/1-subscribe-pool-nodes.yaml
 }
 
+disableAllRepositories(){
+    ansible-playbook ${OCP_USER_PATH}/playbooks/2-disable-all-repositories.yaml
+}
+
+subscribeRepositoriesOnNodes(){
+    ansible-playbook ${OCP_USER_PATH}/playbooks/3-subscribe-repositories-nodes.yaml
+}
+
 prepareNodes(){
-    ansible-playbook ${OCP_USER_PATH}/playbooks/2-prepare-nodes.yaml
+    ansible-playbook ${OCP_USER_PATH}/playbooks/4-prepare-nodes.yaml
 }
 
 prepareDockerNodes(){
-    ansible-playbook ${OCP_USER_PATH}/playbooks/3-prepare-docker-nodes.yaml
+    ansible-playbook ${OCP_USER_PATH}/playbooks/5-prepare-docker-nodes.yaml
 }
 
 checking_cluster_dns_nodes_names
@@ -96,6 +104,10 @@ subscribeBastionOnOpenshift
 subscribeRegisterNodes
 
 subscribePoolNodes
+
+disableAllRepositories
+
+subscribeRepositoriesOnNodes
 
 prepareNodes
 

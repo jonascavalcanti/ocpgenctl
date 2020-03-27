@@ -1,0 +1,12 @@
+---
+- hosts:
+    - masters
+    - infras
+    - appnodes
+  
+  tasks:
+    - name: Disable all the enabled RHSM repositories
+      command: subscription-manager repos --disable="*"
+    
+    - name: Disable all yum-config-manager Repositories
+      command: yum-config-manager --disable \*
