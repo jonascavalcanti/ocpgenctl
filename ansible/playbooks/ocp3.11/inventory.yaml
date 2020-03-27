@@ -9,6 +9,7 @@ ansible_ssh_user=root
 ansible_become=true
 openshift_deployment_type=openshift-enterprise
 openshift_clock_enabled=true
+os_firewall_use_firewalld=True
 
 
 # Disable Pre-Checks
@@ -138,7 +139,7 @@ master1.ocp.jdhlab.corp
 
 
 [etcd]
-master1.ocp.jdhlab.corp
+etcd-0.ocp.jdhlab.corp
 
 # [lb]
 # masterhaproxy.ocp.jdhlab.corp

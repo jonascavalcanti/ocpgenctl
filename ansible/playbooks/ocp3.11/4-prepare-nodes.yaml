@@ -33,7 +33,8 @@
           NM_CONTROLLED=yes
           PEERDNS=yes
           IPV6INIT=no
-
+          DOMAIN=ocp.jdhlabs.corp
+          
     - name: Install Network Manager
       yum:
         name: NetworkManager
