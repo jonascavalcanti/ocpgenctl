@@ -32,6 +32,7 @@
         block: |
           NM_CONTROLLED=yes
           PEERDNS=yes
+          IPV6INIT=no
 
     - name: Install Network Manager
       yum:
