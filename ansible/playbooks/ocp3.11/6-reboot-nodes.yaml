@@ -1,0 +1,9 @@
+---
+- hosts: 
+    - masters
+    - infras
+    - appnodes 
+
+  tasks:
+    - name: Reboot ALL nodes
+      command: "systemctl reboot"
