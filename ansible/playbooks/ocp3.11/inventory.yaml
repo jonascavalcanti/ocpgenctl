@@ -149,7 +149,7 @@ worker2.ocp.jdhlab.corp
 
 [routers]
 worker1.ocp.jdhlab.corp
-worker1.ocp.jdhlab.corp
+worker2.ocp.jdhlab.corp
 
 [nodes]
 master1.ocp.jdhlab.corp    openshift_node_group_name='node-config-master'
