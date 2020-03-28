@@ -2,7 +2,7 @@
 - hosts: localhost
   vars:
     DNSSERVER_IP: 10.11.2.3
-    BASE_DOMAIN: jdhlab.corp
+    BASE_DOMAIN: jdhlabs.com.br
     OCP_VERSION: "3.11"
     OCP_USERID: 3900
     OCP_CLUSTER_INSTALLER_NAME: installer
