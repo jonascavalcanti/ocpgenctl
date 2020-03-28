@@ -3,17 +3,16 @@
     - masters
 
   vars:
-    docker_version: "docker"
+    docker_version: ""
     stor_drv: "overlay2"
-    devs: "/dev/sdb"
     docker_cidr: "10.252.0.0/16"
 
   tasks:
-    - name: Installing {{ docker_version }}
-      become: true
+    - name: Installing Docker on Master
       yum:
-        name: "{{ docker_version }}"
-        state: latest
+        name: 
+          - docker
+        state: installed
     
     - name: Stop Docker Service
       service:
@@ -26,8 +25,8 @@
     - name: Remove Docker Content from /var/lib/docker
       command: rm -rf /var/lib/docker/*
 
-    # - name: Remove Docker Storage File if exist
-    #   command: rm -rf /etc/sysconfig/docker-storage-setup
+    - name: Remove Docker Storage File if exist
+      command: rm -rf /etc/sysconfig/docker-storage-setup
 
     # - name: Configure Docker Storage File
     #   copy:

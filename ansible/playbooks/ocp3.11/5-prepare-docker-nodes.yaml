@@ -10,11 +10,11 @@
     docker_cidr: "10.252.0.0/16"
 
   tasks:
-    - name: Installing {{ docker_version }}
-      become: true
+    - name: Installing Docker on Master
       yum:
-        name: "{{ docker_version }}"
-        state: latest
+        name: 
+          - docker
+        state: installed
     
     - name: Stop Docker Service
       service:
