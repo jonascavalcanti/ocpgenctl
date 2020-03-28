@@ -39,7 +39,7 @@
       lineinfile:
         path: /etc/sysconfig/network-scripts/ifcfg-{{ ansible_default_ipv4.interface }}
         regexp: '^DNS2='
-        line: DNS1=8.8.8.8
+        line: DNS2=8.8.8.8
 
     - name: Insert/Update NM_CONTROLLED and PEERDNS
       blockinfile:
