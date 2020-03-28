@@ -38,7 +38,7 @@ openshift_master_dynamic_provisioning_enabled=True
 os_firewall_use_firewalld=false
 
 openshift_use_dnsmasq=true
-openshift_set_node_ip=true
+
 #######################################################################
 ## Scheduling location. ​ #3#
 ###########################################################################
