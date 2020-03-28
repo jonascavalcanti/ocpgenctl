@@ -5,7 +5,7 @@
     - appnodes
 
   vars:
-    dns-server-ip: "10.11.2.3"
+    dnsserverip: "10.11.2.3"
 
   tasks:
     - name: Configure Selinux Policy to enforcing
@@ -29,11 +29,11 @@
           - yum-utils
         state: installed
 
-    - name: Setting DNS1={{ dns-server-ip }} in interface ifcfg-{{ ansible_default_ipv4.interface }}
+    - name: Setting DNS1={{ dnsserverip }} in interface ifcfg-{{ ansible_default_ipv4.interface }}
       lineinfile:
         path: /etc/sysconfig/network-scripts/ifcfg-{{ ansible_default_ipv4.interface }}
         regexp: '^DNS1='
-        line: DNS1={{ dns-server-ip }}
+        line: DNS1={{ dnsserverip }}
 
     - name: Setting DNS2=8.8.8.8 in interface ifcfg-{{ ansible_default_ipv4.interface }}
       lineinfile:
