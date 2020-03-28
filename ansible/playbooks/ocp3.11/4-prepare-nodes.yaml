@@ -29,6 +29,13 @@
           - yum-utils
         state: installed
 
+
+    - name: Setting DNS1={{ dnsserverip }} in interface ifcfg-{{ ansible_default_ipv4.interface }}
+      lineinfile:
+        path: /etc/sysconfig/network-scripts/ifcfg-{{ ansible_default_ipv4.interface }}
+        regexp: '^#DefaultBlockIOAccounting='
+        line: DefaultBlockIOAccounting=yes
+
     - name: Setting DNS1={{ dnsserverip }} in interface ifcfg-{{ ansible_default_ipv4.interface }}
       lineinfile:
         path: /etc/sysconfig/network-scripts/ifcfg-{{ ansible_default_ipv4.interface }}
