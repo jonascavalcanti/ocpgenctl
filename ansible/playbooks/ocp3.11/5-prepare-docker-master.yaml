@@ -28,6 +28,11 @@
     - name: Remove Docker Storage File if exist
       command: rm -rf /etc/sysconfig/docker-storage-setup
 
+    - name: 'Setting Openshift Network on /etc/cni/net.d/80-openshift-network.conf'
+      copy:
+        content: '{ "cniVersion": "0.2.0", "name": "openshift-sdn", "type": "openshift-sdn" }'
+        dest: "/etc/cni/net.d/80-openshift-network.conf"
+
     # - name: Configure Docker Storage File
     #   copy:
     #     content: "STORAGE_DRIVER={{ stor_drv }}\nDEVS={{devs}}\nVG=docker-vg\nCONTAINER_ROOT_LV_NAME=docker-lv\nCONTAINER_ROOT_LV_SIZE=100%FREE\nDATA_SIZE=100%FREE\nCONTAINER_ROOT_LV_MOUNT_PATH=/var/lib/docker"
