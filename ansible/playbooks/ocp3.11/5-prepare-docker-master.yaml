@@ -5,7 +5,7 @@
   vars:
     docker_version: ""
     stor_drv: "overlay2"
-    docker_cidr: "10.252.0.0/16"
+    docker_cidr: "10.252.0.1/16"
 
   tasks:
     - name: Installing Docker on Master
