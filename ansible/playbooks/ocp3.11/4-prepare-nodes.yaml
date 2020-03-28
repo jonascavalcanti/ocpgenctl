@@ -5,7 +5,7 @@
     - appnodes
 
   vars:
-    dns-server-ip: 10.11.2.3
+    dns-server-ip: "10.11.2.3"
 
   tasks:
     - name: Configure Selinux Policy to enforcing
