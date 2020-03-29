@@ -59,7 +59,7 @@ openshift_service_catalog_remove=true
 ###   Local Providers #5#
 ###########################################################################
 
-openshift_master_htpasswd_users={'admin': '$apr1$kvnxTaIj$F1HZTHuaFhRWLWGfGJGlf.'}
+openshift_master_htpasswd_users={'admin': '$apr1$7uYbwIHZ$LBZvcfQUdbvOCFCRdiwAY.'}
 openshift_master_identity_providers=[{'name': 'Local', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
 
 #######################################################################

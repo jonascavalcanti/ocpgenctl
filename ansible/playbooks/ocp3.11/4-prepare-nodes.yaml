@@ -35,12 +35,14 @@
         path: /etc/systemd/system.conf
         regexp: '^#DefaultBlockIOAccounting='
         line: DefaultBlockIOAccounting=yes
+        state: absent
 
     - name: Setting DNS1={{ dnsserverip }} in interface ifcfg-{{ ansible_default_ipv4.interface }}
       lineinfile:
         path: /etc/sysconfig/network-scripts/ifcfg-{{ ansible_default_ipv4.interface }}
         regexp: '^DNS1='
         line: DNS1={{ dnsserverip }}
+        state: absent
 
     - name: Insert/Update NM_CONTROLLED and PEERDNS
       blockinfile:
