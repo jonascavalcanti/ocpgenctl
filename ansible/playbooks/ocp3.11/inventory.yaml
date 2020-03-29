@@ -29,7 +29,7 @@ openshift_release=v3.11
 
 openshift_master_cluster_method=native
 openshift_master_api_port=6443
-openshift_master_console_port=6443
+openshift_master_console_port=443
 openshift_master_cluster_hostname=ose-internal.ocp.jdhlabs.com.br
 openshift_master_cluster_public_hostname=ose.ocp.jdhlabs.com.br
 openshift_master_default_subdomain=apps.ocp.jdhlabs.com.br

@@ -40,6 +40,8 @@ checking_cluster_dns_nodes_names() {
     if [  "$fqdnActive" == "true" ]
     then
       echo "[DNS OK] - ${node}.${CLUSTER_NAME}.${BASE_DOMAIN}"
+      echo "Setting Hostname to ${node}.${CLUSTER_NAME}.${BASE_DOMAIN}"
+      hostnamectl set-hostname ${node}.${CLUSTER_NAME}.${BASE_DOMAIN}
     else
       echo "----------------------------------------------------------------------------"
       echo "[DNS FAIL] - ${node}.${CLUSTER_NAME}.${BASE_DOMAIN}"
