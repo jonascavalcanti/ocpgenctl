@@ -1,13 +1,13 @@
 ---
 - hosts: localhost
   vars:
-    DNSSERVER_IP: 10.11.2.3
-    BASE_DOMAIN: jdhlabs.com.br
+    DNSSERVER_IP: 10.85.224.12
+    BASE_DOMAIN: dreads.bnb
     OCP_VERSION: "3.11"
     OCP_USERID: 3900
-    OCP_CLUSTER_INSTALLER_NAME: installer
-    OCP_WEBSERVER_IP: 10.11.2.3
-    OCP_BOOTSTRAP_IGN_DNSNAME: openshift-bastion
+    OCP_CLUSTER_INSTALLER_NAME: instaler
+    OCP_WEBSERVER_IP: 10.85.224.47
+    OCP_BOOTSTRAP_IGN_DNSNAME: lb
     MASTERS_DNS_NAMES: "master"
     ETCD_DNS_NAMES: "etcd-0"
     INFRA_NODES_DNS_NAMES: "infra1 infra2"
