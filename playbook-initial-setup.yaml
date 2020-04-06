@@ -8,10 +8,10 @@
     OCP_CLUSTER_INSTALLER_NAME: installer
     OCP_WEBSERVER_IP: 10.11.2.3
     OCP_BOOTSTRAP_IGN_DNSNAME: openshift-bastion
-    MASTERS_DNS_NAMES: "master1"
+    MASTERS_DNS_NAMES: "master"
     ETCD_DNS_NAMES: "etcd-0"
-    INFRA_NODES_DNS_NAMES: "worker1 worker2"
-    APP_NODES_DNS_NAMES: "worker3 worker4"
+    INFRA_NODES_DNS_NAMES: "infra1 infra2"
+    APP_NODES_DNS_NAMES: "apps1 apps2"
     WORKERS_REPLICS: 4
     MASTER_REPLICS: 1
     isNodesWithDHCP: "false"
