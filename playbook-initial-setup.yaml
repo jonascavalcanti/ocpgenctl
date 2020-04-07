@@ -36,12 +36,12 @@
     - name: Setting docker login on registry.redhat.io
       shell: docker login -u {{ rh_user }} -p {{ rh_password }} registry.redhat.io
       environment:
-        http_proxy: http://F900085:Senha0085@192.168.90.247:9090/
+        http_proxy: http://F900085:P@ssw0rd_rhel@192.168.90.247:9090/
     
     - name: Pulling image registry.redhat.io registry.redhat.io/rhel7
       shell: docker pull registry.redhat.io/rhel7:latest
       environment:
-        http_proxy: http://F900085:Senha0085@192.168.90.247:9090/
+        http_proxy: http://F900085:P@ssw0rd_rhel@192.168.90.247:9090/
 
     - name: Creating Dockerfile
       template: 
