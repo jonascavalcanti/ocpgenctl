@@ -45,7 +45,6 @@ RUN yum install -y \
                 sos \
                 psacct \
                 python3-pip 
- 
 #RUN set -ex \
 #        && cd /tmp \
 #        && wget --no-check-certificate https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
@@ -54,8 +53,6 @@ RUN yum install -y \
 #RUN yum update
 
 #RUN yum install -y supervisor
-
-RUN pip3 install supervisor
 
 #OCP variables
 ENV OCP_VERSION="3.11"
@@ -100,6 +97,12 @@ RUN set -ex \
     && mkdir -p /etc/sudoers.d/ \
     && echo "ocp${OCP_USERID} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user \
     && chmod 0440 /etc/sudoers.d/user
+
+COPY pkgs/supervisor-4.1.0.tar.gz /tmp/pkgs/
+COPY pkgs/supervisor-4.1.0-py2.py3-none-any.whl /tmp/pkgs/
+RUN set -ex \
+        && cd /tmp/pkgs \
+        && pip3 install /tmp/pkgs/supervisor-4.1.0-py2.py3-none-any.whl
 
 ADD confs/supervisord.conf /etc/supervisord.conf
 
