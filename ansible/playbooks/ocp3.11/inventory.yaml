@@ -99,7 +99,7 @@ openshift_portal_net=172.30.0.0/16
 openshift_hosted_registry_storage_kind=nfs
 openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
 openshift_hosted_registry_storage_host=nfs.dreads.bnb
-openshift_hosted_registry_storage_nfs_directory=/registryocpdreads
+openshift_hosted_registry_storage_nfs_directory=/mnt/data1/nfsshare/registryocpdreads
 openshift_hosted_registry_storage_volume_name=registry
 openshift_hosted_registry_storage_volume_size=150Gi
 
