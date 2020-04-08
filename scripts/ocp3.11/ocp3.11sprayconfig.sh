@@ -105,7 +105,7 @@ checking_cluster_dns_nodes_names
 
 setSSHKeyOnNodes
 
-subscribeBastionOnOpenshift
+#subscribeBastionOnOpenshift
 
 subscribeRegisterNodes
 
