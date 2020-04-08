@@ -50,6 +50,8 @@ RUN set -ex \
         && wget --no-check-certificate https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
         && yum install -y /tmp/epel-release-latest-7.noarch.rpm
 
+RUN yum update
+
 RUN yum install -y supervisor
 
 #OCP variables
