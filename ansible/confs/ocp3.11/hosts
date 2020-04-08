@@ -11,4 +11,4 @@ master.ocp.dreads.bnb ansible_user=root
 infra[1:2].ocp.dreads.bnb ansible_user=root
 
 [appnodes]
-apps[3:4].ocp.dreads.bnb ansible_user=root
+apps[1:2].ocp.dreads.bnb ansible_user=root
