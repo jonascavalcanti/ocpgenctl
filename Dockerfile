@@ -43,16 +43,19 @@ RUN yum install -y \
                 bash-completion \
                 kexec-tools \
                 sos \
-                psacct
+                psacct \
+                python3-pip 
  
-RUN set -ex \
-        && cd /tmp \
-        && wget --no-check-certificate https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
-        && yum install -y /tmp/epel-release-latest-7.noarch.rpm
+#RUN set -ex \
+#        && cd /tmp \
+#        && wget --no-check-certificate https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
+#        && yum install -y /tmp/epel-release-latest-7.noarch.rpm
 
-RUN yum update
+#RUN yum update
 
-RUN yum install -y supervisor
+#RUN yum install -y supervisor
+
+RUN pip3 install supervisor
 
 #OCP variables
 ENV OCP_VERSION="3.11"
