@@ -18,7 +18,7 @@ RUN  subscription-manager repos \
 
 RUN yum update 
 
-RUN yum install -y \
+RUN yum --no-check-certificate install -y \
                 vim \
                 curl \
                 openssh \
@@ -48,9 +48,9 @@ RUN yum install -y \
 RUN set -ex \
         && cd /tmp \
         && wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
-        && yum install -y /tmp/epel-release-latest-7.noarch.rpm
+        && yum --no-check-certificate install -y /tmp/epel-release-latest-7.noarch.rpm
 
-RUN yum install -y supervisor
+RUN yum --no-check-certificate install -y supervisor
 
 #OCP variables
 ENV OCP_VERSION="{{ OCP_VERSION }}"
