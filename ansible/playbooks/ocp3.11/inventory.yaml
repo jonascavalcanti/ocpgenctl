@@ -2,7 +2,7 @@
 masters
 nodes
 etcd
-#lb
+lb
 
 [OSEv3:vars]
 ansible_ssh_user=root
@@ -29,10 +29,10 @@ openshift_release=v3.11
 
 openshift_master_cluster_method=native
 openshift_master_api_port=6443
-openshift_master_console_port=443
-openshift_master_cluster_hostname=ose-internal.ocp.jdhlabs.com.br
-openshift_master_cluster_public_hostname=ose.ocp.jdhlabs.com.br
-openshift_master_default_subdomain=apps.ocp.jdhlabs.com.br
+openshift_master_console_port=6443
+openshift_master_cluster_hostname=api-int.ocp.dreads.bnb
+openshift_master_cluster_public_hostname=api.ocp.dreads.bnb
+openshift_master_default_subdomain=apps.ocp.dreads.bnb
 openshift_master_dynamic_provisioning_enabled=True
 
 os_firewall_use_firewalld=false
@@ -87,7 +87,7 @@ openshift_portal_net=172.30.0.0/16
 # openshift_cloudprovider_kind=vsphere
 # openshift_cloudprovider_vsphere_username=openshift.service@vsphere.local
 # openshift_cloudprovider_vsphere_password='senha-aqui'
-# openshift_cloudprovider_vsphere_host=gerenciavmware.datacenter.ocp.jdhlabs.com.br
+# openshift_cloudprovider_vsphere_host=gerenciavmware.datacenter.ocp.dreads.bnb
 # openshift_cloudprovider_vsphere_datacenter=APE
 # openshift_cloudprovider_vsphere_datastore=VNX03_OPENSHIFT01
 
@@ -96,12 +96,12 @@ openshift_portal_net=172.30.0.0/16
 ###    Registry #8#
 ###########################################################################
 
-# openshift_hosted_registry_storage_kind=nfs
-# openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
-# openshift_hosted_registry_storage_host=nfs.ocp.jdhlabs.com.br
-# openshift_hosted_registry_storage_nfs_directory=/dados
-# openshift_hosted_registry_storage_volume_name=registry
-# openshift_hosted_registry_storage_volume_size=149Gi
+openshift_hosted_registry_storage_kind=nfs
+openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
+openshift_hosted_registry_storage_host=nfs.dreads.bnb
+openshift_hosted_registry_storage_nfs_directory=/registryocpdreads
+openshift_hosted_registry_storage_volume_name=registry
+openshift_hosted_registry_storage_volume_size=150Gi
 
 #######################################################################
 ### Prometheus Monitoring ​ deployment. #9#
@@ -137,32 +137,30 @@ openshift_logging_es_nodeselector={"node-role.kubernetes.io/infra":"true"}
 #######################################################################
 
 [masters]
-master1.ocp.jdhlabs.com.br
-
+master.ocp.dreads.bnb
 
 [etcd]
-etcd-0.ocp.jdhlabs.com.br
+etcd-0.ocp.dreads.bnb
 
-# [lb]
-# masterhaproxy.ocp.jdhlabs.com.br
-# infrahaproxy.ocp.jdhlabs.com.br
+[lb]
+lb.ocp.dreads.bnb
 
 [infra]
-worker1.ocp.jdhlabs.com.br
-worker2.ocp.jdhlabs.com.br
+infra1.ocp.dreads.bnb
+infra2.ocp.dreads.bnb
 
 [routers]
-worker1.ocp.jdhlabs.com.br
-worker2.ocp.jdhlabs.com.br
+infra1.ocp.dreads.bnb
+infra2.ocp.dreads.bnb
 
 [nodes]
-master1.ocp.jdhlabs.com.br    openshift_node_group_name='node-config-master'
+master.ocp.dreads.bnb    openshift_node_group_name='node-config-master'
 
-worker1.ocp.jdhlabs.com.br     openshift_node_group_name='node-config-infra'
-worker2.ocp.jdhlabs.com.br     openshift_node_group_name='node-config-infra'
+infra1.ocp.dreads.bnb     openshift_node_group_name='node-config-infra'
+infra2.ocp.dreads.bnb     openshift_node_group_name='node-config-infra'
 
-worker3.ocp.jdhlabs.com.br       openshift_node_group_name='node-config-compute'
-worker4.ocp.jdhlabs.com.br       openshift_node_group_name='node-config-compute'
+apps1.ocp.dreads.bnb       openshift_node_group_name='node-config-compute'
+apps2.ocp.dreads.bnb       openshift_node_group_name='node-config-compute'
 
-# app03.ocp.jdhlabs.com.br       openshift_node_group_name='node-config-compute-prod'
-# app04.ocp.jdhlabs.com.br       openshift_node_group_name='node-config-compute-hml'
+# app03.ocp.dreads.bnb       openshift_node_group_name='node-config-compute-prod'
+# app04.ocp.dreads.bnb       openshift_node_group_name='node-config-compute-hml'
