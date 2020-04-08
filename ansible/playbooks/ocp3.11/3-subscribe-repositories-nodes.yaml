@@ -5,7 +5,7 @@
     - appnodes
   
   vars:
-    rhelocppkgs: [rhel-7-server-rpms, rhel-7-server-extras-rpms, rhel-7-server-rh-common-rpms, rhel-7-server-ansible-2.6-rpms, rhel-7-server-ose-3.11-rpms]
+    rhelocppkgs: [rhel-7-server-rpms, rhel-7-server-extras-rpms, rhel-7-server-rh-common-rpms, rhel-7-server-ansible-2.9-rpms, rhel-7-server-ose-3.11-rpms]
   
   tasks:
     - name: Active RHEL and Openshift Repositories

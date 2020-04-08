@@ -14,7 +14,7 @@ RUN  subscription-manager repos \
     --enable="rhel-7-server-rpms" \
     --enable="rhel-7-server-extras-rpms" \
     --enable="rhel-7-server-rh-common-rpms" \
-    --enable="rhel-7-server-ansible-2.6-rpms"
+    --enable="rhel-7-server-ansible-2.9-rpms"
 
 RUN yum update 
 
