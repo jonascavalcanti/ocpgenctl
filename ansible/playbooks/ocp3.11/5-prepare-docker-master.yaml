@@ -28,6 +28,9 @@
     - name: Remove Docker Storage File if exist
       command: rm -rf /etc/sysconfig/docker-storage-setup
 
+    - name: Creating CNI path /etc/cni/net.d/
+      command: mkdir -p /etc/cni/net.d/
+
     - name: 'Setting Openshift Network on /etc/cni/net.d/80-openshift-network.conf'
       copy:
         content: '{ "cniVersion": "0.2.0", "name": "openshift-sdn", "type": "openshift-sdn" }'
