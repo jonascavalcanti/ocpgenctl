@@ -1,6 +1,9 @@
 ---
 - hosts: localhost
   vars:
+    HTTP_PROXY: "http://F900085:Senha0085@192.168.90.247:9090/"
+    HTTPS_PROXY: "http://F900085:Senha0085@192.168.90.247:9090/"
+    NO_PROXY: ".dreads.bnb,.capgv.intra.bnb,10.85.231.27,172.17.*"
     DNSSERVER_IP: 10.85.224.12
     BASE_DOMAIN: dreads.bnb
     OCP_VERSION: "3.11"

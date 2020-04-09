@@ -1,6 +1,10 @@
 #FROM centos:7.7.1908
 FROM registry.redhat.io/rhel7
 
+ENV http_proxy=http://F900085:Senha0085@192.168.90.247:9090/
+ENV http_proxy=http://F900085:Senha0085@192.168.90.247:9090/
+ENV no_proxy=.dreads.bnb,.capgv.intra.bnb,10.85.231.27,172.17.*
+
 RUN subscription-manager register \
                         --username jonas.cavalcanti@goldentechnologia.com.br \
                         --password J7b9c1n1! \
