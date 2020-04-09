@@ -17,6 +17,9 @@ RUN  subscription-manager repos \
     --enable="rhel-7-server-ansible-2.6-rpms" \
     --enable="rhel-7-server-ose-3.11-rpms"
 
+
+RUN sed -i "s/sslverify = 1/sslverify = 0/g" /etc/yum.repos.d/redhat.repo
+ 
 RUN yum update 
 
 RUN yum install -y \
