@@ -2,7 +2,7 @@
 masters
 nodes
 etcd
-lb
+#lb
 
 [OSEv3:vars]
 ansible_ssh_user=root
@@ -147,8 +147,8 @@ master.ocp.dreads.bnb
 [etcd]
 etcd-0.ocp.dreads.bnb
 
-[lb]
-lb.ocp.dreads.bnb
+#[lb]
+#lb.ocp.dreads.bnb
 
 [infra]
 infra1.ocp.dreads.bnb
