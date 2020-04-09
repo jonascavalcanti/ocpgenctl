@@ -10,6 +10,11 @@ ansible_become=true
 openshift_deployment_type=openshift-enterprise
 openshift_clock_enabled=true
 
+# Setting proxy
+openshift_http_proxy=http://F900085:Senha0085@192.168.90.247:9090/
+openshift_https_proxy=http://F900085:Senha0085@192.168.90.247:9090/
+openshift_no_proxy=.dreads.bnb,.capgv.intra.bnb,10.85.231.27,172.17.*
+
 # Disable Pre-Checks
 
 openshift_disable_check=memory_availability,disk_availability,docker_storage,docker_storage_driver,docker_image_availability,package_version,package_availability,package_update
