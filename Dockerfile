@@ -1,9 +1,9 @@
 #FROM centos:7.7.1908
 FROM registry.redhat.io/rhel7
 
-ENV http_proxy=http://F900085:Senha0085@192.168.90.247:9090/
-ENV http_proxy=http://F900085:Senha0085@192.168.90.247:9090/
-ENV no_proxy=.dreads.bnb,.capgv.intra.bnb,10.85.231.27,172.17.*
+ENV http_proxy=
+ENV http_proxy=
+ENV no_proxy=
 
 RUN subscription-manager register \
                         --username jonas.cavalcanti@goldentechnologia.com.br \
@@ -76,7 +76,7 @@ ENV OCP_USERID="3900"
 ENV OCP_USER_PATH="/home/ocp${OCP_USERID}"
 
 #Cluster variables
-ENV BASE_DOMAIN="dreads.bnb"
+ENV BASE_DOMAIN="jdhlabs.com.br"
 ENV CLUSTER_NAME="ocp"
 ENV CLUSTER_CIDR="10.254.0.0/16"
 ENV CLUSTER_SERVICE_NETWORK="172.30.0.0/16"

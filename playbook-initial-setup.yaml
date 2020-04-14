@@ -1,11 +1,11 @@
 ---
 - hosts: localhost
   vars:
-    HTTP_PROXY: "http://F900085:Senha0085@192.168.90.247:9090/"
-    HTTPS_PROXY: "http://F900085:Senha0085@192.168.90.247:9090/"
-    NO_PROXY: ".dreads.bnb,.capgv.intra.bnb,10.85.231.27,172.17.*"
-    DNSSERVER_IP: 10.85.224.12
-    BASE_DOMAIN: dreads.bnb
+    HTTP_PROXY: ""
+    HTTPS_PROXY: ""
+    NO_PROXY: ""
+    DNSSERVER_IP: 8.8.8.8
+    BASE_DOMAIN: jdhlabs.com.br
     OCP_VERSION: "3.11"
     OCP_USERID: 3900
     OCP_CLUSTER_INSTALLER_NAME: instaler
@@ -39,12 +39,12 @@
     - name: Setting docker login on registry.redhat.io
       shell: docker login -u {{ rh_user }} -p {{ rh_password }} registry.redhat.io
       #environment:
-        #http_proxy: http://F900085:P@ssw0rd_rhel@192.168.90.247:9090/
+        #http_proxy: <your proxy server>
     
     - name: Pulling image registry.redhat.io registry.redhat.io/rhel7
       shell: docker pull registry.redhat.io/rhel7:latest
       #environment:
-        #http_proxy: http://F900085:P@ssw0rd_rhel@192.168.90.247:9090/
+        #http_proxy: <your proxy server>
 
     - name: Creating Dockerfile
       template: 

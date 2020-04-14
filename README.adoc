@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Project to deploy Openshift 4
 
 ### Branchs:
@@ -6,34 +5,3 @@ link:https://github.com/jonascavalcantineto/ocp-bootstrap-ignition/tree/release-
 
 ## contributions
 link:https://github.com/zanoniluiz/[Zanoni Luiz]
-=======
-# Deploy OCP 4 on vSphere
-
-### Chapters:
-
-link:documentation/overview.adoc[Deployment Overview]
-
-link:documentation/prerequisites.adoc[Prerequisites Preparation]
-
-link:documentation/ignition.adoc[Generating Install Files]
-
-link:documentation/vsphere-import-ova-with-dhcp.adoc[Import OVA on vSphere]
-
-link:documentation/vsphere-import-iso-with-no-dhcp.adoc[Import OVA on vSphere]
-
-link:documentation/deploy.adoc[Deploy Cluster on vSphere]
-
-link:documentation/post-deployment.adoc[Post deployment configuration]
-
-link:documentation/troubleshooting.adoc[Troubleshooting tips]
-
-link:documentation/common-further-resources.adoc[Further Resources]
-
-## References
-
-link:https://github.com/giofontana/ocp4-vsphere-workshop/[Workshop Openshift]
-
-## contributions
-
-link:https://github.com/zanoniluiz/[Zanoni Luiz]
->>>>>>> release-0.1

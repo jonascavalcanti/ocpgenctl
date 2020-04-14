@@ -8,7 +8,7 @@ services:
     restart: always
     network_mode: host
     dns:
-      - 10.85.224.12
+      - 8.8.8.8
     ports:
       - 80:80
     volumes: 
