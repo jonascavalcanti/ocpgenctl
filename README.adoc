@@ -1,7 +1,11 @@
 # Project to deploy Openshift 4
 
 ### Branchs:
-link:https://github.com/jonascavalcantineto/ocp-bootstrap-ignition/tree/release-v4.3-vsphere6.7U2[Deploy Openshift 4.3 in the vSphere 6.7U2 environment]
+link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/overview.adoc[Deploy Openshift 4.3]
+
+link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp3.11/overview.adoc[Deploy Openshift 3.11]
 
 ## contributions
 link:https://github.com/zanoniluiz/[Zanoni Luiz]
+
+link:https://github.com/hsmiranda[Herberson Miranda]
