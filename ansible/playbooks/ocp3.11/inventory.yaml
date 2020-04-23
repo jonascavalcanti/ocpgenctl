@@ -40,6 +40,11 @@ openshift_master_cluster_public_hostname=api.ocp.dreads.bnb
 openshift_master_default_subdomain=apps.ocp.dreads.bnb
 openshift_master_dynamic_provisioning_enabled=True
 
+
+openshift_master_overwrite_named_certificates=true 
+openshift_master_named_certificates=[{"certfile": "/path/on/host/to/crt-file", "keyfile": "/path/on/host/to/key-file", "names": ["api.ocp.dreads.bnb"], "cafile": "/path/on/host/to/ca-file"}] 
+openshift_hosted_router_certificate={"certfile": "/path/on/host/to/app-crt-file", "keyfile": "/path/on/host/to/app-key-file", "cafile": "/path/on/host/to/app-ca-file"}
+
 os_firewall_use_firewalld=false
 
 openshift_use_dnsmasq=true
