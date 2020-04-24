@@ -42,13 +42,13 @@ openshift_master_dynamic_provisioning_enabled=True
 
 #This certificates need to be in the bastion 
 openshift_master_overwrite_named_certificates=true 
-/home/ocp3900/certs
+
 #Example
 #openshift_master_named_certificates=[{"certfile": "/path/on/host/to/crt-file", "keyfile": "/path/on/host/to/key-file", "names": ["api.ocp.dreads.bnb"], "cafile": "/path/on/host/to/ca-file"}] 
 #openshift_hosted_router_certificate={"certfile": "/path/on/host/to/app-crt-file", "keyfile": "/path/on/host/to/app-key-file", "cafile": "/path/on/host/to/app-ca-file"}
 
-openshift_master_named_certificates=[{"certfile": "/home/ocp3900/certs/api-ocp-chain.crt", "keyfile": "/home/ocp3900/certs/api-ocp.key", "names": ["api.ocp.dreads.bnb"]}] 
-openshift_hosted_router_certificate={"certfile": "/home/ocp3900/certs/apps-ocp-chain.crt", "keyfile": "/home/ocp3900/certs/apps-ocp.key"}
+openshift_master_named_certificates=[{"certfile": "/home/ocp3900/certs/api-ocp-chain.crt", "keyfile": "/home/ocp3900/certs/api-ocp.key", "names": ["api.ocp.dreads.bnb"], "cafile": "/home/ocp3900/certs/BNB_Raiz.crt"}] 
+openshift_hosted_router_certificate={"certfile": "/home/ocp3900/certs/apps-ocp-chain.crt", "keyfile": "/home/ocp3900/certs/apps-ocp.key", , "cafile": "/home/ocp3900/certs/BNB_Raiz.crt"}
 
 
 os_firewall_use_firewalld=false
