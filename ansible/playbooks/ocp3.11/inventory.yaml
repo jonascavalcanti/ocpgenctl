@@ -11,9 +11,9 @@ openshift_deployment_type=openshift-enterprise
 openshift_clock_enabled=true
 
 # Setting proxy
-openshift_http_proxy=http://F900085:Senha0085@192.168.90.247:9090/
-openshift_https_proxy=http://F900085:Senha0085@192.168.90.247:9090/
-openshift_no_proxy=.dreads.bnb,.capgv.intra.bnb,10.85.231.27,172.17.*
+#openshift_http_proxy=http://F900085:Senha0085@192.168.90.247:9090/
+#openshift_https_proxy=http://F900085:Senha0085@192.168.90.247:9090/
+#openshift_no_proxy=.jdhlabs.com.br,.capgv.intra.bnb,10.85.231.27,172.17.*
 
 # Disable Pre-Checks
 
@@ -35,20 +35,20 @@ openshift_release=v3.11
 openshift_master_cluster_method=native
 openshift_master_api_port=6443
 openshift_master_console_port=6443
-openshift_master_cluster_hostname=api-int.ocp.dreads.bnb
-openshift_master_cluster_public_hostname=api.ocp.dreads.bnb
-openshift_master_default_subdomain=apps.ocp.dreads.bnb
+openshift_master_cluster_hostname=api-int.ocp.jdhlabs.com.br
+openshift_master_cluster_public_hostname=api.ocp.jdhlabs.com.br
+openshift_master_default_subdomain=apps.ocp.jdhlabs.com.br
 openshift_master_dynamic_provisioning_enabled=True
 
 #This certificates need to be in the bastion 
 openshift_master_overwrite_named_certificates=true 
 
 #Example
-#openshift_master_named_certificates=[{"certfile": "/path/on/host/to/crt-file", "keyfile": "/path/on/host/to/key-file", "names": ["api.ocp.dreads.bnb"], "cafile": "/path/on/host/to/ca-file"}] 
+#openshift_master_named_certificates=[{"certfile": "/path/on/host/to/crt-file", "keyfile": "/path/on/host/to/key-file", "names": ["api.ocp.jdhlabs.com.br"], "cafile": "/path/on/host/to/ca-file"}] 
 #openshift_hosted_router_certificate={"certfile": "/path/on/host/to/app-crt-file", "keyfile": "/path/on/host/to/app-key-file", "cafile": "/path/on/host/to/app-ca-file"}
 
-openshift_master_named_certificates=[{"certfile": "/home/ocp3900/certs/api-ocp-chain.crt", "keyfile": "/home/ocp3900/certs/api-ocp.key", "names": ["api.ocp.dreads.bnb"], "cafile": "/home/ocp3900/certs/BNB_Raiz.crt"}] 
-openshift_hosted_router_certificate={"certfile": "/home/ocp3900/certs/apps-ocp-chain.crt", "keyfile": "/home/ocp3900/certs/apps-ocp.key", , "cafile": "/home/ocp3900/certs/BNB_Raiz.crt"}
+#openshift_master_named_certificates=[{"certfile": "/home/ocp3900/certs/api-ocp-chain.crt", "keyfile": "/home/ocp3900/certs/api-ocp.key", "names": ["api.ocp.jdhlabs.com.br"], "cafile": "/home/ocp3900/certs/CA_Raiz.crt"}] 
+#openshift_hosted_router_certificate={"certfile": "/home/ocp3900/certs/apps-ocp-chain.crt", "keyfile": "/home/ocp3900/certs/apps-ocp.key", , "cafile": "/home/ocp3900/certs/CA_Raiz.crt"}
 
 
 os_firewall_use_firewalld=false
@@ -103,7 +103,7 @@ openshift_portal_net=172.30.0.0/16
 # openshift_cloudprovider_kind=vsphere
 # openshift_cloudprovider_vsphere_username=openshift.service@vsphere.local
 # openshift_cloudprovider_vsphere_password='senha-aqui'
-# openshift_cloudprovider_vsphere_host=gerenciavmware.datacenter.ocp.dreads.bnb
+# openshift_cloudprovider_vsphere_host=gerenciavmware.datacenter.ocp.jdhlabs.com.br
 # openshift_cloudprovider_vsphere_datacenter=APE
 # openshift_cloudprovider_vsphere_datastore=VNX03_OPENSHIFT01
 
@@ -114,10 +114,10 @@ openshift_portal_net=172.30.0.0/16
 
 openshift_hosted_registry_storage_kind=nfs
 openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
-openshift_hosted_registry_storage_host=nfs.dreads.bnb
-openshift_hosted_registry_storage_nfs_directory=/mnt/data1/nfsshare/registryocp
+openshift_hosted_registry_storage_host=nfs.ocp.jdhlabs.com.br
+openshift_hosted_registry_storage_nfs_directory=/mnt
 openshift_hosted_registry_storage_volume_name=registry
-openshift_hosted_registry_storage_volume_size=150Gi
+openshift_hosted_registry_storage_volume_size=10Gi
 
 #######################################################################
 ### Prometheus Monitoring ​ deployment. #9#
@@ -153,30 +153,30 @@ openshift_logging_es_nodeselector={"node-role.kubernetes.io/infra":"true"}
 #######################################################################
 
 [masters]
-master.ocp.dreads.bnb
+master1.ocp.jdhlabs.com.br
 
 [etcd]
-etcd-0.ocp.dreads.bnb
+etcd-0.ocp.jdhlabs.com.br
 
 #[lb]
-#lb.ocp.dreads.bnb
+#lb.ocp.jdhlabs.com.br
 
 [infra]
-infra1.ocp.dreads.bnb
-infra2.ocp.dreads.bnb
+infra1.ocp.jdhlabs.com.br
+infra2.ocp.jdhlabs.com.br
 
 [routers]
-infra1.ocp.dreads.bnb
-infra2.ocp.dreads.bnb
+infra1.ocp.jdhlabs.com.br
+infra2.ocp.jdhlabs.com.br
 
 [nodes]
-master.ocp.dreads.bnb    openshift_node_group_name='node-config-master'
+master1.ocp.jdhlabs.com.br    openshift_node_group_name='node-config-master'
 
-infra1.ocp.dreads.bnb     openshift_node_group_name='node-config-infra'
-infra2.ocp.dreads.bnb     openshift_node_group_name='node-config-infra'
+infra1.ocp.jdhlabs.com.br     openshift_node_group_name='node-config-infra'
+infra2.ocp.jdhlabs.com.br     openshift_node_group_name='node-config-infra'
 
-apps1.ocp.dreads.bnb       openshift_node_group_name='node-config-compute'
-apps2.ocp.dreads.bnb       openshift_node_group_name='node-config-compute'
+apps1.ocp.jdhlabs.com.br       openshift_node_group_name='node-config-compute'
+apps2.ocp.jdhlabs.com.br       openshift_node_group_name='node-config-compute'
 
-# app03.ocp.dreads.bnb       openshift_node_group_name='node-config-compute-prod'
-# app04.ocp.dreads.bnb       openshift_node_group_name='node-config-compute-hml'
+# app03.ocp.jdhlabs.com.br       openshift_node_group_name='node-config-compute-prod'
+# app04.ocp.jdhlabs.com.br       openshift_node_group_name='node-config-compute-hml'

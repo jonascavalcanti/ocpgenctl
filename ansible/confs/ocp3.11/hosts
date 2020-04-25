@@ -5,12 +5,12 @@ infra_subscription_pool_id=8a85f99b70d0559c017107153c6d4889
 app_subscription_pool_id=8a85f99b70d0559c017107153ebf489a
 
 [masters]
-master.ocp.dreads.bnb ansible_user=root
-#lb.ocp.dreads.bnb ansible_user=root
+master1.ocp.jdhlabs.com.br ansible_user=root
+#lb.ocp.jdhlabs.com.br ansible_user=root
 
 [infras]
-infra[1:2].ocp.dreads.bnb ansible_user=root
+infra[1:2].ocp.jdhlabs.com.br ansible_user=root
 
 
 [appnodes]
-apps[1:2].ocp.dreads.bnb ansible_user=root
+apps[1:2].ocp.jdhlabs.com.br ansible_user=root

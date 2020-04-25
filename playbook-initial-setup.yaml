@@ -4,14 +4,14 @@
     HTTP_PROXY: ""
     HTTPS_PROXY: ""
     NO_PROXY: ""
-    DNSSERVER_IP: 8.8.8.8
+    DNSSERVER_IP: 10.11.2.3
     BASE_DOMAIN: jdhlabs.com.br
     OCP_VERSION: "3.11"
     OCP_USERID: 3900
     OCP_CLUSTER_INSTALLER_NAME: instaler
     OCP_WEBSERVER_IP: 10.85.224.47
     OCP_BOOTSTRAP_IGN_DNSNAME: lb
-    MASTERS_DNS_NAMES: "master"
+    MASTERS_DNS_NAMES: "master1"
     ETCD_DNS_NAMES: "etcd-0"
     INFRA_NODES_DNS_NAMES: "infra1 infra2"
     APP_NODES_DNS_NAMES: "apps1 apps2"
