@@ -24,7 +24,7 @@ RUN  subscription-manager repos \
 
 RUN sed -i "s/sslverify = 1/sslverify = 0/g" /etc/yum.repos.d/redhat.repo
  
-RUN yum update 
+RUN yum update -y
 
 RUN yum install -y \
                 vim \
@@ -64,11 +64,11 @@ RUN yum install -y \
 #RUN yum install -y supervisor
 
 #OCP variables
-ENV OCP_VERSION="3.11"
+ENV OCP_VERSION="4"
 ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest"
-ENV OCP_CLUSTER_INSTALLER_NAME="instaler"
-ENV OCP_BOOTSTRAP_IGN_DNSNAME="lb"
-ENV OCP_WEBSERVER_IP="10.85.224.47"
+ENV OCP_CLUSTER_INSTALLER_NAME="bastion"
+ENV OCP_BOOTSTRAP_IGN_DNSNAME="bastion"
+ENV OCP_WEBSERVER_IP="localhost"
 
 ENV RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}/latest"
 
@@ -101,30 +101,31 @@ ENV VCENTER_DS="datastore"
 
 # Add none root user
 RUN useradd ocp${OCP_USERID}
-
 RUN set -ex \
     && mkdir -p /etc/sudoers.d/ \
     && echo "ocp${OCP_USERID} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user \
     && chmod 0440 /etc/sudoers.d/user
 
+#Enable supervisor process control
 COPY pkgs/supervisor-4.1.0.tar.gz /tmp/pkgs/
 COPY pkgs/supervisor-4.1.0-py2.py3-none-any.whl /tmp/pkgs/
 RUN set -ex \
         && cd /tmp/pkgs \
         && pip3 install /tmp/pkgs/supervisor-4.1.0-py2.py3-none-any.whl
-
 ADD confs/supervisord.conf /etc/supervisord.conf
 
-#Ansible Configurations
-ADD ansible/confs/ocp${OCP_VERSION}/hosts /etc/ansible/hosts
-ADD ansible/confs/ocp${OCP_VERSION}/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
-ADD ansible/playbooks/ocp${OCP_VERSION}/* ${OCP_USER_PATH}/playbooks/
+#UnComment for OCP 3.11
+#ADD ansible/confs/ocp3.11/hosts /etc/ansible/hosts
+#ADD ansible/confs/ocp3.11/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
+
+#Ansible Configurations 
+ADD ansible/playbooks/ocp${OCP_VERSION} ${OCP_USER_PATH}/playbooks
 
 #Inicializations Scripts
 ADD scripts/ocp${OCP_VERSION}/*.sh /
 RUN chmod +x /*.sh && /usr/bin/chown ocp${OCP_USERID} /*.sh
 
-RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/*
+RUN chown ocp${OCP_USERID} -R ${OCP_USER_PATH}/
 RUN chown ocp${OCP_USERID} /var/www/html -R
 
 RUN set -ex \

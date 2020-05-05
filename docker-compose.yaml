@@ -2,13 +2,13 @@ version: '3.7'
 services:
   openshift-bastion:
     build: .
-    image: openshift-bastion:3.11
+    image: openshift-bastion:4
     container_name: openshift-bastion
     hostname: openshift-bastion
     restart: always
     network_mode: host
     dns:
-      - 10.11.2.3
+      - 8.8.8.8
     ports:
       - 80:80
     volumes: 

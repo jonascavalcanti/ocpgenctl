@@ -63,20 +63,20 @@ downloading_installers(){
       curl -s ${OCP_BASEURL}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_USER_PATH} oc kubectl
       curl -s ${OCP_BASEURL}/openshift-install-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_USER_PATH} openshift-install
 
-      echo "Downloading ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova"
-      curl ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-vmware.ova -o ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-vmware.ova -#
-      cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-vmware.ova /var/www/html/ocp${OCP_USERID}/ignition
+      echo "Downloading ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-vmware.ova"
+      curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-vmware.ova -o ${OCP_USER_PATH}/sharedfolder/rhcos-${OCP_LATEST_VERSION}-x86_64-vmware.ova -#
+      cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-${OCP_LATEST_VERSION}-x86_64-vmware.ova /var/www/html/ocp${OCP_USERID}/ignition
       
       if [ "${isNodesWithDHCP}" == "false" ]
       then
         echo "Enviroment without DHCP server to Nodes"
-        echo "Downloading RHCOS Bare Metal Fle ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-metal.raw.gz"
-        curl ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-metal.raw.gz -o ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-metal.raw.gz -#
-        cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-metal.raw.gz /var/www/html/ocp${OCP_USERID}/ignition
+        echo "Downloading RHCOS Bare Metal Fle ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-metal.raw.gz"
+        curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-metal.raw.gz -o ${OCP_USER_PATH}/sharedfolder/rhcos-${OCP_LATEST_VERSION}-x86_64-metal.raw.gz -#
+        cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-${OCP_LATEST_VERSION}-x86_64-metal.raw.gz /var/www/html/ocp${OCP_USERID}/ignition
 
-        echo "Downloading RHCOS ISO Fle ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-metal.raw.gz"
-        curl ${RHCOS_PACKAGES}/rhcos-4.3.0-x86_64-installer.iso -o ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-installer.iso -#
-        cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-4.3.0-x86_64-installer.iso /var/www/html/ocp${OCP_USERID}/ignition
+        echo "Downloading RHCOS ISO Fle ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-metal.raw.gz"
+        curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-installer.iso -o ${OCP_USER_PATH}/sharedfolder/rhcos-${OCP_LATEST_VERSION}-x86_64-installer.iso -#
+        cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-${OCP_LATEST_VERSION}-x86_64-installer.iso /var/www/html/ocp${OCP_USERID}/ignition
       fi
     fi
     else
@@ -99,7 +99,7 @@ settingSshKeyOnInstallConfigFile(){
   ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
 
   ssh_key_rsa_pub=`cat ${OCP_USER_PATH}/.ssh/id_rsa.pub`
-  mv ${OCP_USER_PATH}/playbooks/install-config.yaml ${OCP_USER_PATH}/
+  cp -rv ${OCP_USER_PATH}/playbooks/install-config.yaml ${OCP_USER_PATH}/
 
   echo "Settin SSH Key Pub on ${OCP_USER_PATH}/install-config.yaml"
   sed -i "s|OCP_SSH_KEY|$ssh_key_rsa_pub|" ${OCP_USER_PATH}/install-config.yaml
@@ -190,7 +190,7 @@ copying_configurations_to_shared_folder(){
   cat ${OCP_USER_PATH}/sharedfolder/configurations.txt
 }
 
-checking_cluster_dns_nodes_names
+#checking_cluster_dns_nodes_names
 
 configuring_webserver_nginx
 
