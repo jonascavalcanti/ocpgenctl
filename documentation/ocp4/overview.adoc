@@ -1,9 +1,9 @@
 # OpenShift 4.2+ vSphere Install with Static IPs
 
- In this link:https://red.ht/3bg13ok[previous blog] show for us how to install OpenShift 4.2+ on VMware vSphere 6.7 using DHCP. 
- Using DHCP with address reservation via MAC address filtering is a common way of ensuring network configurations are set and consistent on Red Hat Enterprise Linux CoreOS (RHCOS).
+In this link:https://red.ht/3bg13ok[previous blog] show for us how to install OpenShift 4.2+ on VMware vSphere 6.7 using DHCP. 
+Using DHCP with address reservation via MAC address filtering is a common way of ensuring network configurations are set and consistent on Red Hat Enterprise Linux CoreOS (RHCOS).
 
-Many environments would rather use static IP configuration to achieve the same consistent network configurations. With the release of OpenShift 4.2, we have now added the ability to configure network configurations (and persist them across reboots) in the preboot ignition phase for RHCOS.
+Many environments would rather use static IP configuration to achieve the same consistent network configurations. With the release of OpenShift 4.2+, we have now added the ability to configure network configurations (and persist them across reboots) in the preboot ignition phase for RHCOS.
 
 In this blog we are going to go over how to install OpenShift 4.2+ on VMware vSphere using static IPs.
 
@@ -19,9 +19,9 @@ We will be using my administrative credentials for vSphere. We will also be pass
 
 #### DNS
 
-Like any OpenShift 4 installation, the first consideration you need to take into account when setting up DNS for OpenShift 4 is the **"cluster id"**. The "cluster id" becomes part of your cluster's FQDN. For example; with a cluster id of **"ocp"** and my domain of "example.com", the cluster domain (i.e. the FQDN) for my cluster is **ocp.example.com**
+Like any OpenShift 4 installation, the first consideration you need to take into account when setting up DNS for OpenShift 4 is the **"cluster id"**. The "cluster id" becomes part of your cluster's FQDN. For example; with a cluster id of **"openshift4"** and my domain of "example.com", the cluster domain (i.e. the FQDN) for my cluster is **openshift4.example.com**
 
-DNS entries are created using the **$CLUSTERID.$DOMAIN** cluster domain FQDN nomenclature. All DNS lookups will be based on this cluster domain. Using my example cluster domain, **ocp.example.com**, I have the following DNS entries set up in my environment. Note that the etcd servers are pointed to the IP of the masters, and they are in the form of **etcd-$INDEX**.
+DNS entries are created using the **$CLUSTERID.$DOMAIN** cluster domain FQDN nomenclature. All DNS lookups will be based on this cluster domain. Using my example cluster domain, **openshift4.example.com**, I have the following DNS entries set up in my environment. Note that the etcd servers are pointed to the IP of the masters, and they are in the form of **etcd-$INDEX**.
 
 image::images/dnstests01.png[DNS Tests]
 
@@ -54,8 +54,6 @@ image::images/lbinfrasnodes.png[APIs LoadBalancer]
 More information about load balancer configuration (and general networking guidelines) can be found in the official link:https://docs.openshift.com[OpenShift Documentation].
 
 ## ARTIFACTS
-
-You will need to obtain the installation artifacts by visiting try.openshift.com, there you can login and click on "VMware vSphere" to get the installation artifacts. You will need:
 
 link:https://red.ht/3djUouw[OpenShift4 Client Tools]
 

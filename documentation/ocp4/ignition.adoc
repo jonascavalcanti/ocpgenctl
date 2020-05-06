@@ -16,13 +16,12 @@
 $ cd $HOME
 $ mkdir -p $HOME/ocp-installer/sharedfolder/
 $ chmod 777 $HOME/ocp-installer/sharedfolder/
-$ cd $HOME/ocp/
-$ git clone https://github.com/jonascavalcantineto/ocp-bootstrap-ignition.git
 $ cd $HOME/ocp-installer/sharedfolder/
-$ git checkout release-v4.3-vsphere6.7U2
+$ git clone https://github.com/jonascavalcantineto/openshift-bastion.git
+$ cd $HOME/ocp-installer/sharedfolder/openshift-bastion
 ----
 
-#### Setting the varibles in the main-plybook.yaml file. 
+#### Setting the varibles in the **main-plybook.yaml** file. 
 
 **OCP_VERSION**: Openshift versions | ex.: 3.11 , 4(Get the last Openshift version).
 
@@ -48,22 +47,12 @@ $ git checkout release-v4.3-vsphere6.7U2
 
 **PULL_SECRET**: You can download your PULL Secret on link:https://cloud.redhat.com/openshift/install/vsphere/user-provisioned[Red Hat Openshift Install]
 
-**SSH_KEY**: The SSH Key of the server which will be access the cluster across openssh.
-
-[NOTE]
-
-----
-$ ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa
-----
-
 #### Creating the Kubernetes manifest and Ignition config files
-
-#### Prerequisits
 
 <1> Ansible client
 
 ----
-$ cd $HOME/ocp-installer/sharedfolder/
+$ cd $HOME/ocp-installer/sharedfolder/openshift-bastion
 
 $ ansible-playbook main-playbook.yaml
 
@@ -77,9 +66,9 @@ RHCOS OVA will be in the **$HOME/ocp-installer/sharedfolder/** of you local mach
 
 The RHCOS images might not change with every release of OpenShift Container Platform. You must download an image with the highest version that is less than or equal to the OpenShift Container Platform version that you install. Use the image version that matches your OpenShift Container Platform version if it is available.
 
-#### Let's confirm that our webserver is hosting the bootstrap ignition file:
+#### Let's confirm that webserver is hosting the bootstrap ignition file:
 ----
-curl http://<OCP_BOOTSTRAP_IGN_DNSNAME>/ocp$GUID/ignition/bootstrap.ign
+curl http://<OCP_BOOTSTRAP_IGN_DNSNAME>/ocp$GUID/ignition/
 ----
 
 #### Generated configurations files on your localpath"
