@@ -13,9 +13,9 @@
 
 * link:https://www.openshift.com/blog/openshift-4-2-vsphere-install-with-static-ips[Blog Openshift]
 
-* link:https://docs.openshift.com/container-platform/4.3/installing/installing_vsphere/installing-vsphere.html[Openshift Documentation]
+* link:https://blog.openshift.com/openshift-4-2-vsphere-install-quickstart/[OpenShift 4.2 vSphere Install Quickstart]* - Quick guide to install OpenShift on vSphere.
 
-* link:https://blog.openshift.com/openshift-4-2-vsphere-install-quickstart/[OpenShift 4.3 vSphere Install Quickstart]* - Quick guide to install OpenShift on vSphere.
+* link:https://docs.openshift.com/container-platform/4.4/installing/installing_vsphere/installing-vsphere.html[Openshift Documentation]
 
 * link:https://docs.openshift.com[OpenShift Documentation]* - The landing page for OpenShift documentation.
 
