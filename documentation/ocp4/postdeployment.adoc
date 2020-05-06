@@ -1,9 +1,6 @@
-
-
-#### Post deployment configuration
+## Post vSphere deployment 
 
 Some steps is needed after cluster is up.
-
 
 #### BOOTSTRAP PROCESS
 

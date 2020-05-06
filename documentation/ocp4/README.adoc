@@ -1,13 +1,10 @@
-# Project to deploy Openshift 4.2+
-
-#### Steps:
+#### Steps
 1. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/prerequisites.adoc[Pre Requisities]
 2. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/overview.adoc[Overview]
 3. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/ignition.adoc[Container Ignition Files]
 4. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/deploy.adoc[vSphere Deploy]
 5. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/postdeployment.adoc[Post Deploy]
 6. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/troubleshooting.adoc[Troubleshooting]
-
 
 #### Referencies
 

@@ -1,6 +1,4 @@
-# Deploy OCP on vSphere
-
-### Troubleshooting tips
+## Troubleshooting
 
 To monitor the install progress:
 

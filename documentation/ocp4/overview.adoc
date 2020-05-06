@@ -1,4 +1,4 @@
-# OpenShift 4.2+ vSphere Install with Static IPs
+## OpenShift 4.2+ vSphere Install with Static IPs
 
 In this link:https://red.ht/3bg13ok[previous blog] show for us how to install OpenShift 4.2+ on VMware vSphere 6.7 using DHCP. 
 Using DHCP with address reservation via MAC address filtering is a common way of ensuring network configurations are set and consistent on Red Hat Enterprise Linux CoreOS (RHCOS).

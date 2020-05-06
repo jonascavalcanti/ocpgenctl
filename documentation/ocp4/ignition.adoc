@@ -1,6 +1,4 @@
-## Generate Ignations Files
-
-#### Generating Install Files
+## Generating Ignation Files
 
 <1> The base domain of the cluster. All DNS records must be sub-domains of this base and include the cluster name.
 <2> The cluster name that you specified in your DNS records.
