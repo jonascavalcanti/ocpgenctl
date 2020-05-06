@@ -1,11 +1,14 @@
-# Project to deploy Openshift 4
+# Project to deploy Openshift 4.2+
 
-### Steps:
+#### Steps:
 1. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/prerequisites.adoc[Pre Requisities]
 2. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/overview.adoc[Overview]
-3. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/overview.adoc[Overview]
+3. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/ignition.adoc[Container Ignition Files]
 
-## contributions
-link:https://github.com/zanoniluiz/[Zanoni Luiz]
 
-link:https://github.com/hsmiranda[Herberson Miranda]
+#### Referencies
+
+* link:https://mojo.redhat.com/people/rpecora/blog/2019/12/04/dicas-para-implementa%C3%A7%C3%A3o-do-cluster-openshift-42-em-vmware-vsphere[Dicas para Implementação do cluster Openshift 4.2 em Vmware vSphere]* - Artigo detalhado com passo a passo  e dicas de implementação do OpenShift em vSphere feito pelo nosso colega *Rafael Pécora*.
+* link:https://blog.openshift.com/openshift-4-2-vsphere-install-quickstart/[OpenShift 4.2 vSphere Install Quickstart]* - Quick guide to install OpenShift on vSphere.
+* link:https://docs.openshift.com[OpenShift Documentation]* - The landing page for OpenShift documentation.
+* link:https://chat.google.com/room/AAAA2bt6nL0[OpenShift 4 on Google Chat]* - Google chat forum about OpenShift 4

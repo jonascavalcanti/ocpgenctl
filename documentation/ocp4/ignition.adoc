@@ -68,6 +68,8 @@ $ cd $HOME/ocp/ocp-bootstrap-ignition
 $ ansible-playbook main-playbook.yaml
 
 $ docker-compose up -d --build
+
+$ docker container exec -it openshift-container bash
 ----
 
 [NOTE]
