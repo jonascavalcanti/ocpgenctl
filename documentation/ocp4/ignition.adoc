@@ -24,7 +24,7 @@ $ git checkout release-v4.3-vsphere6.7U2
 
 ## Setting the varibles in the main-plybook.yaml file. 
 
-**OCP_VERSION**: Openshift versions | ex.: 4.0, 4.1, 4.2, 4.3.
+**OCP_VERSION**: Openshift versions | ex.: 3.11 , 4(Get the last Openshift version).
 
 **BASE_DOMAIN**: Base domain of company | ex.: mycompany.com.
 
@@ -71,7 +71,7 @@ $ docker-compose up -d --build
 ----
 
 [NOTE]
-RHCOS OVA will be in the **$HOME/ocp/sharedfolder** of you local machine with name **rhcos-4.3.0-x86_64-vmware.ova**
+RHCOS OVA will be in the **$HOME/ocp/sharedfolder** of you local machine with name **rhcos-x86_64-vmware.ova**
 
 The RHCOS images might not change with every release of OpenShift Container Platform. You must download an image with the highest version that is less than or equal to the OpenShift Container Platform version that you install. Use the image version that matches your OpenShift Container Platform version if it is available.
 

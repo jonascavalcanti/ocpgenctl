@@ -10,9 +10,9 @@ sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R
 ifFQDNisActive(){
   if [ ${node} == "_etcd-server-ssl._tcp" ]
   then
-    fqdn="${node}.${CLUSTER_NAME}.${BASE_DOMAIN} SRV"
+    fqdn="${node}.${CLUSTER_ID}.${BASE_DOMAIN} SRV"
   else
-    fqdn="${node}.${CLUSTER_NAME}.${BASE_DOMAIN}"
+    fqdn="${node}.${CLUSTER_ID}.${BASE_DOMAIN}"
   fi
 
   ip=`dig ${fqdn} +short`
@@ -24,7 +24,7 @@ list_cluster_nodes_names(){
   echo "------------------list_cluster_nodes_names-------------------------"
   for node in ${nodes}
   do
-    echo "$node.${CLUSTER_NAME}.${BASE_DOMAIN}"
+    echo "$node.${CLUSTER_ID}.${BASE_DOMAIN}"
   done
   echo "------------------END Listing Cluster DNS Names---------------------"
 }
@@ -39,12 +39,12 @@ checking_cluster_dns_nodes_names() {
     fqdnActive=$(ifFQDNisActive)
     if [  "$fqdnActive" == "true" ]
     then
-      echo "[DNS OK] - ${node}.${CLUSTER_NAME}.${BASE_DOMAIN}"
-      #echo "Setting Hostname to ${node}.${CLUSTER_NAME}.${BASE_DOMAIN}"
-      #hostnamectl set-hostname ${node}.${CLUSTER_NAME}.${BASE_DOMAIN}
+      echo "[DNS OK] - ${node}.${CLUSTER_ID}.${BASE_DOMAIN}"
+      #echo "Setting Hostname to ${node}.${CLUSTER_ID}.${BASE_DOMAIN}"
+      #hostnamectl set-hostname ${node}.${CLUSTER_ID}.${BASE_DOMAIN}
     else
       echo "----------------------------------------------------------------------------"
-      echo "[DNS FAIL] - ${node}.${CLUSTER_NAME}.${BASE_DOMAIN}"
+      echo "[DNS FAIL] - ${node}.${CLUSTER_ID}.${BASE_DOMAIN}"
       echo "!!For proceed the installation you need to configure all DNS listed before!!"
       echo "----------------------------------------------------------------------------"
       exit 1
