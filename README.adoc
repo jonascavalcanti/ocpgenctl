@@ -1,7 +1,7 @@
 # Project to deploy Openshift 4
 
 ### Documentations:
-link:https://github.com/jonascavalcantineto/openshift-bastion/tree/master/documentation/ocp4/README.adoc[Deploy Openshift 4+]
+link:https://github.com/jonascavalcantineto/openshift-bastion/tree/master/documentation/ocp4/[Deploy Openshift 4+]
 
 link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp3.11/overview.adoc[Deploy Openshift 3.11]
 

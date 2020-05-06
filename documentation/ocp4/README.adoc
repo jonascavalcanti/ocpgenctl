@@ -1,9 +1,9 @@
 # Project to deploy Openshift 4
 
 ### Steps:
-1. link:https://github.com/jonascavalcantineto/openshift-bastion/tree/master/documentation/ocp4/prerequisities.adoc[Pre Requisities]
-2. link:https://github.com/jonascavalcantineto/openshift-bastion/tree/master/documentation/ocp4/overview.adoc[Overview]
-3. link:https://github.com/jonascavalcantineto/openshift-bastion/tree/master/documentation/ocp4/overview.adoc[Overview]
+1. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/prerequisites.adoc[Pre Requisities]
+2. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/overview.adoc[Overview]
+3. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/overview.adoc[Overview]
 
 ## contributions
 link:https://github.com/zanoniluiz/[Zanoni Luiz]
