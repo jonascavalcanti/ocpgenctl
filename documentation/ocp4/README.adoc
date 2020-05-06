@@ -5,14 +5,17 @@
 2. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/overview.adoc[Overview]
 3. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/ignition.adoc[Container Ignition Files]
 4. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/deploy.adoc[vSphere Deploy]
+5. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/postdeployment.adoc[Post Deploy]
+6. link:https://github.com/jonascavalcantineto/openshift-bastion/blob/master/documentation/ocp4/troubleshooting.adoc[Troubleshooting]
 
 
 #### Referencies
+
+* link:https://www.openshift.com/blog/openshift-4-2-vsphere-install-with-static-ips[Blog Openshift]
+
 * link:https://docs.openshift.com/container-platform/4.3/installing/installing_vsphere/installing-vsphere.html[Openshift Documentation]
 
-* link:https://mojo.redhat.com/people/rpecora/blog/2019/12/04/dicas-para-implementa%C3%A7%C3%A3o-do-cluster-openshift-42-em-vmware-vsphere[Dicas para Implementação do cluster Openshift 4.2 em Vmware vSphere]* - Artigo detalhado com passo a passo  e dicas de implementação do OpenShift em vSphere feito pelo nosso colega *Rafael Pécora*.
-
-* link:https://blog.openshift.com/openshift-4-2-vsphere-install-quickstart/[OpenShift 4.2 vSphere Install Quickstart]* - Quick guide to install OpenShift on vSphere.
+* link:https://blog.openshift.com/openshift-4-2-vsphere-install-quickstart/[OpenShift 4.3 vSphere Install Quickstart]* - Quick guide to install OpenShift on vSphere.
 
 * link:https://docs.openshift.com[OpenShift Documentation]* - The landing page for OpenShift documentation.
 

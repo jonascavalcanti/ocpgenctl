@@ -1,6 +1,6 @@
-# Deploy OCP on vSphere
+## Generate Ignations Files
 
-### Generating Install Files
+#### Generating Install Files
 
 <1> The base domain of the cluster. All DNS records must be sub-domains of this base and include the cluster name.
 <2> The cluster name that you specified in your DNS records.
@@ -11,18 +11,18 @@
 <7> Pull secret obtained in cloud.redhat.com.
 <8> The public portion of the default SSH key for the core user in Red Hat Enterprise Linux CoreOS (RHCOS).
 
-## Set up your local environment 
+#### Set up your local environment 
 ----
 $ cd $HOME
-$ mkdir -p $HOME/ocp/sharedfolder
-$ chmod 777 $HOME/ocp/sharedfolder
+$ mkdir -p $HOME/ocp-installer/sharedfolder/
+$ chmod 777 $HOME/ocp-installer/sharedfolder/
 $ cd $HOME/ocp/
 $ git clone https://github.com/jonascavalcantineto/ocp-bootstrap-ignition.git
-$ cd $HOME/ocp/ocp-bootstrap-ignition
+$ cd $HOME/ocp-installer/sharedfolder/
 $ git checkout release-v4.3-vsphere6.7U2
 ----
 
-## Setting the varibles in the main-plybook.yaml file. 
+#### Setting the varibles in the main-plybook.yaml file. 
 
 **OCP_VERSION**: Openshift versions | ex.: 3.11 , 4(Get the last Openshift version).
 
@@ -56,14 +56,14 @@ $ git checkout release-v4.3-vsphere6.7U2
 $ ssh-keygen -t rsa -b 2048 -f ~/.ssh/id_rsa
 ----
 
-## Creating the Kubernetes manifest and Ignition config files
+#### Creating the Kubernetes manifest and Ignition config files
 
-### Prerequisits
+#### Prerequisits
 
 <1> Ansible client
 
 ----
-$ cd $HOME/ocp/ocp-bootstrap-ignition
+$ cd $HOME/ocp-installer/sharedfolder/
 
 $ ansible-playbook main-playbook.yaml
 
@@ -73,23 +73,21 @@ $ docker container exec -it openshift-container bash
 ----
 
 [NOTE]
-RHCOS OVA will be in the **$HOME/ocp/sharedfolder** of you local machine with name **rhcos-x86_64-vmware.ova**
+RHCOS OVA will be in the **$HOME/ocp-installer/sharedfolder/** of you local machine with name **rhcos-x86_64-vmware.ova**
 
 The RHCOS images might not change with every release of OpenShift Container Platform. You must download an image with the highest version that is less than or equal to the OpenShift Container Platform version that you install. Use the image version that matches your OpenShift Container Platform version if it is available.
 
-## Let's confirm that our webserver is hosting the bootstrap ignition file:
+#### Let's confirm that our webserver is hosting the bootstrap ignition file:
 ----
 curl http://<OCP_BOOTSTRAP_IGN_DNSNAME>/ocp$GUID/ignition/bootstrap.ign
 ----
 
-### Generated configurations files on your localpath"
+#### Generated configurations files on your localpath"
 ----
-Configurations Files: $HOME/ocp/sharedfolder"
+Configurations Files: $HOME/ocp-installer/sharedfolder/"
 
 URL to access ignation and RHCOS OVA: http://${OCP_BOOTSTRAP_IGN_DNSNAME}/ocp${OCP_USERID}/ignition/"
 
-OCP access files: $HOME/ocp/sharedfolder/auth"
+OCP access files: $HOME/ocp-installer/sharedfolder/auth"
 ----
 
-## References
-link:https://docs.openshift.com/container-platform/4.3/installing/installing_vsphere/installing-vsphere.html[Openshift Documentation]
