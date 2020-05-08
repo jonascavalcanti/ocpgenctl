@@ -72,12 +72,12 @@ ENV OCP_WEBSERVER_IP="localhost"
 
 ENV RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}/latest"
 
-ENV OCP_USERID="3900"
+ENV OCP_USERID="1450"
 ENV OCP_USER_PATH="/home/ocp${OCP_USERID}"
 
 #Cluster variables
 ENV BASE_DOMAIN="jdhlabs.com.br"
-ENV CLUSTER_NAME="ocp"
+ENV CLUSTER_ID="ocpfaridao"
 ENV CLUSTER_CIDR="10.254.0.0/16"
 ENV CLUSTER_SERVICE_NETWORK="172.30.0.0/16"
 ENV TIER="vsphere"

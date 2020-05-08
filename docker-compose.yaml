@@ -12,4 +12,4 @@ services:
     ports:
       - 80:80
     volumes: 
-      - ${HOME}/ocp-installer/sharedfolder:/home/ocp3900/sharedfolder
+      - ${HOME}/ocp-installer/sharedfolder:/home/ocp1450/sharedfolder
