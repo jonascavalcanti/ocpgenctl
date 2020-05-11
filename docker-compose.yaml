@@ -6,8 +6,9 @@ services:
     container_name: openshift-bastion
     hostname: openshift-bastion
     restart: always
-    network_mode: bridge
+    network_mode: host
     dns:
+      - 8.8.8.8
       - 8.8.8.8
     ports:
       - 80:80
