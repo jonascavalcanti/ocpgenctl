@@ -80,7 +80,7 @@ ENV BASE_DOMAIN="jdhlabs.com.br"
 ENV CLUSTER_ID="ocpfaridao"
 ENV CLUSTER_CIDR="10.254.0.0/16"
 ENV CLUSTER_SERVICE_NETWORK="172.30.0.0/16"
-ENV TIER="vsphere"
+ENV TIER="bare"
 
 #OCP variables
 ENV WORKERS_REPLICS="4"
@@ -120,6 +120,8 @@ ADD confs/supervisord.conf /etc/supervisord.conf
 
 #Ansible Configurations 
 ADD ansible/playbooks/ocp${OCP_VERSION} ${OCP_USER_PATH}/playbooks
+
+RUN if [[ $OCP_VERSION == '4' ]]; then mv ${OCP_USER_PATH}/playbooks/install-config-$TIER.yaml ${OCP_USER_PATH}/playbooks/install-config.yaml; fi 
 
 #Inicializations Scripts
 ADD scripts/ocp${OCP_VERSION}/*.sh /

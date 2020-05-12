@@ -21,7 +21,7 @@
     CLUSTER_ID: ocpfaridao
     CLUSTER_CIDR: "10.254.0.0/16"
     CLUSTER_SERVICE_NETWORK: "172.30.0.0/16"
-    TIER: vsphere
+    TIER: bare
     VCENTER_SERVER: vcenter.local
     VCENTER_USER: admin@vmware.local
     VCENTER_PASS: 1q2w3e
@@ -64,8 +64,14 @@
         dest: ./confs/supervisord.conf
         mode: "0755"
 
-    - name: Creating install-config.yaml file
+    - name: Creating vSphere install-config.yaml file
       template: 
-        src: ./ansible/playbooks/ocp4/install-config.j2
-        dest: ./ansible/playbooks/ocp4/install-config.yaml
+        src: ./ansible/playbooks/ocp4/install-config-vsphere.j2
+        dest: ./ansible/playbooks/ocp4/install-config-vsphere.yaml
         mode: "0755"
+
+    - name: Creating Bare Metal install-config.yaml file
+      template: 
+        src: ./ansible/playbooks/ocp4/install-config-bare.j2
+        dest: ./ansible/playbooks/ocp4/install-config-bare.yaml
+        mode: "0755"   

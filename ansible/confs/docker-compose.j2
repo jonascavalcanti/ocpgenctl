@@ -9,7 +9,6 @@ services:
     network_mode: host
     dns:
       - {{ DNSSERVER_IP }}
-      - 8.8.8.8
     ports:
       - 80:80
     volumes: 
