@@ -116,8 +116,10 @@ settingSshKeyOnInstallConfigFile(){
 }
 
 generate_manisfests_files(){
+  mkdir -p ${OCP_SHARED_FOLDER}/ignitions
+  
   echo "------------------generate_manisfests_files------------------------"
-
+  
   ${OCP_SHARED_FOLDER}/installers/openshift-install create manifests --dir=${OCP_SHARED_FOLDER}/ignitions
   sed -i 's/mastersSchedulable: true/mastersSchedulable: false/g' ${OCP_SHARED_FOLDER}/ignitions/manifests/cluster-scheduler-02-config.yml
   
