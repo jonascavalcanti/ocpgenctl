@@ -79,7 +79,7 @@ ENV OCP_SHARED_FOLDER="/home/ocp${OCP_USERID}/sharedfolder"
 
 #Cluster variables
 ENV BASE_DOMAIN="jdhlabs.com.br"
-ENV CLUSTER_ID="ocpfaridao"
+ENV CLUSTER_ID="ocp"
 ENV CLUSTER_CIDR="10.254.0.0/16"
 ENV CLUSTER_SERVICE_NETWORK="172.30.0.0/16"
 ENV TIER="bare"

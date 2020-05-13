@@ -19,7 +19,7 @@
     WORKERS_REPLICS: 4
     MASTER_REPLICS: 1
     isNodesWithDHCP: "false"
-    CLUSTER_ID: ocpfaridao
+    CLUSTER_ID: ocp
     CLUSTER_CIDR: "10.254.0.0/16"
     CLUSTER_SERVICE_NETWORK: "172.30.0.0/16"
     TIER: bare
