@@ -66,54 +66,59 @@ downloading_installers(){
   echo "------------------downloading_installers------------------------"
 
   echo "Creating folder installers"
-  mkdir -p ${OCP_SHARED_FOLDER}/installers
+  mkdir -p ${OCP_SHARED_FOLDER}/installers/
 
-  if [ ! -f ${OCP_SHARED_FOLDER}/configurations.txt ]
+  if [ ! -f ${OCP_SHARED_FOLDER}/installers/openshift-install ]
   then
-    if [ ! -f ${OCP_SHARED_FOLDER}/installers/openshift-install ]
-    then
-      echo "Downloading openshift-install cli"
-      curl -s ${OCP_BASEURL}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers oc kubectl
-      curl -s ${OCP_BASEURL}/openshift-install-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers openshift-install
+    echo "Downloading openshift-install cli"
+    curl -s ${OCP_BASEURL}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers/ oc kubectl
+    curl -s ${OCP_BASEURL}/openshift-install-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers/ openshift-install
 
-      echo "Downloading RHCOS = OVA  | ISO | RAW.GZ"
-      curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-vmware.x86_64.ova -o ${OCP_SHARED_FOLDER}/installers/rhcos.ova -#
-      curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-metal.x86_64.raw.gz -o ${OCP_SHARED_FOLDER}/installers/bios.raw.gz -#
-      curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-installer.x86_64.iso -o ${OCP_SHARED_FOLDER}/installers/rhcos.iso -#
-    fi
-    echo "Copying RHCOS = OVA  | ISO | RAW.GZ to /var/www/html/installers"
-    cp -rv ${OCP_SHARED_FOLDER}/installers/rhcos.ova /var/www/html/installers
-    cp -rv ${OCP_SHARED_FOLDER}/installers/bios.raw.gz /var/www/html/installers
-    cp -rv ${OCP_SHARED_FOLDER}/installers/rhcos.iso /var/www/html/installers
-  else
-    echo "There is configuration files on path: ${OCP_SHARED_FOLDER}/"
-    echo "!!You need delete and running again for create the Openshift Enviroment!!"
-    exit 1
+    echo "Downloading RHCOS = OVA  | ISO | RAW.GZ"
+    curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-vmware.x86_64.ova -o ${OCP_SHARED_FOLDER}/installers/rhcos.ova -#
+    curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-metal.x86_64.raw.gz -o ${OCP_SHARED_FOLDER}/installers/bios.raw.gz -#
+    curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-installer.x86_64.iso -o ${OCP_SHARED_FOLDER}/installers/rhcos.iso -#
   fi
 
-
+  echo "Copying RHCOS = OVA  | ISO | RAW.GZ to /var/www/html/installers"
+  cp -rv ${OCP_SHARED_FOLDER}/installers/rhcos.ova /var/www/html/installers
+  cp -rv ${OCP_SHARED_FOLDER}/installers/bios.raw.gz /var/www/html/installers
+  cp -rv ${OCP_SHARED_FOLDER}/installers/rhcos.iso /var/www/html/installers
+ 
   echo "------------------End downloading_installers------------------------"
 }
 
 settingSshKeyOnInstallConfigFile(){
   echo "Enable SSH KEYS"
-  ssh-keygen -t rsa -b 4096 -N '' -f ${OCP_USER_PATH}/.ssh/id_rsa
-  chmod 700  ${OCP_USER_PATH}/.ssh
+
+  if [ ! -f ${OCP_SHARED_FOLDER}/auth/id_rsa ]
+  then
+    ssh-keygen -t rsa -b 4096 -N '' -f ${OCP_USER_PATH}/.ssh/id_rsa
+
+    eval "$(ssh-agent -s)"
+    ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
+
+    echo "Copying ssh keys ${OCP_SHARED_FOLDER}/auth/"
+    mkdir -p ${OCP_SHARED_FOLDER}/auth/
+    cp -rv ${OCP_USER_PATH}/.ssh/id_rsa* ${OCP_SHARED_FOLDER}/auth/
+  else
+    cp -rv ${OCP_SHARED_FOLDER}/auth/id_rsa*  ${OCP_USER_PATH}/.ssh/
+  fi
+
+  chmod 700  ${OCP_USER_PATH}/.ssh/
   chmod 600  ${OCP_USER_PATH}/.ssh/id_rsa
   chmod 644  ${OCP_USER_PATH}/.ssh/id_rsa.pub
+}
 
-  eval "$(ssh-agent -s)"
-  ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
-
-  echo "Copying ssh keys ${OCP_SHARED_FOLDER}/auth/"
-  cp -rv ${OCP_USER_PATH}/.ssh/id_rsa* ${OCP_SHARED_FOLDER}/auth/
+add_ssh_key_to_install_config_yaml(){
 
   echo "Settin SSH Key Pub on ${OCP_USER_PATH}/playbooks/install-config.yaml"
   ssh_key_rsa_pub=`cat ${OCP_USER_PATH}/.ssh/id_rsa.pub`
   sed -i "s|OCP_SSH_KEY|$ssh_key_rsa_pub|" ${OCP_USER_PATH}/playbooks/install-config.yaml
-
+  
   mkdir -p ${OCP_SHARED_FOLDER}/ignitions/
-  cp -rv ${OCP_USER_PATH}/playbooks/install-config.yaml ${OCP_SHARED_FOLDER}/ignitions
+  cp -rv ${OCP_USER_PATH}/playbooks/install-config.yaml ${OCP_SHARED_FOLDER}/ignitions/
+
 }
 
 generate_manisfests_files(){
@@ -184,12 +189,21 @@ checking_cluster_dns_nodes_names
 
 configuring_webserver_nginx
 
-settingSshKeyOnInstallConfigFile
-
 downloading_installers
 
-generate_manisfests_files
+settingSshKeyOnInstallConfigFile
 
-generate_ignitions_files
+if [ ! -f ${OCP_SHARED_FOLDER}/configurations.txt ]
+then
+    add_ssh_key_to_install_config_yaml
+
+    generate_manisfests_files
+
+    generate_ignitions_files
+else
+  echo "There is configuration files on path: ${OCP_SHARED_FOLDER}/"
+  echo "!!You need delete and running again for create the Openshift Enviroment!!"
+  exit 1
+fi
 
 configurations_generated
