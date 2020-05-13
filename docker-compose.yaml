@@ -6,10 +6,10 @@ services:
     container_name: ocp-installer
     hostname: ocp-installer
     restart: always
-    network_mode: host
+    network_mode: bridge
     dns:
       - 8.8.8.8
     ports:
-      - 80:80
+      - 81:80
     volumes: 
       - ${HOME}/ocp-installer/sharedfolder:/home/ocp1450/sharedfolder
