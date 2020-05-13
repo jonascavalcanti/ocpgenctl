@@ -117,7 +117,7 @@ settingSshKeyOnInstallConfigFile(){
 
 generate_manisfests_files(){
   mkdir -p ${OCP_SHARED_FOLDER}/ignitions
-  
+
   echo "------------------generate_manisfests_files------------------------"
   
   ${OCP_SHARED_FOLDER}/installers/openshift-install create manifests --dir=${OCP_SHARED_FOLDER}/ignitions
@@ -127,6 +127,8 @@ generate_manisfests_files(){
 }
 
 generate_ignitions_files(){
+  mkdir -p ${OCP_SHARED_FOLDER}/ignitions
+  
   echo "------------------generate_ignitions_files------------------------"
 
   ${OCP_SHARED_FOLDER}/installers/openshift-install create ignition-configs --dir=${OCP_SHARED_FOLDER}/ignitions
