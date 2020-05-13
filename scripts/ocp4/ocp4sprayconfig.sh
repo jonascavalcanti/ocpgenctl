@@ -165,11 +165,14 @@ EOF
       base64 -w0 < ${OCP_SHARED_FOLDER}/ignitions/$i.ign > ${OCP_SHARED_FOLDER}/ignitions/$i.64
   done
 
+  echo "------------------END generate_ignitions_files------------------------"
+}
+
+
+add_ignitions_files_to_www_nginx_path(){
   echo "Copy ${OCP_USER_PATH}/*.ign to WebServer"
   cp -rv ${OCP_SHARED_FOLDER}/ignitions/*.ign /var/www/html/ignition/
   cp -rv ${OCP_SHARED_FOLDER}/ignitions/*.64 /var/www/html/ignition/
-
-  echo "------------------END generate_ignitions_files------------------------"
 }
 
 configurations_generated(){
@@ -206,5 +209,7 @@ else
   echo "!!You need delete and running again for create the Openshift Enviroment!!"
   exit 1
 fi
+
+add_ignitions_files_to_www_nginx_path
 
 configurations_generated
