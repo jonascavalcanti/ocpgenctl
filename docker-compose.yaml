@@ -1,14 +1,15 @@
 version: '3.7'
 services:
-  openshift-bastion:
+  ocp-installer:
     build: .
-    image: openshift-bastion:4
-    container_name: openshift-bastion
-    hostname: openshift-bastion
+    image: ocp-installer:4.4
+    container_name: ocp-installer
+    hostname: ocp-installer
     restart: always
     network_mode: host
     dns:
       - 8.8.8.8
+      - 8.8.4.4
     ports:
       - 80:80
     volumes: 

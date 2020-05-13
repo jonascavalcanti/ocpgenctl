@@ -52,32 +52,41 @@ checking_cluster_dns_nodes_names() {
   echo "------------------END checking_cluster_dns_nodes_names---------------------"
 }
 
+configuring_webserver_nginx(){
+  echo "------------------configuring_webserver_nginx------------------------"
+
+  echo "Creating Ignition and Installers Nginx Paths"
+  mkdir -p /var/www/html/ignition
+  mkdir -p /var/www/html/installers
+
+  echo "------------------End configuring_webserver_nginx------------------------"
+}
+
 downloading_installers(){
   echo "------------------downloading_installers------------------------"
 
-  if [ ! -f ${OCP_USER_PATH}/sharedfolder/configurations.txt ]
+  echo "Creating folder installers"
+  mkdir -p ${OCP_SHARED_FOLDER}/installers
+
+  if [ ! -f ${OCP_SHARED_FOLDER}/configurations.txt ]
   then
-    if [ ! -f ${OCP_USER_PATH}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz ]
+    if [ ! -f ${OCP_SHARED_FOLDER}/installers/openshift-install ]
     then
       echo "Downloading openshift-install cli"
-      curl -s ${OCP_BASEURL}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_USER_PATH} oc kubectl
-      curl -s ${OCP_BASEURL}/openshift-install-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_USER_PATH} openshift-install
+      curl -s ${OCP_BASEURL}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers oc kubectl
+      curl -s ${OCP_BASEURL}/openshift-install-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers openshift-install
 
-      echo "Downloading ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-vmware.ova"
-      curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-vmware.ova -o ${OCP_USER_PATH}/sharedfolder/rhcos-${OCP_LATEST_VERSION}-x86_64-vmware.ova -#
-      cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-${OCP_LATEST_VERSION}-x86_64-vmware.ova /var/www/html/ocp${OCP_USERID}/ignition
-      
-      echo "Enviroment without DHCP server to Nodes"
-      echo "Downloading RHCOS Bare Metal Fle ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-metal.raw.gz"
-      curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-metal.raw.gz -o ${OCP_USER_PATH}/sharedfolder/rhcos-${OCP_LATEST_VERSION}-x86_64-metal.raw.gz -#
-      cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-${OCP_LATEST_VERSION}-x86_64-metal.raw.gz /var/www/html/ocp${OCP_USERID}/ignition
-
-      echo "Downloading RHCOS ISO Fle ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-metal.raw.gz"
-      curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-installer.iso -o ${OCP_USER_PATH}/sharedfolder/rhcos-${OCP_LATEST_VERSION}-x86_64-installer.iso -#
-      cp -rv ${OCP_USER_PATH}/sharedfolder/rhcos-${OCP_LATEST_VERSION}-x86_64-installer.iso /var/www/html/ocp${OCP_USERID}/ignition
+      echo "Downloading RHCOS = OVA  | ISO | RAW.GZ"
+      curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-vmware.x86_64.ova -o ${OCP_SHARED_FOLDER}/installers/rhcos.ova -#
+      curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-metal.x86_64.raw.gz -o ${OCP_SHARED_FOLDER}/installers/bios.raw.gz -#
+      curl ${RHCOS_PACKAGES}/rhcos-${OCP_LATEST_VERSION}-x86_64-installer.x86_64.iso -o ${OCP_SHARED_FOLDER}/installers/rhcos.iso -#
     fi
+    echo "Copying RHCOS = OVA  | ISO | RAW.GZ to /var/www/html/installers"
+    cp -rv ${OCP_SHARED_FOLDER}/installers/rhcos.ova /var/www/html/installers
+    cp -rv ${OCP_SHARED_FOLDER}/installers/bios.raw.gz /var/www/html/installers
+    cp -rv ${OCP_SHARED_FOLDER}/installers/rhcos.iso /var/www/html/installers
   else
-    echo "There is configuration files on path: ${OCP_USER_PATH}/sharedfolder/"
+    echo "There is configuration files on path: ${OCP_SHARED_FOLDER}/"
     echo "!!You need delete and running again for create the Openshift Enviroment!!"
     exit 1
   fi
@@ -96,19 +105,21 @@ settingSshKeyOnInstallConfigFile(){
   eval "$(ssh-agent -s)"
   ssh-add  ${OCP_USER_PATH}/.ssh/id_rsa
 
+  echo "Copying ssh keys ${OCP_SHARED_FOLDER}/auth/"
+  cp -rv ${OCP_USER_PATH}/.ssh/id_rsa* ${OCP_SHARED_FOLDER}/auth/
+
   echo "Settin SSH Key Pub on ${OCP_USER_PATH}/playbooks/install-config.yaml"
   ssh_key_rsa_pub=`cat ${OCP_USER_PATH}/.ssh/id_rsa.pub`
   sed -i "s|OCP_SSH_KEY|$ssh_key_rsa_pub|" ${OCP_USER_PATH}/playbooks/install-config.yaml
 
-  
-  cp -rv ${OCP_USER_PATH}/playbooks/install-config.yaml ${OCP_USER_PATH}/
+  cp -rv ${OCP_USER_PATH}/playbooks/install-config.yaml ${OCP_SHARED_FOLDER}/ignitions
 }
 
 generate_manisfests_files(){
   echo "------------------generate_manisfests_files------------------------"
 
-  ${OCP_USER_PATH}/openshift-install create manifests --dir=${OCP_USER_PATH}
-  sed -i 's/mastersSchedulable: true/mastersSchedulable: false/g' ${OCP_USER_PATH}/manifests/cluster-scheduler-02-config.yml
+  ${OCP_SHARED_FOLDER}/installers/openshift-install create manifests --dir=${OCP_SHARED_FOLDER}/ignitions
+  sed -i 's/mastersSchedulable: true/mastersSchedulable: false/g' ${OCP_SHARED_FOLDER}/ignitions/manifests/cluster-scheduler-02-config.yml
   
   echo "------------------END generate_manisfests_files------------------------"
 }
@@ -116,16 +127,16 @@ generate_manisfests_files(){
 generate_ignitions_files(){
   echo "------------------generate_ignitions_files------------------------"
 
-  ${OCP_USER_PATH}/openshift-install create ignition-configs --dir=${OCP_USER_PATH}
+  ${OCP_SHARED_FOLDER}/installers/openshift-install create ignition-configs --dir=${OCP_SHARED_FOLDER}/ignitions
 
   echo "Generating secondary Ignition config file for your bootstrap node to your computer"
-  cat <<EOF > ${OCP_USER_PATH}/append-bootstrap.ign
+  cat <<EOF > ${OCP_SHARED_FOLDER}/ignitions/append-bootstrap.ign
   {
     "ignition": {
       "config": {
         "append": [
           {
-            "source": "http://${OCP_WEBSERVER_IP}/ocp${OCP_USERID}/ignition/bootstrap.ign",
+            "source": "http://${OCP_WEBSERVER_IP}/ignition/bootstrap.ign",
             "verification": {}
           }
         ]
@@ -143,51 +154,27 @@ EOF
   echo "Generating files in base64"
   for i in append-bootstrap master worker
   do
-      base64 -w0 < $i.ign > $i.64
+      base64 -w0 < ${OCP_SHARED_FOLDER}/ignitions/$i.ign > ${OCP_SHARED_FOLDER}/ignitions/$i.64
   done
 
   echo "Copy ${OCP_USER_PATH}/*.ign to WebServer"
-  cp -rv ${OCP_USER_PATH}/*.ign /var/www/html/ocp${OCP_USERID}/ignition
-  cp -rv ${OCP_USER_PATH}/*.64 /var/www/html/ocp${OCP_USERID}/ignition
+  cp -rv ${OCP_SHARED_FOLDER}/ignitions/*.ign /var/www/html/ignition
+  cp -rv ${OCP_SHARED_FOLDER}/ignitions/*.64 /var/www/html/ignition
 
   echo "------------------END generate_ignitions_files------------------------"
 }
 
-configuring_webserver_nginx(){
-  echo "------------------configuring_webserver_nginx------------------------"
-
-  echo "Creating path /var/www/html/ocp${OCP_USERID}/ignition"
-  mkdir -p /var/www/html/ocp${OCP_USERID}/ignition
-
-  echo "------------------End configuring_webserver_nginx------------------------"
-}
-
-copying_configurations_to_shared_folder(){
-  if [ ! -f ${OCP_USER_PATH}/sharedfolder/configurations.txt ]
-  then
-    cd ${OCP_USER_PATH}/sharedfolder
-    rm -rf ${OCP_USER_PATH}/sharedfolder/*
-
-    echo "Copy generated files .64 to ${OCP_USER_PATH}/sharedfolder/"
-    cp -rv ${OCP_USER_PATH}/*.64 ${OCP_USER_PATH}/auth ${OCP_USER_PATH}/sharedfolder/
-    cp -rv ${OCP_USER_PATH}/*.ign ${OCP_USER_PATH}/auth ${OCP_USER_PATH}/sharedfolder/
-
-    echo "Copying ssh keys ${OCP_USER_PATH}/sharedfolder/auth/"
-    cp -rv ${OCP_USER_PATH}/.ssh/id_rsa* ${OCP_USER_PATH}/sharedfolder/auth/
-
-    echo "Instalation Information----------" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-    echo "Files configurated on:  ${OCP_USER_PATH}/ocp/sharedfolder/" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-    echo "URL to access ignation and RHCOS OVA: http://${OCP_WEBSERVER_IP}/ocp${OCP_USERID}/ignition/" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-    echo "Openshift credentials files:  ${OCP_USER_PATH}/ocp/sharedfolder/auth" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-    list_cluster_nodes_names >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-    echo "--------------------------------" >> ${OCP_USER_PATH}/sharedfolder/configurations.txt
-  else
-    echo "There is configuration files on path: ${OCP_USER_PATH}/sharedfolder/"
-    echo "!!You need delete and running again for create the Openshift Enviroment!!"
-  fi
-
-  echo "Following the configurations of the Cluster OCP below:"
-  cat ${OCP_USER_PATH}/sharedfolder/configurations.txt
+configurations_generated(){
+    
+  echo "--------------------------------" >> ${OCP_SHARED_FOLDER}/configurations.txt
+  echo "Files configurated on:  ${OCP_USER_PATH}/ocp/sharedfolder/" >> ${OCP_SHARED_FOLDER}/configurations.txt
+  echo "URL to access Ignations and RHCOS: http://${OCP_WEBSERVER_IP}/ignition/" >> ${OCP_SHARED_FOLDER}/configurations.txt
+  echo "Openshift Credentials Files:  ${OCP_USER_PATH}/ocp/sharedfolder/ignitions/auth" >> ${OCP_SHARED_FOLDER}/configurations.txt
+  list_cluster_nodes_names >> ${OCP_SHARED_FOLDER}/configurations.txt
+  echo "--------------------------------" >> ${OCP_SHARED_FOLDER}/configurations.txt
+  
+  echo "Cluster Openshift Configurations on file: ${OCP_SHARED_FOLDER}/configurations.txt "
+  cat ${OCP_SHARED_FOLDER}/configurations.txt
 }
 
 checking_cluster_dns_nodes_names
@@ -202,4 +189,4 @@ generate_manisfests_files
 
 generate_ignitions_files
 
-copying_configurations_to_shared_folder
+configurations_generated

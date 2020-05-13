@@ -65,15 +65,17 @@ RUN yum install -y \
 
 #OCP variables
 ENV OCP_VERSION="4"
+ENV OCP_VERSION_RELEASE="4"
 ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest"
 ENV OCP_CLUSTER_INSTALLER_NAME="bastion"
 ENV OCP_BOOTSTRAP_IGN_DNSNAME="bastion"
 ENV OCP_WEBSERVER_IP="localhost"
 
-ENV RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}/latest"
+ENV RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}.${OCP_VERSION_RELEASE}/latest"
 
 ENV OCP_USERID="1450"
 ENV OCP_USER_PATH="/home/ocp${OCP_USERID}"
+ENV OCP_SHARED_FOLDER="/home/ocp${OCP_USERID}/sharedfolder"
 
 #Cluster variables
 ENV BASE_DOMAIN="jdhlabs.com.br"
@@ -104,7 +106,8 @@ RUN useradd ocp${OCP_USERID}
 RUN set -ex \
     && mkdir -p /etc/sudoers.d/ \
     && echo "ocp${OCP_USERID} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user \
-    && chmod 0440 /etc/sudoers.d/user
+    && chmod 0440 /etc/sudoers.d/user \
+    && mkdir -p ${OCP_SHARED_FOLDER}
 
 #Enable supervisor process control
 COPY pkgs/supervisor-4.1.0.tar.gz /tmp/pkgs/
