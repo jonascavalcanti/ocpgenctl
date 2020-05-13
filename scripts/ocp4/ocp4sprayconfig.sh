@@ -112,26 +112,25 @@ settingSshKeyOnInstallConfigFile(){
   ssh_key_rsa_pub=`cat ${OCP_USER_PATH}/.ssh/id_rsa.pub`
   sed -i "s|OCP_SSH_KEY|$ssh_key_rsa_pub|" ${OCP_USER_PATH}/playbooks/install-config.yaml
 
+  mkdir -p ${OCP_SHARED_FOLDER}/ignitions/
   cp -rv ${OCP_USER_PATH}/playbooks/install-config.yaml ${OCP_SHARED_FOLDER}/ignitions
 }
 
 generate_manisfests_files(){
-  mkdir -p ${OCP_SHARED_FOLDER}/ignitions
 
   echo "------------------generate_manisfests_files------------------------"
   
-  ${OCP_SHARED_FOLDER}/installers/openshift-install create manifests --dir=${OCP_SHARED_FOLDER}/ignitions
+  ${OCP_SHARED_FOLDER}/installers/openshift-install create manifests --dir=${OCP_SHARED_FOLDER}/ignitions/
   sed -i 's/mastersSchedulable: true/mastersSchedulable: false/g' ${OCP_SHARED_FOLDER}/ignitions/manifests/cluster-scheduler-02-config.yml
   
   echo "------------------END generate_manisfests_files------------------------"
 }
 
 generate_ignitions_files(){
-  mkdir -p ${OCP_SHARED_FOLDER}/ignitions
-  
+
   echo "------------------generate_ignitions_files------------------------"
 
-  ${OCP_SHARED_FOLDER}/installers/openshift-install create ignition-configs --dir=${OCP_SHARED_FOLDER}/ignitions
+  ${OCP_SHARED_FOLDER}/installers/openshift-install create ignition-configs --dir=${OCP_SHARED_FOLDER}/ignitions/
 
   echo "Generating secondary Ignition config file for your bootstrap node to your computer"
   cat <<EOF > ${OCP_SHARED_FOLDER}/ignitions/append-bootstrap.ign
@@ -162,8 +161,8 @@ EOF
   done
 
   echo "Copy ${OCP_USER_PATH}/*.ign to WebServer"
-  cp -rv ${OCP_SHARED_FOLDER}/ignitions/*.ign /var/www/html/ignition
-  cp -rv ${OCP_SHARED_FOLDER}/ignitions/*.64 /var/www/html/ignition
+  cp -rv ${OCP_SHARED_FOLDER}/ignitions/*.ign /var/www/html/ignition/
+  cp -rv ${OCP_SHARED_FOLDER}/ignitions/*.64 /var/www/html/ignition/
 
   echo "------------------END generate_ignitions_files------------------------"
 }
