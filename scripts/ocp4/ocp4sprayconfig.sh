@@ -208,7 +208,6 @@ then
 else
   echo "There is configuration files on path: ${OCP_SHARED_FOLDER}/"
   echo "!!You need delete and running again for create the Openshift Enviroment!!"
-  exit 1
 fi
 
 add_ignitions_files_to_www_nginx_path
