@@ -102,6 +102,7 @@ settingSshKeyOnInstallConfigFile(){
     mkdir -p ${OCP_SHARED_FOLDER}/auth/
     cp -rv ${OCP_USER_PATH}/.ssh/id_rsa* ${OCP_SHARED_FOLDER}/auth/
   else
+    mkdir -p ${OCP_USER_PATH}/.ssh/
     cp -rv ${OCP_SHARED_FOLDER}/auth/id_rsa*  ${OCP_USER_PATH}/.ssh/
   fi
 
