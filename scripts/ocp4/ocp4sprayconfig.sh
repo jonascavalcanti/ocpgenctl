@@ -176,7 +176,8 @@ configurations_generated(){
     
   echo "--------------------------------" >> ${OCP_SHARED_FOLDER}/configurations.txt
   echo "Files configurated on:  ${OCP_USER_PATH}/ocp/sharedfolder/" >> ${OCP_SHARED_FOLDER}/configurations.txt
-  echo "URL to access Ignations and RHCOS: http://${OCP_WEBSERVER_IP}/ignition/" >> ${OCP_SHARED_FOLDER}/configurations.txt
+  echo "URL to access Ignations: http://${OCP_WEBSERVER_IP}/ignition/" >> ${OCP_SHARED_FOLDER}/configurations.txt
+  echo "URL to access RHCOS Installers: http://${OCP_WEBSERVER_IP}/installers/" >> ${OCP_SHARED_FOLDER}/configurations.txt
   echo "Openshift Credentials Files:  ${OCP_USER_PATH}/ocp/sharedfolder/ignitions/auth" >> ${OCP_SHARED_FOLDER}/configurations.txt
   list_cluster_nodes_names >> ${OCP_SHARED_FOLDER}/configurations.txt
   echo "--------------------------------" >> ${OCP_SHARED_FOLDER}/configurations.txt
