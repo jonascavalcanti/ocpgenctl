@@ -12,10 +12,10 @@
     OCP_VERSION_RELEASE: "4"
     OCP_USERID: 1450
     BOOTSTRAP_NAME: bootstrap
-    MASTERS_DNS_NAMES: "master-0 master-1 master-2"
+    MASTERS_DNS_NAMES: "master1 master2 master3"
     ETCD_DNS_NAMES: "etcd-0 etcd-1 etcd-2"
-    INFRA_NODES_DNS_NAMES: "worker-0 worker-1"
-    APP_NODES_DNS_NAMES: "worker-2 worker-3"
+    INFRA_NODES_DNS_NAMES: "worker1 worker2"
+    APP_NODES_DNS_NAMES: "worker3 worker4"
     WORKERS_REPLICS: 4
     MASTER_REPLICS: 3
     isNodesWithDHCP: "false"
