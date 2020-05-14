@@ -3,7 +3,13 @@
 OCP_LATEST_VERSION=$(curl -s ${OCP_BASEURL}/release.txt | grep 'Version: ' | awk '{print $2}')
 OCP_API="api api-int"
 OCP_APPS='*.apps'
-nodes="_etcd-server-ssl._tcp ${OCP_BOOTSTRAP_IGN_DNSNAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
+
+if [ ${OCP_VERSION} == '4' ]
+then
+  nodes="_etcd-server-ssl._tcp ${BOOTSTRAP_NAME} ${OCP_INSTALLER_BASTION_NAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
+else
+  nodes="_etcd-server-ssl._tcp ${OCP_INSTALLER_BASTION_NAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
+fi
 
 echo "Setting permission to $(whoami) user "
 sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R

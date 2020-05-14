@@ -5,19 +5,19 @@
     HTTPS_PROXY: ""
     NO_PROXY: ""
     DNSSERVER_IP: 8.8.8.8
+    OCP_INSTALLER_BASTION_NAME: installer
+    OCP_WEBSERVER_IP: 10.10.10.10
     BASE_DOMAIN: jdhlabs.com.br
     OCP_VERSION: "4"
     OCP_VERSION_RELEASE: "4"
     OCP_USERID: 1450
-    OCP_CLUSTER_INSTALLER_NAME: bastion
-    OCP_WEBSERVER_IP: localhost
-    OCP_BOOTSTRAP_IGN_DNSNAME: bastion
-    MASTERS_DNS_NAMES: "master1"
-    ETCD_DNS_NAMES: "etcd-0"
-    INFRA_NODES_DNS_NAMES: "infra1 infra2"
-    APP_NODES_DNS_NAMES: "apps1 apps2"
+    BOOTSTRAP_NAME: bootstrap
+    MASTERS_DNS_NAMES: "master-0 master-1 master-2"
+    ETCD_DNS_NAMES: "etcd-0 etcd-1 etcd-2"
+    INFRA_NODES_DNS_NAMES: "worker-0 worker-1"
+    APP_NODES_DNS_NAMES: "worker-2 worker-3"
     WORKERS_REPLICS: 4
-    MASTER_REPLICS: 1
+    MASTER_REPLICS: 3
     isNodesWithDHCP: "false"
     CLUSTER_ID: ocp
     CLUSTER_CIDR: "10.254.0.0/16"
