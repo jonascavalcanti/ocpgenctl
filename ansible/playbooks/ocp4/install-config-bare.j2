@@ -14,14 +14,9 @@ networking:
   clusterNetworks:
   - cidr: {{ CLUSTER_CIDR }}
     hostPrefix: 24
+  networkType: OpenShiftSDN
   serviceNetwork:
   - {{ CLUSTER_SERVICE_NETWORK }}
-  defaultNetwork:
-    type: OpenShiftSDN
-    openshiftSDNConfig:
-      mode: NetworkPolicy
-      mtu: 1450
-      vxlanPort: 4799
 platform:
   none: {}
 fips: false 
