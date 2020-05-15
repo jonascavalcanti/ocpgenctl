@@ -196,6 +196,12 @@ configurations_generated(){
   cat ${OCP_SHARED_FOLDER}/configurations.txt
 }
 
+setKubeconfigOnEnviroment(){
+  mkdir -p ${OCP_USER_PATH}/.kube/
+  cp -rv ${OCP_SHARED_FOLDER}/ignitions/auth/kubeconfig  ${OCP_USER_PATH}/.kube/config
+  sudo cp ${OCP_SHARED_FOLDER}/installers/oc /usr/bin/
+}
+
 checking_cluster_dns_nodes_names
 
 configuring_webserver_nginx
@@ -219,3 +225,5 @@ fi
 add_ignitions_files_to_www_nginx_path
 
 configurations_generated
+
+setKubeconfigOnEnviroment
