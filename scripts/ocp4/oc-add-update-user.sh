@@ -5,7 +5,7 @@ PASS=$2
 
 description(){
     if [[ $# -eq 0 ]] ; then
-        echo "$@ <username> <password>"
+        echo "Using: $0 <username> <password>"
         exit 1
     fi
 }

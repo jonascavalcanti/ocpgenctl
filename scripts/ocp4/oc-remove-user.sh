@@ -4,7 +4,7 @@ USER=$1
 
 description(){
     if [[ $# -eq 0 ]] ; then
-        echo "$@ <username>"
+        echo "Using: $0 <username>"
         exit 1
     fi
 }
