@@ -3,14 +3,10 @@
 USER=$1
 PASS=$2
 
-description(){
-    if [[ $# -eq 0 ]] ; then
-        echo "Using: $0 <username> <password>"
-        exit 1
-    fi
-}
-
-description
+if [[ $# -eq 0 ]] ; then
+    echo "Using: $0 <username> <password>"
+    exit 1
+fi
 
 echo "Retrieve the HTPasswd file from the htpass-secret secret and save the file to your file system"
 oc get secret htpass-secret -ojsonpath={.data.htpasswd} -n openshift-config | base64 -d > ${OCP_SHARED_FOLDER}/auth/users.htpasswd
