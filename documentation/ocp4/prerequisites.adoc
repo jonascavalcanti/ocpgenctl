@@ -1,7 +1,6 @@
 ## Prerequisites Preparation
 
-The following services are pre-requisites for OpenShift 4.3 installation on vSphere (https://docs.openshift.com/container-platform/4.3/installing/installing_vsphere/installing-vsphere.html[see more on the official docs for OpenShift]) :
-
+The following services are pre-requisites for OpenShift 4.2+ installation 
 - RESOURCES
 - NETWORK
 - DNS
