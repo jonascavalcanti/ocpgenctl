@@ -8,5 +8,5 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: nfs.ocp.jdhlabs.com.br
-    path: "/mnt/nfs/registry/"
+    server: 10.1.5.230
+    path: "/mnt/registry/data"
