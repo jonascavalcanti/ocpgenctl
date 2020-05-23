@@ -5,7 +5,7 @@ PATH_CERTS=$2
 CERT=$3
 CERT_KEY=$4
 
-if [[ $# -eq 4 ]] ; then
+if [[ $# -lt 4 ]] ; then
     echo "Using: $0 <comapny-name> <path-certificates> <cartificate-name> <key-cartificate-name>"
     exit 1
 fi

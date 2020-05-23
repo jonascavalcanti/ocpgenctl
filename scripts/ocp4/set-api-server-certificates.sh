@@ -6,7 +6,7 @@ CERT=$3
 CERT_KEY=$4
 HOSTNAME_CERT=$5
 
-if [[ $# -eq 5 ]] ; then
+if [[ $# -lt 5 ]] ; then
     echo "Using: $0 <comapny-name> <path-certificates> <cartificate-name> <key-cartificate-name> <hostname-certificate>" 
     exit 1
 fi
