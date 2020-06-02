@@ -22,7 +22,7 @@
     CLUSTER_ID: ocp
     CLUSTER_CIDR: "10.254.0.0/16"
     CLUSTER_SERVICE_NETWORK: "172.30.0.0/16"
-    TIER: bare
+    TIER: vsphere
     VCENTER_SERVER: vcenter.local
     VCENTER_USER: admin@vmware.local
     VCENTER_PASS: 1q2w3e

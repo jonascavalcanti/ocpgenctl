@@ -17,10 +17,15 @@ RUN subscription-manager refresh
 RUN  subscription-manager repos \
     --enable="rhel-7-server-rpms" \
     --enable="rhel-7-server-extras-rpms" \
-    --enable="rhel-7-server-rh-common-rpms" \
-    --enable="rhel-7-server-ansible-2.6-rpms" \
-    --enable="rhel-7-server-ose-3.11-rpms"
+    --enable="rhel-7-server-rh-common-rpms"
 
+#Enable Ansible Repository
+#RUN subscription-manager repos --enable="rhel-7-server-ansible-2.9-rpms"
+
+RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+#Enable OCP 3 Repository
+RUN subscription-manager repos --enable="rhel-7-server-ose-3.11-rpms"
 
 RUN sed -i "s/sslverify = 1/sslverify = 0/g" /etc/yum.repos.d/redhat.repo
  
@@ -81,7 +86,7 @@ ENV BASE_DOMAIN="jdhlabs.com.br"
 ENV CLUSTER_ID="ocp"
 ENV CLUSTER_CIDR="10.254.0.0/16"
 ENV CLUSTER_SERVICE_NETWORK="172.30.0.0/16"
-ENV TIER="bare"
+ENV TIER="vsphere"
 
 #OCP variables
 ENV WORKERS_REPLICS="4"
@@ -117,8 +122,8 @@ RUN set -ex \
 ADD confs/supervisord.conf /etc/supervisord.conf
 
 #UnComment for OCP 3.11
-#ADD ansible/confs/ocp3.11/hosts /etc/ansible/hosts
-#ADD ansible/confs/ocp3.11/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
+ADD ansible/confs/ocp3/hosts /etc/ansible/hosts
+ADD ansible/confs/ocp3/ansible.cfg ${OCP_USER_PATH}/.ansible.cfg
 
 #Ansible Configurations 
 ADD ansible/playbooks/ocp${OCP_VERSION} ${OCP_USER_PATH}/playbooks
