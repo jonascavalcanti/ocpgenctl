@@ -85,6 +85,9 @@ downloading_installers(){
     curl ${RHCOS_PACKAGES}/rhcos-${OCP_VERSION_RELEASE}-x86_64-vmware.x86_64.ova -o ${OCP_SHARED_FOLDER}/installers/rhcos.ova -#
     curl ${RHCOS_PACKAGES}/rhcos-${OCP_VERSION_RELEASE}-x86_64-metal.x86_64.raw.gz -o ${OCP_SHARED_FOLDER}/installers/bios.raw.gz -#
     curl ${RHCOS_PACKAGES}/rhcos-${OCP_VERSION_RELEASE}-x86_64-installer.x86_64.iso -o ${OCP_SHARED_FOLDER}/installers/rhcos.iso -#
+  else
+    echo "Download error"
+    exit 1
   fi
 
   echo "Copying RHCOS = OVA  | ISO | RAW.GZ to /var/www/html/installers"
