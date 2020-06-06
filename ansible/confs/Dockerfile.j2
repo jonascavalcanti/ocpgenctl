@@ -71,9 +71,9 @@ RUN yum install -y \
 #OCP variables
 ENV OCP_VERSION="{{ OCP_VERSION }}"
 ENV OCP_VERSION_RELEASE="{{ OCP_VERSION_RELEASE }}"
+ENV OCP_RELEASE_UPDATE_NUMBER = "{{ OCP_RELEASE_UPDATE_NUMBER }}"
 ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest"
 ENV OCP_WEBSERVER_IP="{{ OCP_WEBSERVER_IP }}"
-ENV OCP_INSTALLER_BASTION_NAME="{{ OCP_INSTALLER_BASTION_NAME }}"
 
 ENV RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}.${OCP_VERSION_RELEASE}/latest"
 

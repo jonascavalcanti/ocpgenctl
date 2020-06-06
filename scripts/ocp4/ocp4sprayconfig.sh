@@ -1,16 +1,15 @@
 #!/bin/bash
 
 OCP_LATEST_VERSION=$(curl -s ${OCP_BASEURL}/release.txt | grep 'Version: ' | awk '{print $2}')
-OCP_RELEASE_UPDATE_NUMBER="3"
 OCP_VERSION_RELEASE="${OCP_VERSION}.${OCP_VERSION_RELEASE}.${OCP_RELEASE_UPDATE_NUMBER}"
 OCP_API="api api-int"
 OCP_APPS='*.apps'
 
-if [ ${OCP_VERSION} == '4' ]
+if [ ${OCP_VERSION} -eq 4 ]
 then
-  nodes="_etcd-server-ssl._tcp ${BOOTSTRAP_NAME} ${OCP_INSTALLER_BASTION_NAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
+  nodes="_etcd-server-ssl._tcp ${BOOTSTRAP_NAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
 else
-  nodes="_etcd-server-ssl._tcp ${OCP_INSTALLER_BASTION_NAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
+  nodes="_etcd-server-ssl._tcp  ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
 fi
 
 echo "Setting permission to $(whoami) user "
@@ -79,8 +78,8 @@ downloading_installers(){
   if [ ! -f ${OCP_SHARED_FOLDER}/installers/openshift-install ]
   then
     echo "Downloading openshift-install cli"
-    curl -s ${OCP_BASEURL}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers/ oc kubectl
-    curl -s ${OCP_BASEURL}/openshift-install-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers/ openshift-install
+    curl -s ${OCP_BASEURL}/openshift-client-linux-${OCP_VERSION_RELEASE}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers/ oc kubectl
+    curl -s ${OCP_BASEURL}/openshift-install-linux-${OCP_VERSION_RELEASE}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers/ openshift-install
 
     echo "Downloading RHCOS = OVA  | ISO | RAW.GZ"
     curl ${RHCOS_PACKAGES}/rhcos-${OCP_VERSION_RELEASE}-x86_64-vmware.x86_64.ova -o ${OCP_SHARED_FOLDER}/installers/rhcos.ova -#

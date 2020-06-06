@@ -2,7 +2,7 @@ version: '3.7'
 services:
   ocp-installer:
     build: .
-    image: ocp-installer:{{ OCP_VERSION }}.{{ OCP_VERSION_RELEASE }}
+    image: ocp-installer:{{ OCP_VERSION }}.{{ OCP_VERSION_RELEASE }}.{{ OCP_RELEASE_UPDATE_NUMBER }}
     container_name: ocp-installer
     hostname: ocp-installer
     restart: always
@@ -10,6 +10,6 @@ services:
     dns:
       - {{ DNSSERVER_IP }}
     ports:
-      - 81:80
+      - 80:80
     volumes: 
       - ${HOME}/ocp-installer/sharedfolder:/home/ocp{{ OCP_USERID }}/sharedfolder
