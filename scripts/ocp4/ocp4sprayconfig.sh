@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OCP_LATEST_VERSION=$(curl -s ${OCP_BASEURL}/release.txt | grep 'Version: ' | awk '{print $2}')
-OCP_VERSION_RELEASE="${OCP_VERSION}.${OCP_VERSION_RELEASE}.${OCP_RELEASE_UPDATE_NUMBER}"
+OCP_VERSION_RELEASE_UPDATE="${OCP_VERSION}.${OCP_VERSION_RELEASE}.${OCP_RELEASE_UPDATE_NUMBER}"
 OCP_API="api api-int"
 OCP_APPS='*.apps'
 
@@ -78,13 +78,13 @@ downloading_installers(){
   if [ ! -f ${OCP_SHARED_FOLDER}/installers/openshift-install ]
   then
     echo "Downloading openshift-install cli"
-    curl -s ${OCP_BASEURL}/openshift-client-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers/ oc kubectl
-    curl -s ${OCP_BASEURL}/openshift-install-linux-${OCP_LATEST_VERSION}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers/ openshift-install
+    curl -s ${OCP_BASEURL}/openshift-client-linux-${OCP_VERSION_RELEASE_UPDATE}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers/ oc kubectl
+    curl -s ${OCP_BASEURL}/openshift-install-linux-${OCP_VERSION_RELEASE_UPDATE}.tar.gz | tar -xzf - -C ${OCP_SHARED_FOLDER}/installers/ openshift-install
 
     echo "Downloading RHCOS = OVA  | ISO | RAW.GZ"
-    curl ${RHCOS_PACKAGES}/rhcos-${OCP_VERSION_RELEASE}-x86_64-vmware.x86_64.ova -o ${OCP_SHARED_FOLDER}/installers/rhcos.ova -#
-    curl ${RHCOS_PACKAGES}/rhcos-${OCP_VERSION_RELEASE}-x86_64-metal.x86_64.raw.gz -o ${OCP_SHARED_FOLDER}/installers/bios.raw.gz -#
-    curl ${RHCOS_PACKAGES}/rhcos-${OCP_VERSION_RELEASE}-x86_64-installer.x86_64.iso -o ${OCP_SHARED_FOLDER}/installers/rhcos.iso -#
+    curl ${RHCOS_PACKAGES}/rhcos-${OCP_VERSION_RELEASE_UPDATE}-x86_64-vmware.x86_64.ova -o ${OCP_SHARED_FOLDER}/installers/rhcos.ova -#
+    curl ${RHCOS_PACKAGES}/rhcos-${OCP_VERSION_RELEASE_UPDATE}-x86_64-metal.x86_64.raw.gz -o ${OCP_SHARED_FOLDER}/installers/bios.raw.gz -#
+    curl ${RHCOS_PACKAGES}/rhcos-${OCP_VERSION_RELEASE_UPDATE}-x86_64-installer.x86_64.iso -o ${OCP_SHARED_FOLDER}/installers/rhcos.iso -#
   else
     echo "Download error"
     exit 1
