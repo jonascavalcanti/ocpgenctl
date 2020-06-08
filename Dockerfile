@@ -69,11 +69,11 @@ RUN yum install -y \
 #RUN yum install -y supervisor
 
 #OCP variables
-ENV OCP_VERSION="4"
-ENV OCP_VERSION_RELEASE="4"
-ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest"
+ENV OCP_VERSION="3"
+ENV OCP_VERSION_RELEASE="11"
+ENV OCP_RELEASE_UPDATE_NUMBER=""
+ENV OCP_BASEURL="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/${OCP_VERSION}.${OCP_VERSION_RELEASE}.${OCP_RELEASE_UPDATE_NUMBER}"
 ENV OCP_WEBSERVER_IP="10.10.10.10"
-ENV OCP_INSTALLER_BASTION_NAME="installer"
 
 ENV RHCOS_PACKAGES="https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/${OCP_VERSION}.${OCP_VERSION_RELEASE}/latest"
 
