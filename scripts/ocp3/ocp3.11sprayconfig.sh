@@ -2,15 +2,15 @@
 
 OCP_API="api api-int"
 OCP_APPS='*.apps'
-nodes="_etcd-server-ssl._tcp ${OCP_BOOTSTRAP_IGN_DNSNAME} ${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
+nodes="${OCP_API} ${OCP_APPS} ${MASTERS_DNS_NAMES} ${ETCD_DNS_NAMES} ${APP_NODES_DNS_NAMES} ${INFRA_NODES_DNS_NAMES}"
 
 echo "Setting permission to $(whoami) user "
 sudo chown $(whoami):$(whoami) ${OCP_USER_PATH} -R
 
 ifFQDNisActive(){
-  if [ ${node} == "_etcd-server-ssl._tcp" ]
+  if [ ${CLUSTER_ID} == "" ]
   then
-    fqdn="${node}.${CLUSTER_ID}.${BASE_DOMAIN} SRV"
+    fqdn="${node}.${BASE_DOMAIN} SRV"
   else
     fqdn="${node}.${CLUSTER_ID}.${BASE_DOMAIN}"
   fi
@@ -24,7 +24,13 @@ list_cluster_nodes_names(){
   echo "------------------list_cluster_nodes_names-------------------------"
   for node in ${nodes}
   do
-    echo "$node.${CLUSTER_ID}.${BASE_DOMAIN}"
+    if [ ${CLUSTER_ID} == "" ]
+    then
+      echo "$node.${BASE_DOMAIN}"
+    else
+      echo "$node.${CLUSTER_ID}.${BASE_DOMAIN}"
+    fi
+    
   done
   echo "------------------END Listing Cluster DNS Names---------------------"
 }
@@ -39,12 +45,12 @@ checking_cluster_dns_nodes_names() {
     fqdnActive=$(ifFQDNisActive)
     if [  "$fqdnActive" == "true" ]
     then
-      echo "[DNS OK] - ${node}.${CLUSTER_ID}.${BASE_DOMAIN}"
+      echo "[DNS OK] - ${fqdn}"
       #echo "Setting Hostname to ${node}.${CLUSTER_ID}.${BASE_DOMAIN}"
       #hostnamectl set-hostname ${node}.${CLUSTER_ID}.${BASE_DOMAIN}
     else
       echo "----------------------------------------------------------------------------"
-      echo "[DNS FAIL] - ${node}.${CLUSTER_ID}.${BASE_DOMAIN}"
+      echo "[DNS FAIL] -${fqdn}"
       echo "!!For proceed the installation you need to configure all DNS listed before!!"
       echo "----------------------------------------------------------------------------"
       exit 1
