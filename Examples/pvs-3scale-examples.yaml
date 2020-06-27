@@ -8,8 +8,8 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    server: <nfs.domain>
-    path: "<path>"
+    server: 10.6.65.112
+    path: "/mnt/system-redis-storage"
 
 ---
 
@@ -23,8 +23,8 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    server: <nfs.domain>
-    path: "<path>"
+    server: 10.6.65.112
+    path: "/mnt/mysql-storage"
  
 ---
 
@@ -38,8 +38,8 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: <nfs.domain>
-    path: "<path>"
+    server: 10.6.65.112
+    path: "/mnt/system-storage"
 
 ---
 
@@ -53,5 +53,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    server: <nfs.domain>
-    path: "<path>"
+    server: 10.6.65.112
+    path: "/mnt/backend-redis-storage"
